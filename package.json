@@ -1,0 +1,24 @@
+{
+    "name": "clix",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "tsc"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/node": "^18.11.18",
+        "typescript": "^4.9.5"
+    },
+    "dependencies": {
+        "chalk": "^5.2.0",
+        "commander": "^10.0.0",
+        "inquirer": "^9.1.4",
+        "nanospinner": "^1.1.0"
+    }
+}
