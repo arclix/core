@@ -10,7 +10,6 @@ import {
 const createProject = async () => {
     await sleep(500);
     try {
-        emptyLine();
         const answer1 = await inquirer.prompt({
             name: "project",
             type: "input",
@@ -29,7 +28,7 @@ const createProject = async () => {
             name: "style",
             type: "list",
             message: "What styling would you like to use?",
-            choices: ["css", "scss/sass"],
+            choices: ["CSS", "SCSS/SASS"],
         });
 
         if (answer2.language === "TypeScript") {
@@ -49,14 +48,12 @@ const createProject = async () => {
             );
         }
 
-        if (
-            answer3.style === "scss/sass" ||
-            answer3.style === "scss/sass modules"
-        ) {
+        if (answer3.style === "SCSS/SASS") {
             await new Promise((r) => exec("npm install node-sass", r));
         }
-        spinner.stop();
+
         emptyLine();
+        spinner.stop();
         spinner.success({
             text: `Finished creating ${primaryChalk.italic(
                 "React.JS"

@@ -5,7 +5,7 @@ const { log } = console;
 const sleep = (ms = 2000) => new Promise((r) => setTimeout(r, ms));
 const emptyLine = () => log();
 
-const primaryChalk = chalk.hex("#c77dff");
+const primaryChalk = chalk.hex("#61DAFB");
 const errorLog = (log: string) => chalk.red(log);
 const spinner = createSpinner();
 

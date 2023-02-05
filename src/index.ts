@@ -1,22 +1,20 @@
 #!/usr/bin/env nod
 
 import { program } from "commander";
+import { MaxCommand, MinCommand } from "./types/enum.js";
+import { log, emptyLine, primaryChalk, spinner } from "./utilities/utility.js";
 import createProject from "./functions/createProject.js";
 import generateProjects from "./functions/generateProject.js";
-import { MaxCommand, MinCommand } from "./types/enum.js";
-import { log, emptyLine, primaryChalk } from "./utilities/utility.js";
+import chalk from "chalk";
 
 program
-    .option(
-        "-t, --type",
-        "Generates react general and test TypeScript components"
-    )
     .option("-p, --path <string>", "Generates components based on the path")
-    .option("--flat", "Generates components without parent folder");
+    .option("--flat", "Generates components without parent folder")
+    .option("--skipTest", "Skip the test file while generating component");
 
 program.parse();
 
-log("\n" + primaryChalk.italic("> CLIX v0.0.1"));
+log("\n" + primaryChalk.bold.italic("> CLIX v0.0.1"));
 
 await (async (command: string) => {
     if (command === MaxCommand.CREATE) {
@@ -29,6 +27,7 @@ await (async (command: string) => {
         emptyLine();
         await generateProjects(program);
     } else {
-        log("Unknown Commands 💀💀");
+        emptyLine();
+        spinner.error({ text: chalk.red("Unknown Command.\n") });
     }
 })(program.args[0]);

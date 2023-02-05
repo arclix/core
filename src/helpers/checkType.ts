@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import getRootPath from "./getRootPath.js";
 
-const checkReact = async (): Promise<boolean> => {
+const checkType = async (): Promise<boolean> => {
     const rootPath = getRootPath(process.cwd());
     const packageJsonPath = path.resolve(rootPath, "./package.json");
 
@@ -12,14 +12,10 @@ const checkReact = async (): Promise<boolean> => {
         const dependencies = packageJson.dependencies || {};
         const devDependencies = packageJson.devDependencies || {};
 
-        const dependenciesCheck: boolean =
-            dependencies.hasOwnProperty("react") &&
-            dependencies.hasOwnProperty("react-dom");
-        const devDependenciesCheck: boolean =
-            devDependencies.hasOwnProperty("react") &&
-            devDependencies.hasOwnProperty("react-dom");
-
-        if (dependenciesCheck || devDependenciesCheck) {
+        if (
+            dependencies.hasOwnProperty("typescript") ||
+            devDependencies.hasOwnProperty("typescript")
+        ) {
             return true;
         }
         return false;
@@ -28,4 +24,4 @@ const checkReact = async (): Promise<boolean> => {
     }
 };
 
-export default checkReact;
+export default checkType;
