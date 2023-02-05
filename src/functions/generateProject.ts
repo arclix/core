@@ -40,7 +40,7 @@ const generateProjects = async (program: Command) => {
                 spinner.error({
                     text: `${chalk.red("Filename is required.")}
 
-Correct usage is ${chalk.green("clix generate component <filename>")}\n`,
+Correct usage is ${chalk.green("npx arclix generate component <filename>")}\n`,
                 });
                 return;
             }

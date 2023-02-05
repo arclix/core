@@ -1,17 +1,30 @@
 {
-    "name": "clix",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
+    "name": "arclix",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/jitiendran/arclix.git"
+    },
+    "version": "0.0.4",
+    "description": "An Open Source CLI for React.JS",
+    "main": "dist/index.js",
     "type": "module",
+    "files": [
+        "dist"
+    ],
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
+        "publish": "npm run build && npm publish",
         "build": "tsc"
     },
-    "keywords": [],
-    "author": "",
+    "keywords": [
+        "TypeScript",
+        "React",
+        "React CLI",
+        "cli"
+    ],
+    "author": "Jitiendran",
     "license": "ISC",
-    "bin": "./src/index.ts",
+    "bin": "/dist/index.js",
     "devDependencies": {
         "@types/inquirer": "^9.0.3",
         "@types/node": "^18.11.18",

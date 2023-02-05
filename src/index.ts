@@ -1,4 +1,4 @@
-#!/usr/bin/env nod
+#!/usr/bin/env node
 
 import { program } from "commander";
 import { MaxCommand, MinCommand } from "./types/enum.js";
@@ -14,7 +14,7 @@ program
 
 program.parse();
 
-log("\n" + primaryChalk.italic.bold("> CLIX v0.0.1"));
+log("\n" + primaryChalk.italic.bold("> ARCLIX v0.0.3"));
 
 await (async (command: string) => {
     if (command === MaxCommand.CREATE) {
