@@ -9,6 +9,8 @@ import {
     createTest,
     getRootPath,
     createComponent,
+    createStyle,
+    checkStyle,
 } from "../helpers/index.js";
 
 let fileCreationError: boolean = false;
@@ -43,10 +45,11 @@ Correct usage is ${chalk.green("clix generate component <filename>")}\n`,
                 return;
             }
 
+            const hasTypeScript = await checkType();
+            const hasScss = await checkStyle();
+
             const defaultPath =
                 getRootPath(process.cwd()) === "" ? "./src/" : "";
-            const hasTypeScript = await checkType();
-
             const folderPath =
                 defaultPath +
                 (options.path
@@ -63,6 +66,18 @@ Correct usage is ${chalk.green("clix generate component <filename>")}\n`,
                             ? defaultPath + options.path
                             : defaultPath,
                         type: hasTypeScript,
+                        style: hasScss,
+                    },
+                    fileCreationError
+                );
+                createStyle(
+                    {
+                        componentName: program.args[2],
+                        folderPath: options.path
+                            ? defaultPath + options.path
+                            : defaultPath,
+                        type: hasTypeScript,
+                        style: hasScss,
                     },
                     fileCreationError
                 );
@@ -87,6 +102,16 @@ Correct usage is ${chalk.green("clix generate component <filename>")}\n`,
                             componentName: program.args[2],
                             folderPath,
                             type: hasTypeScript,
+                            style: hasScss,
+                        },
+                        fileCreationError
+                    );
+                    createStyle(
+                        {
+                            componentName: program.args[2],
+                            folderPath,
+                            type: hasTypeScript,
+                            style: hasScss,
                         },
                         fileCreationError
                     );

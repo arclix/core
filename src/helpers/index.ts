@@ -1,7 +1,17 @@
 import checkReact from "./checkReact.js";
 import checkType from "./checkType.js";
+import checkStyle from "./checkStyle.js";
 import getRootPath from "./getRootPath.js";
 import createTest from "./createTest.js";
+import createStyle from "./createStyle.js";
 import createComponent from "./createComponent.js";
 
-export { checkReact, checkType, getRootPath, createTest, createComponent };
+export {
+    checkReact,
+    checkType,
+    checkStyle,
+    getRootPath,
+    createTest,
+    createComponent,
+    createStyle,
+};

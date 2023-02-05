@@ -14,7 +14,7 @@ program
 
 program.parse();
 
-log("\n" + primaryChalk.bold.italic("> CLIX v0.0.1"));
+log("\n" + primaryChalk.italic.bold("> CLIX v0.0.1"));
 
 await (async (command: string) => {
     if (command === MaxCommand.CREATE) {

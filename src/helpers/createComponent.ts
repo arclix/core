@@ -5,8 +5,9 @@ import ContentArgs from "../types/interface.js";
 import { spinner } from "../utilities/utility.js";
 
 const createComponent = (args: ContentArgs, fileCreationError: boolean) => {
-    const { componentName, folderPath, type } = args;
-    const reactContent = `const ${componentName} = () => {
+    const { componentName, folderPath, type, style } = args;
+    const reactContent = `import './${componentName}${style ? ".scss" : "css"}'
+const ${componentName} = () => {
     return (
         <>
             // Type content here

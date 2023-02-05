@@ -11,6 +11,7 @@
     "keywords": [],
     "author": "",
     "license": "ISC",
+    "bin": "./src/index.ts",
     "devDependencies": {
         "@types/inquirer": "^9.0.3",
         "@types/node": "^18.11.18",
