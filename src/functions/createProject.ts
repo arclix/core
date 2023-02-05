@@ -22,8 +22,14 @@ const createProject = async () => {
         const answer2 = await inquirer.prompt({
             name: "language",
             type: "list",
-            message: "What would like to use?",
+            message: "What template would you like to use?",
             choices: ["JavaScript", "TypeScript"],
+        });
+        const answer3 = await inquirer.prompt({
+            name: "style",
+            type: "list",
+            message: "What styling would you like to use?",
+            choices: ["css", "scss/sass"],
         });
 
         if (answer2.language === "TypeScript") {
@@ -35,18 +41,21 @@ const createProject = async () => {
                     r
                 )
             );
-
-            spinner.stop();
         } else {
             spinner.start({ text: "Installing dependencies..." });
 
             await new Promise((r) =>
                 exec(`npx create-react-app ${answer1.project}`, r)
             );
-
-            spinner.stop();
         }
 
+        if (
+            answer3.style === "scss/sass" ||
+            answer3.style === "scss/sass modules"
+        ) {
+            await new Promise((r) => exec("npm install node-sass", r));
+        }
+        spinner.stop();
         emptyLine();
         spinner.success({
             text: `Finished creating ${primaryChalk.italic(
@@ -54,7 +63,7 @@ const createProject = async () => {
             )} project`,
         });
     } catch (error) {
-        spinner.error({ text: error.message });
+        spinner.error({ text: (error as Error).message });
         process.exit(1);
     }
 };
