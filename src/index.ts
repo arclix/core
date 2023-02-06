@@ -14,7 +14,7 @@ program
 
 program.parse();
 
-log("\n" + primaryChalk.italic.bold("> ARCLIX v0.0.3"));
+log("\n" + primaryChalk.italic.bold("> ARCLIX v0.0.6"));
 
 await (async (command: string) => {
     if (command === MaxCommand.CREATE) {

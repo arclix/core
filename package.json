@@ -4,7 +4,7 @@
         "type": "git",
         "url": "https://github.com/jitiendran/arclix.git"
     },
-    "version": "0.0.4",
+    "version": "0.0.6",
     "description": "An Open Source CLI for React.JS",
     "main": "dist/index.js",
     "type": "module",
@@ -13,7 +13,6 @@
     ],
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "publish": "npm run build && npm publish",
         "build": "tsc"
     },
     "keywords": [
