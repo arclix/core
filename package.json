@@ -19,7 +19,9 @@
         "TypeScript",
         "React",
         "React CLI",
-        "cli"
+        "cli",
+        "react",
+        "react-cli"
     ],
     "author": "Jitiendran",
     "license": "ISC",
