@@ -165,7 +165,7 @@ Component Structure:
 
 ```
 [COMPONENT NAME]
-├── [COMPONENT NAME].csx
+├── [COMPONENT NAME].css
 ├── [COMPONENT NAME].jsx
 └── [COMPONENT NAME].test.jsx
 ```
