@@ -5,8 +5,14 @@ import ContentArgs from "../types/interface.js";
 import { spinner } from "../utilities/utility.js";
 
 const createComponent = (args: ContentArgs, fileCreationError: boolean) => {
-    const { componentName, folderPath, type, style } = args;
-    const reactContent = `import './${componentName}${style ? ".scss" : "css"}'
+    const { componentName, folderPath, type, style, scopeStyle } = args;
+    const styleType = style ? ".scss" : ".css";
+    const reactContent = `${
+        scopeStyle
+            ? `import styles from './${componentName}.module${styleType}';`
+            : `import './${componentName}${styleType}';`
+    }
+
 const ${componentName} = () => {
     return (
         <>

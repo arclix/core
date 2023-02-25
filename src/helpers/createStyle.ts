@@ -5,8 +5,11 @@ import ContentArgs from "../types/interface.js";
 import { spinner } from "../utilities/utility.js";
 
 const createStyle = (args: ContentArgs, fileCreationError: boolean) => {
-    const { componentName, folderPath, style } = args;
-    const fileName = `${componentName}${style ? ".scss" : ".css"}`;
+    const { componentName, folderPath, style, scopeStyle } = args;
+    const styleType = style ? ".scss" : ".css";
+    const fileName = `${componentName}${
+        scopeStyle ? `.module${styleType}` : styleType
+    }`;
 
     fs.writeFile(path.join(folderPath, fileName), "", (err) => {
         if (err) {

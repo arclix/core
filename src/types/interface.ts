@@ -3,6 +3,7 @@ interface ContentArgs {
     folderPath: string;
     style?: boolean;
     type: boolean;
+    scopeStyle: boolean;
 }
 
 export default ContentArgs;
