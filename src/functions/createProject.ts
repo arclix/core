@@ -24,6 +24,21 @@ const changeDirectory = async (dir: string, goBack: boolean = false) => {
     }
 };
 
+const installSass = async (projectName: string) => {
+    const npmPath = process.platform == "win32" ? "npm.cmd" : "npm";
+    const finalPath = path.join(process.cwd(), `./${projectName}`);
+    await new Promise((r) => {
+        const installProcess = spawn(
+            npmPath,
+            ["install", "--save-dev", "sass"],
+            {
+                cwd: finalPath,
+            }
+        );
+        installProcess.on("close", (code) => r(code));
+    });
+};
+
 const createReactApp = async (language: string, projectName: string) => {
     switch (language) {
         case "TypeScript":
@@ -41,33 +56,9 @@ const createReactApp = async (language: string, projectName: string) => {
     }
 };
 
-const checkProjectName = (projectName: string): boolean => {
-    if (projectName !== projectName.toLowerCase()) {
-        return false;
-    }
-    return true;
-};
-
-const createProject = async () => {
+const createProject = async (projectName: string) => {
     await sleep(500);
     try {
-        const answer1 = await inquirer.prompt({
-            name: "project",
-            type: "input",
-            message: "Project name?",
-            default: () => {
-                return "sample-react-app";
-            },
-        });
-
-        if (!checkProjectName(answer1.project)) {
-            emptyLine();
-            spinner.error({
-                text: chalk.red("Project name should be in lowercase\n"),
-            });
-            return;
-        }
-
         const answer2 = await inquirer.prompt({
             name: "language",
             type: "list",
@@ -82,32 +73,22 @@ const createProject = async () => {
         });
 
         spinner.start({ text: "Installing dependencies...\n" });
-        await createReactApp(answer2.language, answer1.project);
+        await createReactApp(answer2.language, projectName);
         spinner.success({ text: "Finished installing dependencies" });
 
         if (answer3.style === "SCSS/SASS") {
             spinner.start({ text: "Installing additional dependencies...\n" });
-            const npmPath = process.platform == "win32" ? "npm.cmd" : "npm";
-            const finalPath = path.join(process.cwd(), `./${answer1.project}`);
-            await new Promise((r) => {
-                const installProcess = spawn(
-                    npmPath,
-                    ["install", "--save-dev", "sass"],
-                    {
-                        cwd: finalPath,
-                    }
-                );
-                installProcess.on("close", (code) => r(code));
-            });
+            await installSass(projectName);
             spinner.success({
                 text: "Finished installing additional dependencies\n",
             });
         }
+
         spinner.success({
             text: `Finished creating ${primaryChalk.italic("React.JS")} project
 
 To run the project
-    - cd ${answer1.project}
+    - cd ${projectName}
     - npm start
             `,
         });

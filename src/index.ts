@@ -7,19 +7,47 @@ import createProject from "./functions/createProject.js";
 import generateProjects from "./functions/generateProject.js";
 import chalk from "chalk";
 
+const checkProjectName = (projectName: string): boolean => {
+    if (projectName !== projectName.toLowerCase()) {
+        return false;
+    }
+    return true;
+};
+
 program
     .option("-p, --path <string>", "Generates components based on the path")
     .option("--flat", "Generates components without parent folder")
-    .option("--skipTest", "Skip the test file while generating component");
+    .option("--scopeStyle", "Scopes the style to the component")
+    .option("--skipTest", "Skip the test file while generating component")
+    .option("-v, --version", "Displays the version of Arclix in use");
 
 program.parse();
 
-log("\n" + primaryChalk.italic.bold("> ARCLIX v0.0.6"));
+log("\n" + primaryChalk.italic.bold("> ARCLIX v0.0.7"));
 
 await (async (command: string) => {
+    const options = program.opts();
+
+    if (options.version) {
+        return;
+    }
+
     if (command === MaxCommand.CREATE) {
         emptyLine();
-        await createProject();
+        if (!program.args[1]) {
+            spinner.error({ text: chalk.red("Missing Project Name.") });
+            return;
+        }
+
+        if (!checkProjectName(program.args[1])) {
+            emptyLine();
+            spinner.error({
+                text: chalk.red("Project name should be in lowercase\n"),
+            });
+            return;
+        }
+
+        await createProject(program.args[1]);
     } else if (
         command === MaxCommand.GENERATE ||
         command === MinCommand.GENERATE

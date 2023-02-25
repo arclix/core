@@ -67,6 +67,7 @@ Correct usage is ${chalk.green("npx arclix generate component <filename>")}\n`,
                             : defaultPath,
                         type: hasTypeScript,
                         style: hasScss,
+                        scopeStyle: options.scopeStyle,
                     },
                     fileCreationError
                 );
@@ -78,6 +79,7 @@ Correct usage is ${chalk.green("npx arclix generate component <filename>")}\n`,
                             : defaultPath,
                         type: hasTypeScript,
                         style: hasScss,
+                        scopeStyle: options.scopeStyle,
                     },
                     fileCreationError
                 );
@@ -89,6 +91,7 @@ Correct usage is ${chalk.green("npx arclix generate component <filename>")}\n`,
                                 ? defaultPath + options.path
                                 : defaultPath,
                             type: hasTypeScript,
+                            scopeStyle: options.scopeStyle,
                         },
                         fileCreationError
                     );
@@ -103,6 +106,7 @@ Correct usage is ${chalk.green("npx arclix generate component <filename>")}\n`,
                             folderPath,
                             type: hasTypeScript,
                             style: hasScss,
+                            scopeStyle: options.scopeStyle,
                         },
                         fileCreationError
                     );
@@ -112,6 +116,7 @@ Correct usage is ${chalk.green("npx arclix generate component <filename>")}\n`,
                             folderPath,
                             type: hasTypeScript,
                             style: hasScss,
+                            scopeStyle: options.scopeStyle,
                         },
                         fileCreationError
                     );
@@ -121,6 +126,7 @@ Correct usage is ${chalk.green("npx arclix generate component <filename>")}\n`,
                                 componentName: program.args[2],
                                 folderPath,
                                 type: hasTypeScript,
+                                scopeStyle: options.scopeStyle,
                             },
                             fileCreationError
                         );
