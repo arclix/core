@@ -11,7 +11,7 @@ body:
       attributes:
           label: Describe the bug
           description: A clear and concise description of what the bug is. If you intend to raise a PR for this issue, inform us in the description. Thanks!
-          placeholder: I am doing ... What I expect is ... What actually happening is ...
+          placeholder: I am doing ... Expected behaviour ... Actual behaviour ...
       validations:
           required: true
     - type: input
@@ -60,7 +60,7 @@ body:
 
               ````
               <details>
-              <summary>Click to expand!</summary>
+              <summary>View logs!</summary>
 
               ```shell
               // paste the log text here
@@ -77,9 +77,9 @@ body:
                 required: true
               - label: Check that there isn't [already an issue](https://github.com/arclix/core/issues) that reports the same bug to avoid creating a duplicate.
                 required: true
-              - label: Make sure this is a Arclix issue and not a framework-specific issue. For example, if it's a Vue SFC related bug, it should likely be reported to [vuejs/core](https://github.com/vuejs/core) instead.
+              - label: Make sure this is a Arclix issue and not a React specific issue.
                 required: true
               - label: Check that this is a concrete bug. For Q&A open a [GitHub Discussion](https://github.com/arclix/core/discussions).
                 required: true
-              - label: Please follow [minimal reproducible example](https://stackoverflow.com/help/minimal-reproducible-example) of the bug.
+              - label: Please follow [minimal reproducible example](https://stackoverflow.com/help/minimal-reproducible-example) of the bug and Refer the [example issue](https://github.com/arclix/core/issues/4)
                 required: true
