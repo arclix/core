@@ -39,6 +39,6 @@
         "typescript": "^4.9.5"
     },
     "simple-git-hooks": {
-        "pre-commit": "npm run format"
+        "pre-commit": "prettier --write --cache ."
     }
 }

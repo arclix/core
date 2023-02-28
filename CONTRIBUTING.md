@@ -1,6 +1,6 @@
 # Arclix Contribution Guide
 
-Hi! We're really excited and happy to see that you're in contributing to Arclix. Before submitting your contribution, please read through the following guide.
+Hi! We're really excited and happy to see that you're contributing to Arclix. Before submitting your contribution, please read through the following guide.
 
 ## Prerequisites
 
