@@ -69,7 +69,7 @@ Correct usage is ${chalk.green("npx arclix generate component <filename>")}\n`,
                         style: hasScss,
                         scopeStyle: options.scopeStyle,
                     },
-                    fileCreationError
+                    fileCreationError,
                 );
                 createStyle(
                     {
@@ -81,7 +81,7 @@ Correct usage is ${chalk.green("npx arclix generate component <filename>")}\n`,
                         style: hasScss,
                         scopeStyle: options.scopeStyle,
                     },
-                    fileCreationError
+                    fileCreationError,
                 );
                 !options.skipTest &&
                     createTest(
@@ -93,7 +93,7 @@ Correct usage is ${chalk.green("npx arclix generate component <filename>")}\n`,
                             type: hasTypeScript,
                             scopeStyle: options.scopeStyle,
                         },
-                        fileCreationError
+                        fileCreationError,
                     );
             } else {
                 fs.mkdir(folderPath, { recursive: true }, async (err) => {
@@ -108,7 +108,7 @@ Correct usage is ${chalk.green("npx arclix generate component <filename>")}\n`,
                             style: hasScss,
                             scopeStyle: options.scopeStyle,
                         },
-                        fileCreationError
+                        fileCreationError,
                     );
                     createStyle(
                         {
@@ -118,7 +118,7 @@ Correct usage is ${chalk.green("npx arclix generate component <filename>")}\n`,
                             style: hasScss,
                             scopeStyle: options.scopeStyle,
                         },
-                        fileCreationError
+                        fileCreationError,
                     );
                     !options.skipTest &&
                         createTest(
@@ -128,7 +128,7 @@ Correct usage is ${chalk.green("npx arclix generate component <filename>")}\n`,
                                 type: hasTypeScript,
                                 scopeStyle: options.scopeStyle,
                             },
-                            fileCreationError
+                            fileCreationError,
                         );
                 });
             }
@@ -138,7 +138,7 @@ Correct usage is ${chalk.green("npx arclix generate component <filename>")}\n`,
             if (fileCreationError) {
                 spinner.error({
                     text: `${chalk.red(
-                        `Component ${program.args[2]} is not created.\n`
+                        `Component ${program.args[2]} is not created.\n`,
                     )}`,
                 });
             } else {
@@ -152,7 +152,7 @@ Correct usage is ${chalk.green("npx arclix generate component <filename>")}\n`,
     } else {
         spinner.error({
             text: chalk.red(
-                "Cannot create component outside of React project.\n"
+                "Cannot create component outside of React project.\n",
             ),
         });
     }
