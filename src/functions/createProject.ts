@@ -33,7 +33,7 @@ const installSass = async (projectName: string) => {
             ["install", "--save-dev", "sass"],
             {
                 cwd: finalPath,
-            }
+            },
         );
         installProcess.on("close", (code) => r(code));
     });
@@ -43,7 +43,7 @@ const createReactApp = async (language: string, projectName: string) => {
     switch (language) {
         case "TypeScript":
             await execCommand(
-                `npx create-react-app ${projectName} --template typescript`
+                `npx create-react-app ${projectName} --template typescript`,
             );
             break;
 
