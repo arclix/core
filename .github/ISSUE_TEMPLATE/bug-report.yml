@@ -73,6 +73,10 @@ body:
           label: Validations
           description: Before submitting the issue, please make sure you do the following
           options:
+              - label: Follow our [Code of Conduct](https://github.com/arclix/core/blob/master/CODE_OF_CONDUCT.md)
+                required: true
+              - label: Read the [Contributing Guidelines](https://github.com/arclix/core/blob/master/CONTRIBUTING.md).
+                required: true
               - label: Read the [docs](https://arclix.github.io/arclix-docs/docs/intro).
                 required: true
               - label: Check that there isn't [already an issue](https://github.com/arclix/core/issues) that reports the same bug to avoid creating a duplicate.

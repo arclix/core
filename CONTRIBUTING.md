@@ -55,7 +55,7 @@ Will be added soon...
 
 -   No need to worry about code style as long as you have installed the dev dependencies. Modified files are automatically formatted with Prettier on commit (by invoking [Git Hooks](https://git-scm.com/docs/githooks) via [simple-git-hooks](https://github.com/toplenboren/simple-git-hooks)).
 
--   PR title must follow the [commit message convention](./.github/COMMIT-CONVENTION.md) so that changelogs can be automatically generated.
+-   PR title must follow the [commit message convention](./.github/COMMIT_CONVENTION.md) so that changelogs can be automatically generated.
 
 ## Dependencies Guidelines
 
