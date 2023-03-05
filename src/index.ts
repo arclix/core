@@ -23,7 +23,7 @@ program
 
 program.parse();
 
-log("\n" + primaryChalk.italic.bold("> ARCLIX v0.0.7"));
+log("\n" + primaryChalk.italic.bold("ARCLIX v0.0.8"));
 
 await (async (command: string) => {
     const options = program.opts();
