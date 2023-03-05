@@ -18,9 +18,9 @@
 
 Get started with ARCLIX, learn the commands for initializing and generating react components.
 
--   [Get Started](#getting-started)
--   [Creating an App](#creating-project) – How to create a new app.
--   [Generatea a Component](#generating-component) - How to generate a component
+- [Get Started](#getting-started)
+- [Creating an App](#creating-project) – How to create a new app.
+- [Generatea a Component](#generating-component) - How to generate a component
 
 If something doesn’t work, please [file an issue](https://github.com/jitiendran/arclix/issues/new).<br>
 If you have questions or need help, please ask in [GitHub Discussions](https://github.com/jitiendran/arclix/discussions)
@@ -29,7 +29,7 @@ If you have questions or need help, please ask in [GitHub Discussions](https://g
 
 ### Prerequisites
 
--   Install [Node.js](https://nodejs.org) which includes `npm`
+- Install [Node.js](https://nodejs.org) which includes `npm`
 
 ### Setting Up a Project
 
@@ -52,17 +52,17 @@ After running the `create` command you'll be prompted with following questions
 1. Project name?
 
 2. What template would you like to use?
-    ```
-    [TEMPLATE]
-    ├── JavaScript
-    └── TypeScript
-    ```
+   ```
+   [TEMPLATE]
+   ├── JavaScript
+   └── TypeScript
+   ```
 3. What styling would you like to use?
-    ```
-    [STYLING]
-    ├── CSS
-    └── SCSS/SASS
-    ```
+   ```
+   [STYLING]
+   ├── CSS
+   └── SCSS/SASS
+   ```
 
 Then it will create a directory named `[PROJECT NAME]` inside the current folder based on the prompts.
 
