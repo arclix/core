@@ -18,12 +18,16 @@
 
 Get started with ARCLIX, learn the commands for initializing and generating react components.
 
-- [Get Started](#getting-started)
-- [Creating an App](#creating-project) – How to create a new app.
-- [Generatea a Component](#generating-component) - How to generate a component
+-   [Get Started](#getting-started)
+-   [Creating an App](#creating-project) – How to create a new app.
+-   [Generate a Component](#generating-component) - How to generate a component
+-   [Contribution Guidelines](https://github.com/arclix/core/blob/master/CONTRIBUTING.md) - How to contribute to this project.
+-   [LICENSE](#license)
 
-If something doesn’t work, please [file an issue](https://github.com/jitiendran/arclix/issues/new).<br>
-If you have questions or need help, please ask in [GitHub Discussions](https://github.com/jitiendran/arclix/discussions)
+If something doesn’t work, please [file an issue](https://github.com/arclix/core/issues/new).<br>
+If you have questions or need help, please ask in [GitHub Discussions](https://github.com/arclix/core/issues/discussions)
+
+For detailed documentation please visit [Arclix](https://arclix.github.io/arclix-docs/) website.
 
 ## Getting started
 
@@ -42,27 +46,25 @@ npm install -g arclix
 ## Creating project
 
 ```
-npx arclix create
+npx arclix create [PROJECT NAME]
 ```
 
 **_Note:_** It uses `create-react-app` by `Facebook` as a base to create a react project and add additional dependencies according to your needs.
 
 After running the `create` command you'll be prompted with following questions
 
-1. Project name?
-
-2. What template would you like to use?
-   ```
-   [TEMPLATE]
-   ├── JavaScript
-   └── TypeScript
-   ```
-3. What styling would you like to use?
-   ```
-   [STYLING]
-   ├── CSS
-   └── SCSS/SASS
-   ```
+1. What template would you like to use?
+    ```
+    [TEMPLATE]
+    ├── JavaScript
+    └── TypeScript
+    ```
+2. What styling would you like to use?
+    ```
+    [STYLING]
+    ├── CSS
+    └── SCSS/SASS
+    ```
 
 Then it will create a directory named `[PROJECT NAME]` inside the current folder based on the prompts.
 
@@ -174,6 +176,12 @@ Options or Flags available:
 
 | Flag             | Description                                    |
 | ---------------- | ---------------------------------------------- |
-| -p --path <path> | Generates component based on the path.         |
+| -p --path [path] | Generates component based on the path.         |
 | --flat           | Generates component without parent folder.     |
+| --scopeStyle     | Scopes the style to the component.             |
 | --skipTest       | Skip the test file while generating component. |
+| -v --version     | Displays version number of Arclix in use.      |
+
+## License
+
+[MIT](https://github.com/arclix/core/blob/master/LICENSE)

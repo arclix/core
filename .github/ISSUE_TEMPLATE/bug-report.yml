@@ -1,0 +1,89 @@
+name: "🪲 Bug Report"
+description: "Report an issue with Arclix"
+labels: [pending triage]
+body:
+    - type: markdown
+      attributes:
+          value: |
+              Thanks for taking the time to fill out this bug report!
+    - type: textarea
+      id: bug-description
+      attributes:
+          label: Describe the bug
+          description: A clear and concise description of what the bug is. If you intend to raise a PR for this issue, inform us in the description. Thanks!
+          placeholder: I am doing ... Expected behaviour ... Actual behaviour ...
+      validations:
+          required: true
+    - type: input
+      id: reproduction
+      attributes:
+          label: Reproduction
+          description: Please provide a link to a repo that can reproduce the problem you ran into. A [minimal reproduction](https://stackoverflow.com/help/minimal-reproducible-example) is required ([Why?](https://antfu.me/posts/why-reproductions-are-required)). If a report is vague (e.g. just a generic error message) and has no reproduction, it will receive a "need reproduction" label. If no reproduction is provided after 3 days, it will be auto-closed.
+          placeholder: Reproduction URL
+      validations:
+          required: true
+    - type: textarea
+      id: reproduction-steps
+      attributes:
+          label: Steps to reproduce
+          description: Please provide any reproduction steps that may need to be described. E.g. If it happens only when running the dev or build script make sure it's clear which one to use.
+          placeholder: Run `npm install` followed by `npm start`
+    - type: textarea
+      id: system-info
+      attributes:
+          label: System Info
+          description: Run `npx envinfo --system --npmPackages '{arclix,arclix/*}' --binaries --browsers` and provide the Output of the command.
+          render: shell
+          placeholder: System, Binaries, Browsers
+      validations:
+          required: true
+    - type: dropdown
+      id: package-manager
+      attributes:
+          label: Used Package Manager
+          description: Select the used package manager
+          options:
+              - npm
+              - yarn
+              - pnpm
+      validations:
+          required: true
+    - type: textarea
+      id: logs
+      attributes:
+          label: Logs
+          description: |
+              Optional if provided reproduction. Please try not to insert an image but copy paste the log text.
+
+              1. Run `npm run build` with the `--debug` flag.
+              2. Provide the error log here in the format below.
+
+              ````
+              <details>
+              <summary>View logs!</summary>
+
+              ```shell
+              // paste the log text here
+              ```
+              </details>
+              ````
+    - type: checkboxes
+      id: checkboxes
+      attributes:
+          label: Validations
+          description: Before submitting the issue, please make sure you do the following
+          options:
+              - label: Follow our [Code of Conduct](https://github.com/arclix/core/blob/master/CODE_OF_CONDUCT.md)
+                required: true
+              - label: Read the [Contributing Guidelines](https://github.com/arclix/core/blob/master/CONTRIBUTING.md).
+                required: true
+              - label: Read the [docs](https://arclix.github.io/arclix-docs/docs/intro).
+                required: true
+              - label: Check that there isn't [already an issue](https://github.com/arclix/core/issues) that reports the same bug to avoid creating a duplicate.
+                required: true
+              - label: Make sure this is a Arclix issue and not a React specific issue.
+                required: true
+              - label: Check that this is a concrete bug. For Q&A open a [GitHub Discussion](https://github.com/arclix/core/discussions).
+                required: true
+              - label: Please follow [minimal reproducible example](https://stackoverflow.com/help/minimal-reproducible-example) of the bug and Refer the [example issue](https://github.com/arclix/core/issues/4)
+                required: true
