@@ -36,26 +36,26 @@ Will be added soon...
 
 ## Pull Request Guidelines
 
--   Checkout a topic branch from a base branch (e.g. `master`), and merge back against that branch.
+- Checkout a topic branch from a base branch (e.g. `master`), and merge back against that branch.
 
--   If adding a new feature:
+- If adding a new feature:
 
-    -   Add accompanying test case.
-    -   Provide a convincing reason to add this feature. Ideally, you should open a suggestion issue first, and have it approved before working on it.
+  - Add accompanying test case.
+  - Provide a convincing reason to add this feature. Ideally, you should open a suggestion issue first, and have it approved before working on it.
 
--   If fixing a bug:
+- If fixing a bug:
 
-    -   If you are resolving a special issue, add `(bugfix #xxxx[,#xxxx])` (#xxxx is the issue id) in your PR title for a better release log (e.g. `bugfix: fixed something... (bugfix #1234)`).
-    -   Provide a detailed description of the bug in the PR. Live demo preferred.
-    -   Add appropriate test coverage if applicable.
+  - If you are resolving a special issue, add `(bugfix #xxxx[,#xxxx])` (#xxxx is the issue id) in your PR title for a better release log (e.g. `bugfix: fixed something... (bugfix #1234)`).
+  - Provide a detailed description of the bug in the PR. Live demo preferred.
+  - Add appropriate test coverage if applicable.
 
--   It's OK to have multiple small commits as you work on the PR. GitHub can automatically squash them before merging.
+- It's OK to have multiple small commits as you work on the PR. GitHub can automatically squash them before merging.
 
--   Make sure tests pass!
+- Make sure tests pass!
 
--   No need to worry about code style as long as you have installed the dev dependencies. Modified files are automatically formatted with Prettier on commit (by invoking [Git Hooks](https://git-scm.com/docs/githooks) via [simple-git-hooks](https://github.com/toplenboren/simple-git-hooks)).
+- No need to worry about code style as long as you have installed the dev dependencies. Modified files are automatically formatted with Prettier on commit (by invoking [Git Hooks](https://git-scm.com/docs/githooks) via [simple-git-hooks](https://github.com/toplenboren/simple-git-hooks)).
 
--   PR title must follow the [commit message convention](./.github/COMMIT_CONVENTION.md) so that changelogs can be automatically generated.
+- PR title must follow the [commit message convention](./.github/COMMIT_CONVENTION.md) so that changelogs can be automatically generated.
 
 ## Dependencies Guidelines
 
@@ -65,7 +65,7 @@ Arclix aims to be lightweight, and this includes being aware of the number of np
 
 Most deps should be added to `devDependencies` even if they are needed at runtime. Some exceptions are:
 
--   Type packages. Example: `@types/*`.
--   Deps that cannot be properly bundled due to binary files. Example: `esbuild`.
+- Type packages. Example: `@types/*`.
+- Deps that cannot be properly bundled due to binary files. Example: `esbuild`.
 
 Avoid deps with large transitive dependencies that result in bloated size compared to the functionality it provides. For example, `http-proxy` itself plus `@types/http-proxy` is a little over 1MB in size, but `http-proxy-middleware` pulls in a ton of dependencies that make it 7MB(!) when a minimal custom middleware on top of `http-proxy` only requires a couple of lines of code.

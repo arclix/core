@@ -14,7 +14,8 @@
   "scripts": {
     "format": "prettier --write --cache .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
+    "build": "tsc",
+    "prepare": "husky install"
   },
   "keywords": [
     "TypeScript",
@@ -32,6 +33,7 @@
     "@types/node": "^18.11.18",
     "chalk": "^5.2.0",
     "commander": "^10.0.0",
+    "husky": "^8.0.3",
     "inquirer": "^9.1.4",
     "nanospinner": "^1.1.0",
     "prettier": "2.8.4",
