@@ -1,6 +1,5 @@
 import checkReact from "./checkReact.js";
-import checkType from "./checkType.js";
-import checkStyle from "./checkStyle.js";
 import getRootPath from "./getRootPath.js";
+import checkProperty from "./checkProperty.js";
 
-export { checkReact, checkType, checkStyle, getRootPath };
+export { checkReact, checkProperty, getRootPath };

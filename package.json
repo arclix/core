@@ -12,10 +12,16 @@
         "dist"
     ],
     "scripts": {
-        "format": "prettier --write --cache .",
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "tsc --watch --project ./tsconfig.json",
         "build": "tsc --project ./tsconfig.json",
-        "verify:pre-commit": "npm run build && npm run format",
+        "prettier": "prettier --write --cache .",
+        "prettier:check": "prettier --check .",
+        "lint": "eslint --ext .ts --cache .",
+        "format": "npm run prettier && npm run lint",
+        "format:check": "npm run prettier:check && npm run lint",
+        "verify": "npm run build && npm run format:check",
+        "pre-commit": "npm run build && npm run format",
+        "test": "echo \"Error: no test specified\" && exit 1",
         "prepare": "husky install"
     },
     "keywords": [
@@ -32,8 +38,11 @@
     "devDependencies": {
         "@types/inquirer": "^9.0.3",
         "@types/node": "^18.11.18",
+        "@typescript-eslint/eslint-plugin": "^5.54.1",
+        "@typescript-eslint/parser": "^5.54.1",
         "chalk": "^5.2.0",
         "commander": "^10.0.0",
+        "eslint": "^8.35.0",
         "husky": "^8.0.3",
         "inquirer": "^9.1.4",
         "nanospinner": "^1.1.0",
