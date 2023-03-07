@@ -31,6 +31,6 @@ If the PR reverts a previous commit, it should begin with `revert(#issue_id): `,
 
 The commit message contains a succinct description of the change:
 
-- use the imperative, present tense: "change" not "changed" nor "changes"
-- don't capitalize the first letter
-- no dot (.) at the end
+-   use the imperative, present tense: "change" not "changed" nor "changes"
+-   don't capitalize the first letter
+-   no dot (.) at the end

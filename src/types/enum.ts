@@ -1,12 +1,12 @@
-enum MaxCommand {
-  CREATE = 'create',
-  GENERATE = 'generate',
-  COMPONENT = 'component',
+enum Command {
+    CREATE = "create",
+    GENERATE = "generate",
+    COMPONENT = "component",
 }
 
-enum MinCommand {
-  GENERATE = 'g',
-  COMPONENT = 'c',
+enum AliasCommand {
+    GENERATE = "g",
+    COMPONENT = "c",
 }
 
-export { MaxCommand, MinCommand };
+export { Command, AliasCommand };
