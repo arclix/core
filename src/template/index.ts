@@ -1,2 +1,2 @@
-export * from './component.js';
-export * from './Test.js';
+export * from "./component.js";
+export * from "./test.js";

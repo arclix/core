@@ -1,24 +1,33 @@
-export function ComponentTemplate({
-  componentName,
-  scopeStyle,
-  styleType,
+export function componentTemplate({
+    addIndex,
+    componentName,
+    scopeStyle,
+    styleType,
 }: {
-  componentName: string;
-  scopeStyle: boolean;
-  styleType: string;
+    addIndex: boolean;
+    componentName: string;
+    scopeStyle: boolean;
+    styleType: string;
 }) {
-  return `${
-    scopeStyle
-      ? `import styles from './${componentName}.module${styleType}';`
-      : `import './${componentName}${styleType}';`
-  }
-    
-    export const ${componentName} = () => {
-        return (
-            <>
-              {/* Type content here */}
-            </>
-        );
-    };
+    return `${
+        scopeStyle
+            ? `import styles from './${componentName}.module${styleType}';`
+            : `import './${componentName}${styleType}';`
+    }
+
+${addIndex ? "export" : ""} const ${componentName} = () => {
+    return (
+        <>
+            {/* Type content here */}
+        </>
+    );
+};
+${
+    !addIndex
+        ? `
+
+export default ${componentName};`
+        : ""
+}
   `;
 }
