@@ -2,12 +2,7 @@ import fs from "fs";
 import chalk from "chalk";
 import { OptionValues } from "commander";
 import { spinner } from "../utilities/utility.js";
-import {
-    checkType,
-    checkReact,
-    getRootPath,
-    checkStyle,
-} from "../helpers/index.js";
+import { checkReact, getRootPath, checkProperty } from "../helpers/index.js";
 import { GenerateComponentUtility } from "../core/GenerateComponentUtility.js";
 
 /**
@@ -51,8 +46,8 @@ export default class GenerateComponent {
         const isReact = await checkReact();
 
         if (isReact) {
-            const hasTypeScript = await checkType();
-            const hasScss = await checkStyle();
+            const hasTypeScript = await checkProperty("typescript");
+            const hasScss = await checkProperty("sass");
 
             // Default folder path
             let folderPath = !getRootPath(process.cwd()) ? "./src/" : "";

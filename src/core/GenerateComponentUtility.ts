@@ -17,7 +17,7 @@ export class GenerateComponentUtility {
     private styleType: ".scss" | ".css";
     private constructor(
         private readonly args: ContentArgs,
-        private fileCreationError: boolean,
+        public fileCreationError: boolean,
     ) {
         this.argParams = args;
         this.argParams.componentName = convertToTitleCase(args.componentName);

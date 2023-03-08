@@ -13,11 +13,10 @@ const checkReact = async (): Promise<boolean> => {
         const devDependencies = packageJson.devDependencies || {};
 
         const dependenciesCheck: boolean =
-            dependencies.hasOwnProperty("react") &&
-            dependencies.hasOwnProperty("react-dom");
+            dependencies.hasOwn("react") && dependencies.hasOwn("react-dom");
         const devDependenciesCheck: boolean =
-            devDependencies.hasOwnProperty("react") &&
-            devDependencies.hasOwnProperty("react-dom");
+            devDependencies.hasOwn("react") &&
+            devDependencies.hasOwn("react-dom");
 
         if (dependenciesCheck || devDependenciesCheck) {
             return true;
