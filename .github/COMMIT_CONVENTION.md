@@ -1,31 +1,74 @@
 ## Git Commit Message Convention
 
-The commit messages should follow the following examples.
+We follow a standard commit convention followed by [Angular's commit convention](https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines).
 
-#### Examples
+So that we have the following advantages:
+
+-   get **more readable messages**.
+-   easy to follow throught **project history**.
+-   generate better **change log** for Arclix.
+
+## Commit Message Format
+
+The commit messages should follow the following:
 
 ```
-feature(#issue_id): add 'comments' option
-bugfix(#issue_id): fix dev error
-refactor(#issue_id): refactor the 'comments' option
-revert(#issue_id): add 'comments' option
+<type>[optional scope]: <description> (#issue id)
+
+[optional body]
+
+[optional footer(s)]
 ```
 
-### Feature
+### Types
 
-If the PR adds a new feature, it should begin with `feature(#issue_id): `, followed by the commit message.
+| Type       | Description                                                                                                 |
+| ---------- | ----------------------------------------------------------------------------------------------------------- |
+| `feat`     | A new feature                                                                                               |
+| `fix`      | A bug fix                                                                                                   |
+| `docs`     | Documentation only changes                                                                                  |
+| `style`    | Changes that do not affect the meaning of the code(white-space formatting, missing semi-colons,etc)         |
+| `refactor` | A code change that neither fixes a bug nor adds a feature                                                   |
+| `perf`     | A code change that improves performance                                                                     |
+| `test`     | Adding missing tests or correcting existing tests                                                           |
+| `build`    | Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs) |
+| `ci`       | Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs) |
+| `chore`    | Other changes that don't modify src or test files                                                           |
+| `revert`   | Reverts a commit                                                                                            |
 
-### BugFix
+### Examples
 
-If the PR fixes a bug, it should begin with `bugfix(#issue_id): `, followed by the commit message.
+1. Commit message with description and scope
 
-### Refactor
+    ```
+    feat(core): add create project (#1)
+    ```
 
-If the PR does refactiring of existing code, it should begin with `refactor(#issue_id): `, followed by the commit message.
+2. Commit message with `!` to draw attention to breaking change
+
+    ```
+    refactor(core)!: remove create project (#2)
+    ```
+
+3. Commit message without scope
+
+    ```
+    feat: add create project (#1)
+    ```
 
 ### Revert
 
-If the PR reverts a previous commit, it should begin with `revert(#issue_id): `, followed by the header of the reverted commit.
+If the PR reverts a previous commit, it should begin with `revert: `, followed by the header of the reverted commit.
+
+Example:
+
+```
+revert: feat(core): add create poject (#1)
+```
+
+### Scopes
+
+The scope could be anything specifying the place of the commit change. For example `core`, `build`, `workflow`, `cli`, `create`, `generate`, `deps`, etc...
 
 ### Commit Message
 

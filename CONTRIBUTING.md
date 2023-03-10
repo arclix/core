@@ -45,15 +45,19 @@ Will be added soon...
 
 -   If fixing a bug:
 
-    -   If you are resolving a special issue, add `(bugfix #xxxx[,#xxxx])` (#xxxx is the issue id) in your PR title for a better release log (e.g. `bugfix: fixed something... (bugfix #1234)`).
+    -   If you are resolving a special issue, add `fix: remove something (#issue id) #PR id` in your PR title for a better release log (e.g. `fix: remove something (#1) #2`).
     -   Provide a detailed description of the bug in the PR. Live demo preferred.
     -   Add appropriate test coverage if applicable.
 
 -   It's OK to have multiple small commits as you work on the PR. GitHub can automatically squash them before merging.
 
--   Make sure tests pass!
+-   Make sure to run the following commands before raising the PR:
 
--   No need to worry about code style as long as you have installed the dev dependencies. Modified files are automatically formatted with Prettier on commit (by invoking [Git Hooks](https://git-scm.com/docs/githooks) via [simple-git-hooks](https://github.com/toplenboren/simple-git-hooks)).
+    ```bash
+    npm run format
+    ```
+
+-   No need to worry about code style as long as you have installed the dev dependencies. Modified files are automatically formatted with Prettier on commit (by invoking [Git Hooks](https://git-scm.com/docs/githooks) via [husky](https://typicode.github.io/husky)).
 
 -   PR title must follow the [commit message convention](./.github/COMMIT_CONVENTION.md) so that changelogs can be automatically generated.
 
