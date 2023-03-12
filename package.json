@@ -43,14 +43,16 @@
         "@typescript-eslint/eslint-plugin": "^5.54.1",
         "@typescript-eslint/parser": "^5.54.1",
         "@vitest/coverage-c8": "^0.29.2",
-        "chalk": "^5.2.0",
-        "commander": "^10.0.0",
         "eslint": "^8.35.0",
         "husky": "^8.0.3",
-        "inquirer": "^9.1.4",
-        "nanospinner": "^1.1.0",
         "prettier": "2.8.4",
         "typescript": "^4.9.5",
         "vitest": "^0.29.2"
+    },
+    "dependencies": {
+        "chalk": "^5.2.0",
+        "commander": "^10.0.0",
+        "inquirer": "^9.1.4",
+        "nanospinner": "^1.1.0"
     }
 }
