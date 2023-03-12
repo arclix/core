@@ -18,7 +18,7 @@ const checkProjectName = (projectName: string): boolean => {
 };
 
 program.version(
-    "ARCLIX v0.0.8",
+    "ARCLIX v0.0.9",
     "-v --version",
     "Displays the version of Arclix in use",
 );
@@ -27,7 +27,7 @@ program
     .command(Command.CREATE)
     .description("Creates React project in the current directory")
     .action(async (_str, options) => {
-        log("\n" + primaryChalk.italic.bold("ARCLIX v0.0.8"));
+        log("\n" + primaryChalk.italic.bold("ARCLIX v0.0.9"));
         emptyLine();
 
         const projectName = options.args[0];
@@ -71,7 +71,7 @@ generate
     .option("-f, --flat", "Generates components without parent folder.")
     .option("-p, --path <string>", "Generates components based on the path.")
     .action((componentName: string, options: OptionValues) => {
-        log("\n" + primaryChalk.italic.bold("ARCLIX v0.0.8"));
+        log("\n" + primaryChalk.italic.bold("ARCLIX v0.0.9"));
         emptyLine();
         generateComponentInstance.generateProject(componentName, options);
     });
