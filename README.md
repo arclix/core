@@ -174,13 +174,15 @@ Component Structure:
 
 Options or Flags available:
 
-| Flag             | Description                                    |
-| ---------------- | ---------------------------------------------- |
-| -p --path [path] | Generates component based on the path.         |
-| --flat           | Generates component without parent folder.     |
-| --scopeStyle     | Scopes the style to the component.             |
-| --skipTest       | Skip the test file while generating component. |
-| -v --version     | Displays version number of Arclix in use.      |
+| Flag              | Description                                                                                                                                                       |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| --addIndex        | Let's to import component without the folder name.<br/> For e.g: Instead of `import Sample from "./Sample/Sample"`, we can do `import { Sample } from "./Sample"` |
+| --scopeStyle      | Scopes the style to the component.                                                                                                                                |
+| --skipTest        | Skip the test file while generating component.                                                                                                                    |
+| -p, --path [path] | Generates component based on the path.                                                                                                                            |
+| -f, --flat        | Generates component without parent folder.                                                                                                                        |
+| -v, --version     | Displays version number of Arclix in use.                                                                                                                         |
+| -h, --help        | Provides help about the use of Arclix.                                                                                                                            |
 
 ## License
 
