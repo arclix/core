@@ -12,9 +12,11 @@ import { GenerateComponentUtility } from "../core/GenerateComponentUtility.js";
  */
 export default class GenerateComponent {
     private fileCreationError: boolean;
+    private readonly defaultPackagePath: string;
     private static instance: GenerateComponent;
 
     private constructor() {
+        this.defaultPackagePath = "./package.json";
         this.fileCreationError = false;
     }
 
@@ -42,12 +44,16 @@ export default class GenerateComponent {
     public generateProject = async (
         componentName: string,
         options: OptionValues,
+        packagePath = this.defaultPackagePath,
     ) => {
-        const isReact = await checkReact();
+        const isReact = await checkReact(packagePath);
 
         if (isReact) {
-            const hasTypeScript = await checkProperty("typescript");
-            const hasScss = await checkProperty("sass");
+            const hasTypeScript = await checkProperty(
+                "typescript",
+                packagePath,
+            );
+            const hasScss = await checkProperty("sass", packagePath);
 
             // Default folder path
             let folderPath = !getRootPath(process.cwd()) ? "./src/" : "";

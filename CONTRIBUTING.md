@@ -32,7 +32,23 @@ To use breakpoints and explore code execution, you can use the ["Run and Debug"]
 
 ## Testing
 
-Will be added soon...
+We do unit testing for all the module including core, utility, etc.
+
+### Unit Tests
+
+Unit tests are powered by [vitest](https://vitest.dev/). The detailed configuration of vitest is inside `vitest.config.cjs` file.
+
+-   Run unit tests under each module using:
+    ```bash
+    npm run test
+    ```
+-   Run unit tests with coverage using:
+    ```bash
+    npm run test:coverage
+    ```
+
+> **Warning**
+> Do maintain the `branches` and `functions` greater than `50%` in the coverage.
 
 ## Pull Request Guidelines
 
@@ -55,6 +71,10 @@ Will be added soon...
 
     ```bash
     npm run format
+    ```
+
+    ```bash
+    npm run verify:pr
     ```
 
 -   No need to worry about code style as long as you have installed the dev dependencies. Modified files are automatically formatted with Prettier on commit (by invoking [Git Hooks](https://git-scm.com/docs/githooks) via [husky](https://typicode.github.io/husky)).

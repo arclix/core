@@ -2,9 +2,19 @@ import fs from "fs";
 import path from "path";
 import getRootPath from "./getRootPath.js";
 
-const checkType = async (property: string): Promise<boolean> => {
+/**
+ * Checks whether the given property exists or not
+ *
+ * @param property property to check
+ * @param packagePath path to package.json
+ * @returns true if exists or false
+ */
+const checkProperty = async (
+    property: string,
+    packagePath: string,
+): Promise<boolean> => {
     const rootPath = getRootPath(process.cwd());
-    const packageJsonPath = path.resolve(rootPath, "./package.json");
+    const packageJsonPath = path.resolve(rootPath, packagePath);
 
     try {
         const data = await fs.promises.readFile(packageJsonPath, "utf-8");
@@ -12,7 +22,10 @@ const checkType = async (property: string): Promise<boolean> => {
         const dependencies = packageJson.dependencies || {};
         const devDependencies = packageJson.devDependencies || {};
 
-        if (dependencies.hasOwn(property) || devDependencies.hasOwn(property)) {
+        if (
+            Object.hasOwn(dependencies, property) ||
+            Object.hasOwn(devDependencies, property)
+        ) {
             return true;
         }
         return false;
@@ -21,4 +34,4 @@ const checkType = async (property: string): Promise<boolean> => {
     }
 };
 
-export default checkType;
+export default checkProperty;

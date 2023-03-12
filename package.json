@@ -20,8 +20,10 @@
         "format": "npm run prettier && npm run lint",
         "format:check": "npm run prettier:check && npm run lint",
         "verify": "npm run build && npm run format:check",
+        "verify:pr": "npm run verify && npm run test:coverage",
         "pre-commit": "npm run verify",
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "test": "vitest run",
+        "test:coverage": "vitest run --coverage",
         "prepare": "husky install"
     },
     "keywords": [
@@ -40,6 +42,7 @@
         "@types/node": "^18.11.18",
         "@typescript-eslint/eslint-plugin": "^5.54.1",
         "@typescript-eslint/parser": "^5.54.1",
+        "@vitest/coverage-c8": "^0.29.2",
         "chalk": "^5.2.0",
         "commander": "^10.0.0",
         "eslint": "^8.35.0",
@@ -47,6 +50,7 @@
         "inquirer": "^9.1.4",
         "nanospinner": "^1.1.0",
         "prettier": "2.8.4",
-        "typescript": "^4.9.5"
+        "typescript": "^4.9.5",
+        "vitest": "^0.29.2"
     }
 }

@@ -11,11 +11,11 @@ export function componentTemplate({
 }) {
     return `${
         scopeStyle
-            ? `import styles from './${componentName}.module${styleType}';`
-            : `import './${componentName}${styleType}';`
+            ? `import styles from './${componentName}.module.${styleType}';`
+            : `import './${componentName}.${styleType}';`
     }
 
-${addIndex ? "export" : ""} const ${componentName} = () => {
+${addIndex ? "export " : ""}const ${componentName} = () => {
     return (
         <>
             {/* Type content here */}
@@ -25,9 +25,7 @@ ${addIndex ? "export" : ""} const ${componentName} = () => {
 ${
     !addIndex
         ? `
-
 export default ${componentName};`
         : ""
-}
-  `;
+}`;
 }

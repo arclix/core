@@ -13,5 +13,6 @@
         "strictNullChecks": true,
         "outDir": "dist"
     },
-    "include": ["src/**/*"]
+    "include": ["src/**/*", "mock.test.ts"],
+    "exclude": ["node_modules", "src/**/*.test.ts"]
 }

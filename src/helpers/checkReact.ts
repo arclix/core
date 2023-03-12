@@ -2,9 +2,15 @@ import fs from "fs";
 import path from "path";
 import getRootPath from "./getRootPath.js";
 
-const checkReact = async (): Promise<boolean> => {
+/**
+ * Check wether the project is a React project or not
+ *
+ * @param packagePath path to package.json
+ * @returns true it it's a react project or flase
+ */
+const checkReact = async (packagePath: string): Promise<boolean> => {
     const rootPath = getRootPath(process.cwd());
-    const packageJsonPath = path.resolve(rootPath, "./package.json");
+    const packageJsonPath = path.resolve(rootPath, packagePath);
 
     try {
         const data = await fs.promises.readFile(packageJsonPath, "utf-8");
@@ -13,10 +19,11 @@ const checkReact = async (): Promise<boolean> => {
         const devDependencies = packageJson.devDependencies || {};
 
         const dependenciesCheck: boolean =
-            dependencies.hasOwn("react") && dependencies.hasOwn("react-dom");
+            Object.hasOwn(dependencies, "react") &&
+            Object.hasOwn(dependencies, "react-dom");
         const devDependenciesCheck: boolean =
-            devDependencies.hasOwn("react") &&
-            devDependencies.hasOwn("react-dom");
+            Object.hasOwn(devDependencies, "react") &&
+            Object.hasOwn(devDependencies, "react-dom");
 
         if (dependenciesCheck || devDependenciesCheck) {
             return true;
