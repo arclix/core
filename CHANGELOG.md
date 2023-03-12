@@ -5,6 +5,7 @@
 -   feature(#19): add linting to project by @jitiendran in https://github.com/arclix/core/pull/20
 -   docs(dev): update commit convention (#21) by @jitiendran in https://github.com/arclix/core/pull/22
 -   test(core): add unit test for all the modules (#8) by @jitiendran in https://github.com/arclix/core/pull/23
+-   fix(deps): move required deps to dependencies (#27) by @jitiendran in https://github.com/arclix/core/pull/28
 
 ## <small>0.0.8 (05-03-2023)</small>
 
