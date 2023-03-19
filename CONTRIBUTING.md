@@ -16,20 +16,6 @@ To develop and test the core `Arclix` package:
 4. Also make sure you run `npm run build` before raising the PR.
 5. You can also do both step 3 & 4 using `npm run verify`.
 
-## Debugging
-
-To use breakpoints and explore code execution, you can use the ["Run and Debug"](https://code.visualstudio.com/docs/editor/debugging) feature from VS Code.
-
-1. Add a `debugger` statement where you want to stop the code execution.
-
-2. Click the "Run and Debug" icon in the activity bar of the editor, which opens the [_Run and Debug view_](https://code.visualstudio.com/docs/editor/debugging#_run-and-debug-view).
-
-3. Click the "JavaScript Debug Terminal" button in the _Run and Debug view_, which opens a terminal in VS Code.
-
-4. From that terminal, go to `playground/xxx`, and run `pnpm run dev`.
-
-5. The execution will stop at the `debugger` statement, and you can use the [Debug toolbar](https://code.visualstudio.com/docs/editor/debugging#_debug-actions) to continue, step over, and restart the process...
-
 ## Testing
 
 We do unit testing for all the module including core, utility, etc.

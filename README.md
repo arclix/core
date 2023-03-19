@@ -2,7 +2,7 @@
 
 <br>
 <p align="center">
-    <img src="./public/images/arclix.png">
+    <img src="./public/images/arclix.svg">
      <br><br>
     <i>The <b>ARCLIX</b> is a command-line interface tool that you use to initialize and generate.
     <br> <b>React</b> applications directly from a command shell.</i>
