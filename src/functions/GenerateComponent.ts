@@ -4,6 +4,8 @@ import { OptionValues } from "commander";
 import { spinner } from "../utilities/utility.js";
 import { checkReact, getRootPath, checkProperty } from "../helpers/index.js";
 import { GenerateComponentUtility } from "../core/GenerateComponentUtility.js";
+import getConfig from "../helpers/getConfig.js";
+import { ArclixConfig } from "../types/interface.js";
 
 /**
  * A singleton class to generate component.
@@ -12,10 +14,18 @@ import { GenerateComponentUtility } from "../core/GenerateComponentUtility.js";
  */
 export default class GenerateComponent {
     private fileCreationError: boolean;
+    private readonly config: ArclixConfig | null;
+    private readonly defaultPath: string;
     private readonly defaultPackagePath: string;
     private static instance: GenerateComponent;
 
     private constructor() {
+        this.config = getConfig();
+        if (this.config) {
+            this.defaultPath = this.config.generate.defaultPath;
+        } else {
+            this.defaultPath = "./src/";
+        }
         this.defaultPackagePath = "./package.json";
         this.fileCreationError = false;
     }
@@ -56,13 +66,15 @@ export default class GenerateComponent {
             const hasScss = await checkProperty("sass", packagePath);
 
             // Default folder path
-            let folderPath = !getRootPath(process.cwd()) ? "./src/" : "";
+            let folderPath = !getRootPath(process.cwd())
+                ? this.defaultPath
+                : "";
 
             /**
              * If "flat" then don't create a folder with name componentName
              * Else create a folder with name componentName
              */
-            if (options.flat) {
+            if (options.flat || this.config?.generate.flat) {
                 // If path is provided append it with defaultPath
                 if (options.path) {
                     folderPath += options.path;
@@ -83,18 +95,20 @@ export default class GenerateComponent {
                         folderPath,
                         type: hasTypeScript,
                         style: hasScss,
-                        scopeStyle: options.scopeStyle,
-                        addIndex: options.addIndex,
+                        scopeStyle:
+                            options.scopeStyle ||
+                            this.config?.generate.scopeStyle,
+                        addIndex:
+                            options.addIndex || this.config?.generate.addIndex,
                     },
                     this.fileCreationError,
                 );
 
             // NOTE: Not creating folder if --flat flag is provided
             spinner.start({ text: "Creating component..." });
-            if (options.flat) {
+            if (options.flat || this.config?.generate.flat) {
                 componentUtilityInstance.generateComponent(
-                    !options.skipTest,
-                    options.addIndex,
+                    options.skipTest || this.config?.generate.skipTest,
                 );
             } else {
                 fs.mkdir(folderPath, { recursive: true }, async (err) => {
@@ -102,8 +116,7 @@ export default class GenerateComponent {
                         spinner.error({ text: err.message });
                     }
                     componentUtilityInstance.generateComponent(
-                        !options.skipTest,
-                        options.addIndex,
+                        options.skipTest || this.config?.generate.skipTest,
                     );
                 });
             }

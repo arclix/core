@@ -7,4 +7,16 @@ interface ContentArgs {
     addIndex: boolean;
 }
 
-export default ContentArgs;
+type GenerateConfig = {
+    flat: boolean;
+    addIndex: boolean;
+    skipTest: boolean;
+    scopeStyle: boolean;
+    defaultPath: string;
+};
+
+interface ArclixConfig {
+    generate: GenerateConfig;
+}
+
+export { ContentArgs, ArclixConfig, GenerateConfig };
