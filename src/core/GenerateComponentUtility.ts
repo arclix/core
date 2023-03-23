@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import chalk from "chalk";
-import ContentArgs from "../types/interface.js";
+import { ContentArgs } from "../types/interface.js";
 import { componentTemplate } from "../template/component.js";
 import { convertToTitleCase, spinner } from "../utilities/utility.js";
 import { testTemplate } from "../template/test.js";
@@ -9,7 +9,7 @@ import { testTemplate } from "../template/test.js";
 /**
  * A singleton utility class to generate component based on arguments.
  *
- * author @aaraamuthan
+ * author @aaraamuthan @jitiendran
  */
 export class GenerateComponentUtility {
     private static instance: GenerateComponentUtility;
@@ -86,10 +86,10 @@ export class GenerateComponentUtility {
         this.writeToFile(this.argParams.folderPath, fileName, content);
     };
 
-    public generateComponent = (includeTest: boolean, addIndex: boolean) => {
+    public generateComponent = (skipTest: boolean) => {
         this.createComponent();
         this.createStyleFile();
-        addIndex && this.createIndexFile();
-        includeTest && this.createTestFile();
+        this.argParams.addIndex && this.createIndexFile();
+        !skipTest && this.createTestFile();
     };
 }

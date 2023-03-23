@@ -2,6 +2,7 @@ import inquirer from "inquirer";
 import { exec, spawn } from "child_process";
 import { spinner, primaryChalk } from "../utilities/utility.js";
 import path from "path";
+import GenerateConfigFile from "./GenerateConfigFile.js";
 
 /**
  * A singleton class to create React project.
@@ -10,6 +11,11 @@ import path from "path";
  */
 export default class CreateProject {
     private static instance: CreateProject;
+    private readonly generateConfigFileInstance: GenerateConfigFile;
+
+    private constructor() {
+        this.generateConfigFileInstance = GenerateConfigFile.getInstance();
+    }
 
     public static getInstance(): CreateProject {
         if (!CreateProject.instance) {
@@ -86,14 +92,16 @@ export default class CreateProject {
                 });
             }
 
+            this.generateConfigFileInstance.generateConfigFile(projectName);
+
             spinner.success({
                 text: `Finished creating ${primaryChalk.italic(
                     "React.JS",
                 )} project
     
-    To run the project
-        - cd ${projectName}
-        - npm start
+To run the project
+    - cd ${projectName}
+    - npm start
                 `,
             });
         } catch (error) {
