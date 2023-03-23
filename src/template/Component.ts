@@ -11,8 +11,8 @@ export function componentTemplate({
 }) {
     return `${
         scopeStyle
-            ? `import styles from './${componentName}.module.${styleType}';`
-            : `import './${componentName}.${styleType}';`
+            ? `import styles from './${componentName}.module${styleType}';`
+            : `import './${componentName}${styleType}';`
     }
 
 ${addIndex ? "export " : ""}const ${componentName} = () => {
