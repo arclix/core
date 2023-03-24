@@ -18,7 +18,7 @@ export default class GenerateConfigFile {
             addIndex: false,
             skipTest: false,
             scopeStyle: false,
-            defaultPath: "./src",
+            defaultPath: "./src/",
         };
 
         this.config = {
