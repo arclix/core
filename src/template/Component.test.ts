@@ -8,8 +8,8 @@ const mockComponent = (
 ) => {
     return `${
         module
-            ? `import styles from './Sample.module.${style}';`
-            : `import './Sample.${style}';`
+            ? `import styles from './Sample.module${style}';`
+            : `import './Sample${style}';`
     }
 
 ${index ? "export " : ""}const Sample = () => {

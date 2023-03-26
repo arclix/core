@@ -39,8 +39,6 @@ describe("Generate Component", () => {
     });
 
     afterAll(async () => {
-        // await fs.rm(srcPath, { recursive: true });
-        // await fs.rm(mockPath, { recursive: true });
         await fs.rm("./src/mocks/index.ts");
         await fs.rm("./src/mocks/Sample.tsx");
         await fs.rm("./src/mocks/Sample.module.scss");

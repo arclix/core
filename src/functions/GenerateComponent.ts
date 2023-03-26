@@ -20,7 +20,7 @@ export default class GenerateComponent {
     private static instance: GenerateComponent;
 
     private constructor() {
-        this.config = getConfig();
+        this.config = getConfig("./arclix.config.json");
         if (this.config) {
             this.defaultPath = this.config.generate.defaultPath;
         } else {

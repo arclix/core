@@ -1,0 +1,7 @@
+{
+    "flat": false,
+    "addIndex": false,
+    "skipTest": false,
+    "scopeStyle": false,
+    "defaultPath": "./src/"
+}

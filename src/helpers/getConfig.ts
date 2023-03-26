@@ -3,9 +3,15 @@ import path from "path";
 import getRootPath from "./getRootPath.js";
 import { ArclixConfig } from "../types/interface.js";
 
-const getConfig = (): ArclixConfig | null => {
+/**
+ * Get's the config file contents
+ *
+ * @param defaultPath path to the config file
+ * @returns config content if the file exists otherwise null
+ */
+const getConfig = (defaultPath: string): ArclixConfig | null => {
     const rootPath = getRootPath(process.cwd());
-    const configPath = path.resolve(rootPath, "./arclix.config.json");
+    const configPath = path.resolve(rootPath, defaultPath);
     if (fs.existsSync(configPath)) {
         const data = fs.readFileSync(configPath, { encoding: "utf-8" });
         return JSON.parse(data) as ArclixConfig;
