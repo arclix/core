@@ -2,6 +2,7 @@ enum Command {
     CREATE = "create",
     GENERATE = "generate",
     COMPONENT = "component",
+    INIT = "init",
 }
 
 enum AliasCommand {

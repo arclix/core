@@ -1,5 +1,8 @@
+import chalk from "chalk";
 import fs from "fs";
 import path from "path";
+import getRootPath from "../helpers/getRootPath.js";
+import { emptyLine, log, spinner } from "../utilities/utility.js";
 import { ArclixConfig, GenerateConfig } from "../types/interface.js";
 
 /**
@@ -33,12 +36,34 @@ export default class GenerateConfigFile {
         return GenerateConfigFile.instance;
     }
 
-    public generateConfigFile = (projectName: string) => {
+    /**
+     * Generate config file while creating the project if projectName exists.
+     * Otherwise generates config file to existing project.
+     *
+     * @param projectName to be created with arclix
+     */
+    public generateConfigFile = (projectName?: string) => {
         const currentDir = process.cwd();
         const content = `${JSON.stringify(this.config, null, 2)}\n`;
 
-        process.chdir(path.join(currentDir, `./${projectName}`));
-        fs.writeFileSync("arclix.config.json", content);
-        process.chdir(currentDir);
+        if (projectName) {
+            process.chdir(path.join(currentDir, `./${projectName}`));
+            fs.writeFileSync("arclix.config.json", content);
+            process.chdir(currentDir);
+        } else {
+            const rootPath = getRootPath(currentDir);
+            const configPath = path.join(rootPath, "./arclix.config.json");
+
+            if (fs.existsSync(configPath)) {
+                log("\nArclix config file already exists.\n");
+                return;
+            }
+
+            fs.writeFileSync(configPath, content);
+            emptyLine();
+            spinner.success({
+                text: `Generated ${chalk.green("arclix.config.json")} file.\n`,
+            });
+        }
     };
 }
