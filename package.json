@@ -5,7 +5,7 @@
         "url": "https://github.com/arclix/core.git"
     },
     "version": "0.1.0",
-    "description": "An Open Source CLI for React.JS",
+    "description": "An Open Source CLI with Creation and Component Generation for React.",
     "main": "dist/index.js",
     "type": "module",
     "files": [

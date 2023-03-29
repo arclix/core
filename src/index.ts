@@ -3,12 +3,15 @@
 import chalk from "chalk";
 import CreateProject from "./functions/CreateProject.js";
 import GenerateComponent from "./functions/GenerateComponent.js";
+import GenerateConfigFile from "./functions/GenerateConfigFile.js";
 import { OptionValues, program } from "commander";
 import { Command, AliasCommand } from "./types/enum.js";
 import { log, emptyLine, primaryChalk, spinner } from "./utilities/utility.js";
 
+const version = "ARCLIX v0.1.0";
 const createProjectInstance = CreateProject.getInstance();
 const generateComponentInstance = GenerateComponent.getInstance();
+const generateConfigFileInstance = GenerateConfigFile.getInstance();
 
 const checkProjectName = (projectName: string): boolean => {
     if (projectName !== projectName.toLowerCase()) {
@@ -18,7 +21,7 @@ const checkProjectName = (projectName: string): boolean => {
 };
 
 program.version(
-    "ARCLIX v0.1.0",
+    version,
     "-v --version",
     "Displays the version of Arclix in use",
 );
@@ -27,7 +30,7 @@ program
     .command(Command.CREATE)
     .description("Creates React project in the current directory")
     .action(async (_str, options) => {
-        log("\n" + primaryChalk.italic.bold("ARCLIX v0.1.0"));
+        log("\n" + primaryChalk.italic.bold(version));
         emptyLine();
 
         const projectName = options.args[0];
@@ -71,9 +74,17 @@ generate
     .option("-f, --flat", "Generates components without parent folder.")
     .option("-p, --path <string>", "Generates components based on the path.")
     .action((componentName: string, options: OptionValues) => {
-        log("\n" + primaryChalk.italic.bold("ARCLIX v0.1.0"));
+        log("\n" + primaryChalk.italic.bold(version));
         emptyLine();
         generateComponentInstance.generateProject(componentName, options);
+    });
+
+program
+    .command(Command.INIT)
+    .description("Generated config file to the existing react project.")
+    .action(() => {
+        log("\n" + primaryChalk.italic.bold(version));
+        generateConfigFileInstance.generateConfigFile();
     });
 
 program.parse(process.argv);
