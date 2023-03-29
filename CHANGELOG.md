@@ -1,3 +1,9 @@
+## <small>0.1.1 (29-03-2023)</small>
+
+-   test(config): add tests for generate config feature (#43) by @jitiendran in https://github.com/arclix/core/pull/44
+-   chore(readme): update node.js link and remove public/img folder (#45, #46) by @jitiendran in https://github.com/arclix/core/pull/47
+-   feat(config): create a command to generate config file (#48) by @jitiendran in https://github.com/arclix/core/pull/50
+
 ## <small>0.1.0 (24-03-2023)</small>
 
 -   chore(commit): add commit lint to project (#29) by @jitiendran in https://github.com/arclix/core/pull/30
