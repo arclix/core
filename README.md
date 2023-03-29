@@ -2,7 +2,7 @@
 
 <br>
 <p align="center">
-    <img src="./public/images/arclix.svg" width="500px">
+    <img src="https://arclix.github.io/arclix-docs/svg/arclix.svg" width="500px">
      <br><br>
     <i>The <b>ARCLIX</b> is a command-line interface tool that you use to initialize and generate.
     <br> <b>React</b> applications directly from a command shell.</i>
@@ -27,13 +27,13 @@ Get started with ARCLIX, learn the commands for initializing and generating reac
 If something doesn’t work, please [file an issue](https://github.com/arclix/core/issues/new).<br>
 If you have questions or need help, please ask in [GitHub Discussions](https://github.com/arclix/core/issues/discussions)
 
-For detailed documentation please visit [Arclix](https://arclix.github.io/arclix-docs/) website.
+For detailed documentation please visit [Arclix](https://arclix.github.io/arclix-docs) website.
 
 ## Getting started
 
 ### Prerequisites
 
--   Install [Node.js](https://nodejs.org) which includes `npm`
+-   Install [Node.js](https://nodejs.dev) which includes `npm`
 
 ### Setting Up a Project
 
