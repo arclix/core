@@ -19,4 +19,6 @@ interface ArclixConfig {
     generate: GenerateConfig;
 }
 
-export { ContentArgs, ArclixConfig, GenerateConfig };
+type packageType = { dependencies: any; devDependencies: any };
+
+export { ContentArgs, ArclixConfig, GenerateConfig, packageType };
