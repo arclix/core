@@ -2,10 +2,15 @@ import fs from "fs";
 import chalk from "chalk";
 import { OptionValues } from "commander";
 import { spinner } from "../utilities/utility.js";
-import { checkReact, getRootPath, checkProperty } from "../helpers/index.js";
-import { GenerateComponentUtility } from "../core/GenerateComponentUtility.js";
-import getConfig from "../helpers/getConfig.js";
 import { ArclixConfig } from "../types/interface.js";
+import { GenerateComponentUtility } from "../core/GenerateComponentUtility.js";
+import {
+    checkReact,
+    checkProperty,
+    getRootPath,
+    getConfig,
+    getPackageFile,
+} from "../helpers/index.js";
 
 /**
  * A singleton class to generate component.
@@ -56,88 +61,92 @@ export default class GenerateComponent {
         options: OptionValues,
         packagePath = this.defaultPackagePath,
     ) => {
-        const isReact = await checkReact(packagePath);
+        const pkg = await getPackageFile(packagePath);
 
-        if (isReact) {
-            const hasTypeScript = await checkProperty(
-                "typescript",
-                packagePath,
-            );
-            const hasScss = await checkProperty("sass", packagePath);
+        // Throw error if package.json doesn't exist
+        if (!pkg) {
+            spinner.error({
+                text: chalk.red("package.json file doesn't exist.\n"),
+            });
+            return;
+        }
 
-            // Default folder path
-            let folderPath = !getRootPath(process.cwd())
-                ? this.defaultPath
-                : "";
+        const isReact = await checkReact(pkg);
 
-            /**
-             * If "flat" then don't create a folder with name componentName
-             * Else create a folder with name componentName
-             */
-            if (options.flat || this.config?.generate.flat) {
-                // If path is provided append it with defaultPath
-                if (options.path) {
-                    folderPath += options.path;
-                }
-            } else {
-                // If path is provided append it with defaultPath
-                if (options.path) {
-                    folderPath += this.handlePath(options.path) + componentName;
-                } else {
-                    folderPath += componentName;
-                }
-            }
-
-            const componentUtilityInstance =
-                GenerateComponentUtility.getInstance(
-                    {
-                        componentName,
-                        folderPath,
-                        type: hasTypeScript,
-                        style: hasScss,
-                        scopeStyle:
-                            options.scopeStyle ||
-                            this.config?.generate.scopeStyle,
-                        addIndex:
-                            options.addIndex || this.config?.generate.addIndex,
-                    },
-                    this.fileCreationError,
-                );
-
-            // NOTE: Not creating folder if --flat flag is provided
-            spinner.start({ text: "Creating component..." });
-            if (options.flat || this.config?.generate.flat) {
-                componentUtilityInstance.generateComponent(
-                    options.skipTest || this.config?.generate.skipTest,
-                );
-            } else {
-                fs.mkdir(folderPath, { recursive: true }, async (err) => {
-                    if (err) {
-                        spinner.error({ text: err.message });
-                    }
-                    componentUtilityInstance.generateComponent(
-                        options.skipTest || this.config?.generate.skipTest,
-                    );
-                });
-            }
-
-            // IMPORTANT: This is where response is sent to the user.
-            if (this.fileCreationError) {
-                spinner.error({
-                    text: `${chalk.red(
-                        `Component ${componentName} is not created.\n`,
-                    )}`,
-                });
-            } else {
-                spinner.success({
-                    text: `Component ${chalk.green(componentName)} created\n`,
-                });
-            }
-        } else {
+        // Throw error if it isn't a react project
+        if (!isReact) {
             spinner.error({
                 text: chalk.red(
                     "Cannot create component outside of React project.\n",
                 ),
+            });
+            return;
+        }
+
+        const hasTypeScript = await checkProperty("typescript", pkg);
+        const hasScss = await checkProperty("sass", pkg);
+
+        // Default folder path
+        let folderPath = !getRootPath(process.cwd()) ? this.defaultPath : "";
+
+        /**
+         * If "flat" then don't create a folder with name componentName
+         * Else create a folder with name componentName
+         */
+        if (options.flat || this.config?.generate.flat) {
+            // If path is provided append it with defaultPath
+            if (options.path) {
+                folderPath += this.handlePath(options.path);
+            }
+        } else {
+            // If path is provided append it with defaultPath
+            if (options.path) {
+                folderPath += this.handlePath(options.path) + componentName;
+            } else {
+                folderPath += componentName;
+            }
+        }
+
+        const componentUtilityInstance = GenerateComponentUtility.getInstance(
+            {
+                componentName,
+                folderPath,
+                type: hasTypeScript,
+                style: hasScss,
+                scopeStyle:
+                    options.scopeStyle || this.config?.generate.scopeStyle,
+                addIndex: options.addIndex || this.config?.generate.addIndex,
+            },
+            this.fileCreationError,
+        );
+
+        // NOTE: Not creating folder if --flat flag is provided
+        spinner.start({ text: "Creating component..." });
+        if (options.flat || this.config?.generate.flat) {
+            componentUtilityInstance.generateComponent(
+                options.skipTest || this.config?.generate.skipTest,
+            );
+        } else {
+            fs.mkdir(folderPath, { recursive: true }, async (err) => {
+                if (err) {
+                    spinner.error({ text: err.message });
+                }
+                componentUtilityInstance.generateComponent(
+                    options.skipTest || this.config?.generate.skipTest,
+                );
+            });
+        }
+
+        // IMPORTANT: This is where response is sent to the user.
+        if (this.fileCreationError) {
+            spinner.error({
+                text: `${chalk.red(
+                    `Component ${componentName} is not created.\n`,
+                )}`,
+            });
+        } else {
+            spinner.success({
+                text: `Component ${chalk.green(componentName)} created.\n`,
             });
         }
     };

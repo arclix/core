@@ -1,23 +1,30 @@
 import { describe, expect, it } from "vitest";
+import { packageType } from "../types/interface";
 import checkReact from "./checkReact";
 
 describe("Check React", () => {
-    const normalPath = "./package.json";
-    const wrongPath = "./mocks/mockPackage.json";
-    const mockPath = "./src/mocks/mock.package.json";
+    const wrongPkg: packageType = {
+        dependencies: {},
+        devDependencies: {},
+    };
+    const mockPkg: packageType = {
+        dependencies: {
+            react: "^18.2.0",
+            "react-dom": "^18.2.0",
+        },
+        devDependencies: {
+            react: "^18.2.0",
+            "react-dom": "^18.2.0",
+        },
+    };
 
     it("should return true if it's a react project", async () => {
-        const isReact = await checkReact(mockPath);
+        const isReact = await checkReact(mockPkg);
         expect(isReact).toBe(true);
     });
 
     it("should return false if it's not a react project", async () => {
-        const isReact = await checkReact(normalPath);
-        expect(isReact).toBe(false);
-    });
-
-    it("should return false if the package doesn't exist in the project", async () => {
-        const isReact = await checkReact(wrongPath);
+        const isReact = await checkReact(wrongPkg);
         expect(isReact).toBe(false);
     });
 });
