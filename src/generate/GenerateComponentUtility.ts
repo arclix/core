@@ -2,9 +2,8 @@ import fs from "fs";
 import path from "path";
 import chalk from "chalk";
 import { ContentArgs } from "../types/interface.js";
-import { componentTemplate } from "../template/component.js";
 import { convertToTitleCase, spinner } from "../utilities/utility.js";
-import { testTemplate } from "../template/test.js";
+import { componentTemplate, testTemplate } from "./template/index.js";
 
 /**
  * A singleton utility class to generate component based on arguments.

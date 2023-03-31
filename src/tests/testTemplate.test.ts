@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { testTemplate } from "./test";
+import { testTemplate } from "../generate/template/test.js";
 
 const mockTestTemplate = (index: boolean): string => {
     return `import { render } from '@testing-library/react';

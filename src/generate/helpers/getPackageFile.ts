@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { packageType } from "../types/interface.js";
+import { packageType } from "../../types/interface.js";
 import getRootPath from "./getRootPath.js";
 
 /**
