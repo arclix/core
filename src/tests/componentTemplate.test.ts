@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { componentTemplate } from "./Component";
+import { componentTemplate } from "../generate/template/component.js";
 
 const mockComponent = (
     style: string,

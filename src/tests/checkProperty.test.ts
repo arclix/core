@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { packageType } from "../types/interface";
-import checkProperty from "./checkProperty";
+import { packageType } from "../types/interface.js";
+import checkProperty from "../generate/helpers/checkProperty.js";
 
 describe("Check Property", () => {
     const mockPkg: packageType = {
@@ -9,7 +9,7 @@ describe("Check Property", () => {
             typescript: "^4.9.4",
             sass: "^1.58.3",
         },
-    };
+    } as const;
 
     it("should return true if it's a typescript project", async () => {
         const isTypeScript = await checkProperty("typescript", mockPkg);

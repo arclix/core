@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import getPackageFile from "./getPackageFile";
+import getPackageFile from "../generate/helpers/getPackageFile.js";
 
 describe("Get package.json file", () => {
     it("should return package.json file content if exists", async () => {

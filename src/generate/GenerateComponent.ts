@@ -3,14 +3,14 @@ import chalk from "chalk";
 import { OptionValues } from "commander";
 import { spinner } from "../utilities/utility.js";
 import { ArclixConfig } from "../types/interface.js";
-import { GenerateComponentUtility } from "../core/GenerateComponentUtility.js";
+import { GenerateComponentUtility } from "./GenerateComponentUtility.js";
 import {
     checkReact,
     checkProperty,
     getRootPath,
     getConfig,
     getPackageFile,
-} from "../helpers/index.js";
+} from "./helpers/index.js";
 
 /**
  * A singleton class to generate component.

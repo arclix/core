@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import fs from "fs";
 import path from "path";
-import getRootPath from "../helpers/getRootPath.js";
+import getRootPath from "../generate/helpers/getRootPath.js";
 import { emptyLine, log, spinner } from "../utilities/utility.js";
 import { ArclixConfig, GenerateConfig } from "../types/interface.js";
 

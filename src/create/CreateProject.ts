@@ -1,8 +1,8 @@
+import path from "path";
 import inquirer from "inquirer";
+import GenerateConfigFile from "./GenerateConfigFile.js";
 import { exec, spawn } from "child_process";
 import { spinner, primaryChalk } from "../utilities/utility.js";
-import path from "path";
-import GenerateConfigFile from "./GenerateConfigFile.js";
 
 /**
  * A singleton class to create React project.

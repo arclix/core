@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 import chalk from "chalk";
-import CreateProject from "./functions/CreateProject.js";
-import GenerateComponent from "./functions/GenerateComponent.js";
-import GenerateConfigFile from "./functions/GenerateConfigFile.js";
+import CreateProject from "./create/CreateProject.js";
+import GenerateComponent from "./generate/GenerateComponent.js";
+import GenerateConfigFile from "./create/GenerateConfigFile.js";
 import { OptionValues, program } from "commander";
 import { Command, AliasCommand } from "./types/enum.js";
 import { log, emptyLine, primaryChalk, spinner } from "./utilities/utility.js";

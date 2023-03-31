@@ -1,7 +1,7 @@
 import fs from "fs/promises";
 import path from "path";
-import GenerateComponent from "./GenerateComponent";
 import { afterAll, describe, expect, it } from "vitest";
+import GenerateComponent from "../generate/GenerateComponent.js";
 
 describe("Generate Component", () => {
     const packagePath = "./src/mocks/mock.package.json";

@@ -1,6 +1,6 @@
-import getConfig from "./getConfig";
 import { describe, expect, it } from "vitest";
-import { GenerateConfig } from "../types/interface";
+import { GenerateConfig } from "../types/interface.js";
+import getConfig from "../generate/helpers/getConfig.js";
 
 const defaultConfig: GenerateConfig = {
     flat: false,
@@ -8,7 +8,7 @@ const defaultConfig: GenerateConfig = {
     skipTest: false,
     scopeStyle: false,
     defaultPath: "./src/",
-};
+} as const;
 
 describe("Get Arclix Config", () => {
     it("should return config file contents", () => {
