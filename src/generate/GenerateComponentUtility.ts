@@ -1,38 +1,25 @@
 import fs from "fs";
 import path from "path";
 import chalk from "chalk";
-import { ContentArgs } from "../types/interface.js";
+import { ContentArgs } from "../types/type.js";
 import { convertToTitleCase, spinner } from "../utilities/utility.js";
 import { componentTemplate, testTemplate } from "./template/index.js";
 
 /**
- * A singleton utility class to generate component based on arguments.
+ * A utility class to generate component based on arguments.
  *
  * author @aaraamuthan @jitiendran
  */
 export class GenerateComponentUtility {
-    private static instance: GenerateComponentUtility;
     private argParams: ContentArgs;
     private styleType: ".scss" | ".css";
-    private constructor(
+    constructor(
         private readonly args: ContentArgs,
         public fileCreationError: boolean,
     ) {
         this.argParams = args;
         this.argParams.componentName = convertToTitleCase(args.componentName);
         this.styleType = this.argParams.style ? ".scss" : ".css";
-    }
-    public static getInstance(
-        args: ContentArgs,
-        fileCreationError: boolean,
-    ): GenerateComponentUtility {
-        if (!GenerateComponentUtility.instance) {
-            GenerateComponentUtility.instance = new GenerateComponentUtility(
-                args,
-                fileCreationError,
-            );
-        }
-        return GenerateComponentUtility.instance;
     }
     private writeToFile = (
         folderPath: string,

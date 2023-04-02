@@ -5,7 +5,7 @@ import CreateProject from "./create/CreateProject.js";
 import GenerateComponent from "./generate/GenerateComponent.js";
 import GenerateConfigFile from "./create/GenerateConfigFile.js";
 import { OptionValues, program } from "commander";
-import { Command, AliasCommand } from "./types/enum.js";
+import { Command, AliasCommand } from "./types/type.js";
 import { log, emptyLine, primaryChalk, spinner } from "./utilities/utility.js";
 
 const version = "ARCLIX v0.1.1";
@@ -28,24 +28,11 @@ program.version(
 
 program
     .command(Command.CREATE)
+    .argument("<project name>", "name of project to be generated")
     .description("Creates React project in the current directory")
-    .action(async (_str, options) => {
+    .action(async (projectName: string) => {
         log("\n" + primaryChalk.italic.bold(version));
         emptyLine();
-
-        const projectName = options.args[0];
-
-        // Throw error if projectname is empty or null
-        if (options.args.length === 0) {
-            spinner.error({ text: chalk.red("Missing Project Name.") });
-            return;
-        }
-
-        // Throw error if there are two or more arguments
-        if (options.args.length > 1) {
-            spinner.error({ text: chalk.red("Unknown option.") });
-            return;
-        }
 
         // Throw error if the projectname is not in lowercase
         if (!checkProjectName(projectName)) {
@@ -73,10 +60,18 @@ generate
     .option("--addIndex", "Adds index file to make the imports easier.")
     .option("-f, --flat", "Generates components without parent folder.")
     .option("-p, --path <string>", "Generates components based on the path.")
-    .action((componentName: string, options: OptionValues) => {
+    .action(async (...actions) => {
+        const start = performance.now();
         log("\n" + primaryChalk.italic.bold(version));
         emptyLine();
-        generateComponentInstance.generateProject(componentName, options);
+        const componentNames: string[] = actions[2].args;
+        const options: OptionValues = actions[2]._optionValues;
+        await generateComponentInstance.generateComponent(
+            componentNames,
+            options,
+        );
+        const end = performance.now();
+        console.log(`Time taken ${end - start}ms`);
     });
 
 program

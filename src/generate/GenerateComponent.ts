@@ -2,7 +2,7 @@ import fs from "fs";
 import chalk from "chalk";
 import { OptionValues } from "commander";
 import { spinner } from "../utilities/utility.js";
-import { ArclixConfig } from "../types/interface.js";
+import { ArclixConfig } from "../types/type.js";
 import { GenerateComponentUtility } from "./GenerateComponentUtility.js";
 import {
     checkReact,
@@ -56,8 +56,54 @@ export default class GenerateComponent {
         return path;
     };
 
-    public generateProject = async (
+    private getFolderPath = (
         componentName: string,
+        options: OptionValues,
+    ): string => {
+        // Default folder path
+        let folderPath = !getRootPath(process.cwd()) ? this.defaultPath : "";
+
+        /**
+         * If "flat" then don't create a folder with name componentName
+         * Else create a folder with name componentName
+         */
+        if (options.flat || this.config?.generate.flat) {
+            // If path is provided append it with defaultPath
+            if (options.path) {
+                folderPath += this.handlePath(options.path);
+            }
+        } else {
+            // If path is provided append it with defaultPath
+            if (options.path) {
+                folderPath += this.handlePath(options.path) + componentName;
+            } else {
+                folderPath += componentName;
+            }
+        }
+
+        return folderPath;
+    };
+
+    private handleNestedComponentName = (
+        componentName: string,
+        options: OptionValues,
+    ): string => {
+        if (componentName.includes("/")) {
+            if (options.flat) {
+                spinner.error({
+                    text: `${chalk.red(
+                        "Cannot nest the component while using --flat or -f option\n",
+                    )}`,
+                });
+                return "";
+            }
+            componentName = componentName.split("/").pop() as string;
+        }
+        return componentName;
+    };
+
+    public generateComponent = async (
+        componentNames: string[],
         options: OptionValues,
         packagePath = this.defaultPackagePath,
     ) => {
@@ -86,67 +132,63 @@ export default class GenerateComponent {
         const hasTypeScript = await checkProperty("typescript", pkg);
         const hasScss = await checkProperty("sass", pkg);
 
-        // Default folder path
-        let folderPath = !getRootPath(process.cwd()) ? this.defaultPath : "";
-
-        /**
-         * If "flat" then don't create a folder with name componentName
-         * Else create a folder with name componentName
-         */
-        if (options.flat || this.config?.generate.flat) {
-            // If path is provided append it with defaultPath
-            if (options.path) {
-                folderPath += this.handlePath(options.path);
-            }
-        } else {
-            // If path is provided append it with defaultPath
-            if (options.path) {
-                folderPath += this.handlePath(options.path) + componentName;
-            } else {
-                folderPath += componentName;
-            }
-        }
-
-        const componentUtilityInstance = GenerateComponentUtility.getInstance(
-            {
-                componentName,
-                folderPath,
-                type: hasTypeScript,
-                style: hasScss,
-                scopeStyle:
-                    options.scopeStyle || this.config?.generate.scopeStyle,
-                addIndex: options.addIndex || this.config?.generate.addIndex,
-            },
-            this.fileCreationError,
-        );
-
-        // NOTE: Not creating folder if --flat flag is provided
         spinner.start({ text: "Creating component..." });
-        if (options.flat || this.config?.generate.flat) {
-            componentUtilityInstance.generateComponent(
-                options.skipTest || this.config?.generate.skipTest,
+        // Generate multiple and nested components
+        componentNames.forEach((componentName, index) => {
+            const folderPath = this.getFolderPath(componentName, options);
+            componentName = this.handleNestedComponentName(
+                componentName,
+                options,
             );
-        } else {
-            fs.mkdir(folderPath, { recursive: true }, async (err) => {
-                if (err) {
-                    spinner.error({ text: err.message });
-                }
+
+            if (componentName === "") {
+                componentNames.splice(index, 1);
+                return;
+            }
+
+            const componentUtilityInstance = new GenerateComponentUtility(
+                {
+                    componentName,
+                    folderPath,
+                    type: hasTypeScript,
+                    style: hasScss,
+                    scopeStyle:
+                        options.scopeStyle || this.config?.generate.scopeStyle,
+                    addIndex:
+                        options.addIndex || this.config?.generate.addIndex,
+                },
+                this.fileCreationError,
+            );
+
+            // NOTE: Not creating folder if --flat flag is provided
+            if (options.flat || this.config?.generate.flat) {
                 componentUtilityInstance.generateComponent(
                     options.skipTest || this.config?.generate.skipTest,
                 );
-            });
-        }
+            } else {
+                fs.mkdir(folderPath, { recursive: true }, async (err) => {
+                    if (err) {
+                        spinner.error({ text: err.message });
+                    }
+                    componentUtilityInstance.generateComponent(
+                        options.skipTest || this.config?.generate.skipTest,
+                    );
+                });
+            }
+        });
 
         // IMPORTANT: This is where response is sent to the user.
         if (this.fileCreationError) {
             spinner.error({
                 text: `${chalk.red(
-                    `Component ${componentName} is not created.\n`,
+                    `Component ${componentNames.join(", ")} is not created.\n`,
                 )}`,
             });
         } else {
             spinner.success({
-                text: `Component ${chalk.green(componentName)} created.\n`,
+                text: `Component ${chalk.green(
+                    componentNames.join(", "),
+                )} created.\n`,
             });
         }
     };

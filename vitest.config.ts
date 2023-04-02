@@ -4,6 +4,7 @@ export default defineConfig({
     test: {
         exclude: ["**/node_modules/**", "**/dist/**"],
         include: ["src/tests/*test.ts"],
+        silent: true,
         coverage: {
             reporter: ["text", "json", "html"],
             reportsDirectory: "./coverage",

@@ -1,4 +1,4 @@
-import { packageType } from "../../types/interface.js";
+import { packageType } from "../../types/type.js";
 
 /**
  * Check wether the project is a React project or not
