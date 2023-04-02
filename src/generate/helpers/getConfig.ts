@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import getRootPath from "./getRootPath.js";
-import { ArclixConfig } from "../../types/interface.js";
+import { ArclixConfig } from "../../types/type.js";
 
 /**
  * Get's the config file contents

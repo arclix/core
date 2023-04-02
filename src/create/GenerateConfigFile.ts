@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import getRootPath from "../generate/helpers/getRootPath.js";
 import { emptyLine, log, spinner } from "../utilities/utility.js";
-import { ArclixConfig, GenerateConfig } from "../types/interface.js";
+import { ArclixConfig, GenerateConfig } from "../types/type.js";
 
 /**
  * A singleton class to generate config file.
