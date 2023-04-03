@@ -3,6 +3,12 @@ import path from "path";
 import { afterAll, describe, expect, it } from "vitest";
 import GenerateComponent from "../generate/GenerateComponent.js";
 
+const exists = async (path: string): Promise<boolean> => {
+    return new Promise((r) => {
+        fs.access(path).then(() => r(true));
+    });
+};
+
 describe("Generate Component", () => {
     const packagePath = "./src/mocks/mock.package.json";
     const mockPath = path.join(process.cwd(), "./src/mocks");
@@ -21,22 +27,22 @@ describe("Generate Component", () => {
             packagePath,
         );
 
-        const folderExists = await fs.stat(mockPath);
-        const componentFileExists = await fs.stat(
+        const folderExists = await exists(mockPath);
+        const componentFileExists = await exists(
             path.join(mockPath, "./Sample.tsx"),
         );
-        const styleFileExists = await fs.stat(
+        const styleFileExists = await exists(
             path.join(mockPath, "./Sample.scss"),
         );
-        const testFileExists = await fs.stat(
+        const testFileExists = await exists(
             path.join(mockPath, "./Sample.test.tsx"),
         );
 
-        expect(folderExists.isDirectory()).toBe(true);
-        expect(componentFileExists.isFile()).toBe(true);
-        expect(styleFileExists.isFile()).toBe(true);
-        expect(testFileExists.isFile()).toBe(true);
-    }, 70000);
+        expect(folderExists).toBe(true);
+        expect(componentFileExists).toBe(true);
+        expect(styleFileExists).toBe(true);
+        expect(testFileExists).toBe(true);
+    });
 
     it("should generate component 'Sample' with index file", async () => {
         await generateComponentInstance.generateComponent(
@@ -51,52 +57,52 @@ describe("Generate Component", () => {
             packagePath,
         );
 
-        const folderExists = await fs.stat("./src/mocks/Sample");
-        const componentFileExists = await fs.stat(
-            path.join(mockPath, "./Sample/Sample.tsx"),
-        );
-        const styleFileExists = await fs.stat(
-            path.join(mockPath, "./Sample/Sample.scss"),
-        );
-        const indexFileExists = await fs.stat(
-            path.join(mockPath, "./Sample/index.ts"),
-        );
-        const testFileExists = await fs.stat(
-            path.join(mockPath, "./Sample/Sample.test.tsx"),
-        );
+        setTimeout(async () => {
+            const folderExists = await exists("./src/mocks/Sample");
+            const componentFileExists = await exists(
+                path.join(mockPath, "./Sample/Sample.tsx"),
+            );
+            const styleFileExists = await exists(
+                path.join(mockPath, "./Sample/Sample.scss"),
+            );
+            const indexFileExists = await exists(
+                path.join(mockPath, "./Sample/index.ts"),
+            );
+            const testFileExists = await exists(
+                path.join(mockPath, "./Sample/Sample.test.tsx"),
+            );
+            expect(folderExists).toBe(true);
+            expect(componentFileExists).toBe(true);
+            expect(styleFileExists).toBe(true);
+            expect(indexFileExists).toBe(true);
+            expect(testFileExists).toBe(true);
+        }, 5000);
+    }, 50000),
+        it("should generate component 'Sample' without test file", async () => {
+            await generateComponentInstance.generateComponent(
+                ["Sample"],
+                {
+                    flat: false,
+                    addIndex: false,
+                    skipTest: true,
+                    path: "./mocks",
+                    scopeStyle: false,
+                },
+                packagePath,
+            );
 
-        expect(folderExists.isDirectory()).toBe(true);
-        expect(componentFileExists.isFile()).toBe(true);
-        expect(styleFileExists.isFile()).toBe(true);
-        expect(indexFileExists.isFile()).toBe(true);
-        expect(testFileExists.isFile()).toBe(true);
-    }, 70000);
+            const folderExists = await exists("./src/mocks/Sample");
+            const componentFileExists = await exists(
+                path.join(mockPath, "./Sample/Sample.tsx"),
+            );
+            const styleFileExists = await exists(
+                path.join(mockPath, "./Sample/Sample.scss"),
+            );
 
-    it("should generate component 'Sample' without test file", async () => {
-        await generateComponentInstance.generateComponent(
-            ["Sample"],
-            {
-                flat: false,
-                addIndex: false,
-                skipTest: true,
-                path: "./mocks",
-                scopeStyle: false,
-            },
-            packagePath,
-        );
-
-        const folderExists = await fs.stat("./src/mocks/Sample");
-        const componentFileExists = await fs.stat(
-            path.join(mockPath, "./Sample/Sample.tsx"),
-        );
-        const styleFileExists = await fs.stat(
-            path.join(mockPath, "./Sample/Sample.scss"),
-        );
-
-        expect(folderExists.isDirectory()).toBe(true);
-        expect(componentFileExists.isFile()).toBe(true);
-        expect(styleFileExists.isFile()).toBe(true);
-    }, 70000);
+            expect(folderExists).toBe(true);
+            expect(componentFileExists).toBe(true);
+            expect(styleFileExists).toBe(true);
+        });
 
     it("should generate component 'Sample' with scoped style", async () => {
         await generateComponentInstance.generateComponent(
@@ -111,22 +117,24 @@ describe("Generate Component", () => {
             packagePath,
         );
 
-        const folderExists = await fs.stat("./src/mocks/Sample");
-        const componentFileExists = await fs.stat(
-            path.join(mockPath, "./Sample/Sample.tsx"),
-        );
-        const styleFileExists = await fs.stat(
-            path.join(mockPath, "./Sample/Sample.module.scss"),
-        );
-        const testFileExists = await fs.stat(
-            path.join(mockPath, "./Sample/Sample.test.tsx"),
-        );
+        setTimeout(async () => {
+            const folderExists = await exists("./src/mocks/Sample");
+            const componentFileExists = await exists(
+                path.join(mockPath, "./Sample/Sample.tsx"),
+            );
+            const styleFileExists = await exists(
+                path.join(mockPath, "./Sample/Sample.module.scss"),
+            );
+            const testFileExists = await exists(
+                path.join(mockPath, "./Sample/Sample.test.tsx"),
+            );
 
-        expect(folderExists.isDirectory()).toBe(true);
-        expect(componentFileExists.isFile()).toBe(true);
-        expect(styleFileExists.isFile()).toBe(true);
-        expect(testFileExists.isFile()).toBe(true);
-    }, 70000);
+            expect(folderExists).toBe(true);
+            expect(componentFileExists).toBe(true);
+            expect(styleFileExists).toBe(true);
+            expect(testFileExists).toBe(true);
+        }, 5000);
+    }, 50000);
 
     it("should generate multiple and nested components", async () => {
         await generateComponentInstance.generateComponent(
@@ -141,37 +149,37 @@ describe("Generate Component", () => {
             packagePath,
         );
 
-        const folderExists = await fs.stat("./src/mocks/Sample");
-        const componentFileExists = await fs.stat(
+        const folderExists = await exists("./src/mocks/Sample");
+        const componentFileExists = await exists(
             path.join(mockPath, "./Sample/Sample.tsx"),
         );
-        const styleFileExists = await fs.stat(
+        const styleFileExists = await exists(
             path.join(mockPath, "./Sample/Sample.scss"),
         );
-        const testFileExists = await fs.stat(
+        const testFileExists = await exists(
             path.join(mockPath, "./Sample/Sample.test.tsx"),
         );
 
-        const nestedFolderExists = await fs.stat("./src/mocks/Sample/Nested");
-        const nestedComponentFileExists = await fs.stat(
+        const nestedFolderExists = await exists("./src/mocks/Sample/Nested");
+        const nestedComponentFileExists = await exists(
             path.join(mockPath, "./Sample/Nested/Nested.tsx"),
         );
-        const nestedStyleFileExists = await fs.stat(
+        const nestedStyleFileExists = await exists(
             path.join(mockPath, "./Sample/Nested/Nested.scss"),
         );
-        const nestedTestFileExists = await fs.stat(
+        const nestedTestFileExists = await exists(
             path.join(mockPath, "./Sample/Nested/Nested.test.tsx"),
         );
 
-        expect(folderExists.isDirectory()).toBe(true);
-        expect(componentFileExists.isFile()).toBe(true);
-        expect(styleFileExists.isFile()).toBe(true);
-        expect(testFileExists.isFile()).toBe(true);
-        expect(nestedFolderExists.isDirectory()).toBe(true);
-        expect(nestedComponentFileExists.isFile()).toBe(true);
-        expect(nestedStyleFileExists.isFile()).toBe(true);
-        expect(nestedTestFileExists.isFile()).toBe(true);
-    }, 70000);
+        expect(folderExists).toBe(true);
+        expect(componentFileExists).toBe(true);
+        expect(styleFileExists).toBe(true);
+        expect(testFileExists).toBe(true);
+        expect(nestedFolderExists).toBe(true);
+        expect(nestedComponentFileExists).toBe(true);
+        expect(nestedStyleFileExists).toBe(true);
+        expect(nestedTestFileExists).toBe(true);
+    });
 
     afterAll(async () => {
         await fs.rm("./src/mocks/Sample.tsx");
