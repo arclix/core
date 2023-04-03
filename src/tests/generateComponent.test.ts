@@ -77,32 +77,33 @@ describe("Generate Component", () => {
             expect(indexFileExists).toBe(true);
             expect(testFileExists).toBe(true);
         }, 5000);
-    }, 50000),
-        it("should generate component 'Sample' without test file", async () => {
-            await generateComponentInstance.generateComponent(
-                ["Sample"],
-                {
-                    flat: false,
-                    addIndex: false,
-                    skipTest: true,
-                    path: "./mocks",
-                    scopeStyle: false,
-                },
-                packagePath,
-            );
+    }, 50000);
 
-            const folderExists = await exists("./src/mocks/Sample");
-            const componentFileExists = await exists(
-                path.join(mockPath, "./Sample/Sample.tsx"),
-            );
-            const styleFileExists = await exists(
-                path.join(mockPath, "./Sample/Sample.scss"),
-            );
+    it("should generate component 'Sample' without test file", async () => {
+        await generateComponentInstance.generateComponent(
+            ["Sample"],
+            {
+                flat: false,
+                addIndex: false,
+                skipTest: true,
+                path: "./mocks",
+                scopeStyle: false,
+            },
+            packagePath,
+        );
 
-            expect(folderExists).toBe(true);
-            expect(componentFileExists).toBe(true);
-            expect(styleFileExists).toBe(true);
-        });
+        const folderExists = await exists("./src/mocks/Sample");
+        const componentFileExists = await exists(
+            path.join(mockPath, "./Sample/Sample.tsx"),
+        );
+        const styleFileExists = await exists(
+            path.join(mockPath, "./Sample/Sample.scss"),
+        );
+
+        expect(folderExists).toBe(true);
+        expect(componentFileExists).toBe(true);
+        expect(styleFileExists).toBe(true);
+    });
 
     it("should generate component 'Sample' with scoped style", async () => {
         await generateComponentInstance.generateComponent(
