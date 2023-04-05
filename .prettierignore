@@ -1,3 +1,4 @@
 dist/
 coverage/
 LICENSE.md
+.github/workflows/
