@@ -4,10 +4,10 @@ import { packageType } from "../../types/type.js";
 import getRootPath from "./getRootPath.js";
 
 /**
- * Get the dependencies and deveDepencies from package
+ * Get the dependencies and devDependencies from package
  *
  * @param packagePath of the package.json file
- * @returns dependencies and deveDependencies from package.json or null
+ * @returns dependencies and devDependencies from package.json or null
  */
 const getPackageFile = async (
     packagePath: string,
