@@ -10,6 +10,10 @@ export default defineConfig({
             reportsDirectory: "./coverage",
             provider: "c8",
             clean: true,
+            lines: 70,
+            functions: 70,
+            statements: 70,
+            branches: 70,
         },
     },
     esbuild: {
