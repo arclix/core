@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { GenerateConfig } from "../types/interface.js";
-import getConfig from "../generate/helpers/getConfig.js";
+import { GenerateConfig } from "../types/type";
+import getConfig from "../generate/helpers/getConfig";
 
 const defaultConfig: GenerateConfig = {
     flat: false,

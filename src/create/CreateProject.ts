@@ -1,6 +1,7 @@
 import path from "path";
 import inquirer from "inquirer";
 import GenerateConfigFile from "./GenerateConfigFile.js";
+import { singleton } from "../types/decorator.js";
 import { exec, spawn } from "child_process";
 import { spinner, primaryChalk } from "../utilities/utility.js";
 
@@ -9,20 +10,12 @@ import { spinner, primaryChalk } from "../utilities/utility.js";
  *
  * author @jitiendran
  */
+@singleton
 export default class CreateProject {
-    private static instance: CreateProject;
     private readonly generateConfigFileInstance: GenerateConfigFile;
 
-    private constructor() {
-        this.generateConfigFileInstance = GenerateConfigFile.getInstance();
-    }
-
-    public static getInstance(): CreateProject {
-        if (!CreateProject.instance) {
-            CreateProject.instance = new CreateProject();
-        }
-
-        return CreateProject.instance;
+    constructor() {
+        this.generateConfigFileInstance = new GenerateConfigFile();
     }
 
     private execCommand = async (command: string): Promise<any> => {

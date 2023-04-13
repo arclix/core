@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { packageType } from "../types/interface.js";
-import checkProperty from "../generate/helpers/checkProperty.js";
+import { packageType } from "../types/type";
+import checkProperty from "../generate/helpers/checkProperty";
 
 describe("Check Property", () => {
     const mockPkg: packageType = {
