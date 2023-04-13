@@ -4,6 +4,7 @@ import { OptionValues } from "commander";
 import { spinner } from "../utilities/utility.js";
 import { ArclixConfig } from "../types/type.js";
 import { GenerateComponentUtility } from "./GenerateComponentUtility.js";
+import { singleton } from "../types/decorator.js";
 import {
     checkReact,
     checkProperty,
@@ -17,14 +18,14 @@ import {
  *
  * author @jitiendran
  */
+@singleton
 export default class GenerateComponent {
     private fileCreationError: boolean;
     private readonly config: ArclixConfig | null;
     private readonly defaultPath: string;
     private readonly defaultPackagePath: string;
-    private static instance: GenerateComponent;
 
-    private constructor() {
+    constructor() {
         this.config = getConfig("./arclix.config.json");
         if (this.config) {
             this.defaultPath = this.config.generate.defaultPath;
@@ -33,14 +34,6 @@ export default class GenerateComponent {
         }
         this.defaultPackagePath = "./package.json";
         this.fileCreationError = false;
-    }
-
-    public static getInstance(): GenerateComponent {
-        if (!GenerateComponent.instance) {
-            GenerateComponent.instance = new GenerateComponent();
-        }
-
-        return GenerateComponent.instance;
     }
 
     private handlePath = (path: string): string => {
@@ -108,7 +101,6 @@ export default class GenerateComponent {
         packagePath = this.defaultPackagePath,
     ) => {
         const pkg = await getPackageFile(packagePath);
-
         // Throw error if package.json doesn't exist
         if (!pkg) {
             spinner.error({
@@ -118,7 +110,6 @@ export default class GenerateComponent {
         }
 
         const isReact = await checkReact(pkg);
-
         // Throw error if it isn't a react project
         if (!isReact) {
             spinner.error({

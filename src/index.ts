@@ -9,9 +9,9 @@ import { Command, AliasCommand } from "./types/type.js";
 import { log, emptyLine, primaryChalk, spinner } from "./utilities/utility.js";
 
 const version = "ARCLIX v0.1.1";
-const createProjectInstance = CreateProject.getInstance();
-const generateComponentInstance = GenerateComponent.getInstance();
-const generateConfigFileInstance = GenerateConfigFile.getInstance();
+const createProjectInstance = new CreateProject();
+const generateComponentInstance = new GenerateComponent();
+const generateConfigFileInstance = new GenerateConfigFile();
 
 const checkProjectName = (projectName: string): boolean => {
     if (projectName !== projectName.toLowerCase()) {
@@ -61,7 +61,6 @@ generate
     .option("-f, --flat", "Generates components without parent folder.")
     .option("-p, --path <string>", "Generates components based on the path.")
     .action(async (...actions) => {
-        const start = performance.now();
         log("\n" + primaryChalk.italic.bold(version));
         emptyLine();
         const componentNames: string[] = actions[2].args;
@@ -70,8 +69,6 @@ generate
             componentNames,
             options,
         );
-        const end = performance.now();
-        console.log(`Time taken ${end - start}ms`);
     });
 
 program

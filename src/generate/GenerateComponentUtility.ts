@@ -3,7 +3,7 @@ import path from "path";
 import chalk from "chalk";
 import { ContentArgs } from "../types/type.js";
 import { convertToTitleCase, spinner } from "../utilities/utility.js";
-import { componentTemplate, testTemplate } from "./template/index.js";
+import { componentTemplate, testTemplate } from "./templates/index.js";
 
 /**
  * A utility class to generate component based on arguments.

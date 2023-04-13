@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { packageType } from "../types/interface.js";
-import checkReact from "../generate/helpers/checkReact.js";
+import { packageType } from "../types/type";
+import checkReact from "../generate/helpers/checkReact";
 
 describe("Check React", () => {
     const wrongPkg: packageType = {

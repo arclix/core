@@ -10,6 +10,7 @@
         "allowUnreachableCode": false,
         "allowUnusedLabels": false,
         "strictNullChecks": true,
+        "experimentalDecorators": true,
         "outDir": "dist"
     },
     "include": ["src/**/*"],

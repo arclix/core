@@ -1,7 +1,7 @@
 import fs from "fs/promises";
 import path from "path";
 import { afterAll, describe, expect, it } from "vitest";
-import GenerateComponent from "../generate/GenerateComponent.js";
+import GenerateComponent from "../generate/GenerateComponent";
 
 const exists = async (path: string): Promise<boolean> => {
     return new Promise((r) => {
@@ -12,7 +12,7 @@ const exists = async (path: string): Promise<boolean> => {
 describe("Generate Component", () => {
     const packagePath = "./src/mocks/mock.package.json";
     const mockPath = path.join(process.cwd(), "./src/mocks");
-    const generateComponentInstance = GenerateComponent.getInstance();
+    const generateComponentInstance = new GenerateComponent();
 
     it("should generate component without folder with name 'Sample'", async () => {
         await generateComponentInstance.generateComponent(
@@ -202,7 +202,7 @@ describe("Generate Component", () => {
         await fs.rm("./src/mocks/Sample/Nested/Nested.tsx");
         await fs.rm("./src/mocks/Sample/Nested/Nested.scss");
         await fs.rm("./src/mocks/Sample/Nested/Nested.test.tsx");
-        await fs.rmdir("./src/mocks/Sample/Nested");
-        await fs.rmdir("./src/mocks/Sample");
+        await fs.rmdir("./src/mocks/Sample/Nested", { recursive: true });
+        await fs.rmdir("./src/mocks/Sample", { recursive: true });
     });
 });

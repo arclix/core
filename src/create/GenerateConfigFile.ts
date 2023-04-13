@@ -2,6 +2,7 @@ import chalk from "chalk";
 import fs from "fs";
 import path from "path";
 import getRootPath from "../generate/helpers/getRootPath.js";
+import { singleton } from "../types/decorator.js";
 import { emptyLine, log, spinner } from "../utilities/utility.js";
 import { ArclixConfig, GenerateConfig } from "../types/type.js";
 
@@ -10,12 +11,12 @@ import { ArclixConfig, GenerateConfig } from "../types/type.js";
  *
  * author @jitiendran
  */
+@singleton
 export default class GenerateConfigFile {
     private readonly config: ArclixConfig;
     private readonly generateConfig: GenerateConfig;
-    private static instance: GenerateConfigFile;
 
-    private constructor() {
+    constructor() {
         this.generateConfig = {
             flat: false,
             addIndex: false,
@@ -29,16 +30,9 @@ export default class GenerateConfigFile {
         };
     }
 
-    public static getInstance(): GenerateConfigFile {
-        if (!GenerateConfigFile.instance) {
-            GenerateConfigFile.instance = new GenerateConfigFile();
-        }
-        return GenerateConfigFile.instance;
-    }
-
     /**
-     * Generate config file while creating the project if projectName exists.
-     * Otherwise generates config file to existing project.
+     * Generates config file while creating the project if projectName exists.
+     * Otherwise generates config file to the existing project.
      *
      * @param projectName to be created with arclix
      */
