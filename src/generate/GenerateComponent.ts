@@ -147,6 +147,7 @@ export default class GenerateComponent {
                         options.scopeStyle || this.config?.generate.scopeStyle,
                     addIndex:
                         options.addIndex || this.config?.generate.addIndex,
+                    flat: options.flat
                 },
                 this.fileCreationError,
             );

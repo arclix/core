@@ -5,6 +5,7 @@ export interface ContentArgs {
     type: boolean;
     scopeStyle: boolean;
     addIndex: boolean;
+    flat: boolean;
 }
 
 export interface GenerateConfig {
