@@ -4,7 +4,7 @@
         "type": "git",
         "url": "https://github.com/arclix/core.git"
     },
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "An Open Source CLI with Creation and Component Generation for React.",
     "main": "dist/index.js",
     "type": "module",
