@@ -1,8 +1,9 @@
-import fs from "fs";
+// import fs from "fs";
+import fs from "node:fs";
 import chalk from "chalk";
 import { OptionValues } from "commander";
-import { spinner } from "../utilities/utility.js";
-import { ArclixConfig } from "../types/type.js";
+import { convertToTitleCase, spinner } from "../utilities/utility.js";
+import { ArclixConfig, GenerateConfig } from "../types/type.js";
 import { GenerateComponentUtility } from "./GenerateComponentUtility.js";
 import { singleton } from "../types/decorator.js";
 import {
@@ -26,73 +27,57 @@ export default class GenerateComponent {
     private readonly defaultPackagePath: string;
 
     constructor() {
-        this.config = getConfig("./arclix.config.json");
-        if (this.config) {
-            this.defaultPath = this.config.generate.defaultPath;
-        } else {
-            this.defaultPath = "./src/";
-        }
-        this.defaultPackagePath = "./package.json";
         this.fileCreationError = false;
+        this.config = getConfig("./arclix.config.json");
+        this.defaultPath = this.config?.generate.defaultPath ?? "./src";
+        this.defaultPackagePath = "./package.json";
     }
 
-    private handlePath = (path: string): string => {
-        // Do nothing because default path is src
-        if (path === "./src") {
-            return "";
-        }
-
-        // Add '/' to the end of path if not provided
-        if (path[path.length - 1] !== "/") {
-            return path + "/";
-        }
-        return path;
+    // Get's the options either from flags or configs
+    // Flags can override config values, so flags take higher priority
+    private getOptions = (
+        options: OptionValues,
+        property: keyof GenerateConfig,
+    ): boolean => {
+        return options[property] || this.config?.generate[property];
     };
 
+    // Get's the folder path where the component should be generated.
     private getFolderPath = (
         componentName: string,
         options: OptionValues,
     ): string => {
-        // Default folder path
-        let folderPath = !getRootPath(process.cwd()) ? this.defaultPath : "";
+        const defaultPath = getRootPath(process.cwd())
+            ? ""
+            : this.handlePath(this.defaultPath);
+        // If the `path` option is provided then add the path provided in the option.
+        const pathSuffix = options.path ? this.handlePath(options.path) : "";
+        // If the `flat` option is provided then there is no need to add folder name.
+        const folderName = this.getOptions(options, "flat")
+            ? ""
+            : componentName;
+        return `${defaultPath}${pathSuffix}${folderName}`;
+    };
 
-        /**
-         * If "flat" then don't create a folder with name componentName
-         * Else create a folder with name componentName
-         */
-        if (options.flat || this.config?.generate.flat) {
-            // If path is provided append it with defaultPath
-            if (options.path) {
-                folderPath += this.handlePath(options.path);
-            }
-        } else {
-            // If path is provided append it with defaultPath
-            if (options.path) {
-                folderPath += this.handlePath(options.path) + componentName;
-            } else {
-                folderPath += componentName;
-            }
-        }
-
-        return folderPath;
+    // Add trailing '/' to the path if not provided
+    private handlePath = (path: string): string => {
+        return path.endsWith("/") ? path : path + "/";
     };
 
     private handleNestedComponentName = (
         componentName: string,
         options: OptionValues,
     ): string => {
-        if (componentName.includes("/")) {
-            if (options.flat) {
-                spinner.error({
-                    text: `${chalk.red(
-                        "Cannot nest the component while using --flat or -f option\n",
-                    )}`,
-                });
-                return "";
-            }
-            componentName = componentName.split("/").pop() as string;
+        const nestedComponentName = componentName.split("/").pop();
+        if (componentName.includes("/") && this.getOptions(options, "flat")) {
+            spinner.error({
+                text: `${chalk.red(
+                    "Cannot nest the component while using --flat or -f option\n",
+                )}`,
+            });
+            return "";
         }
-        return componentName;
+        return nestedComponentName ?? componentName;
     };
 
     public generateComponent = async (
@@ -126,13 +111,13 @@ export default class GenerateComponent {
         spinner.start({ text: "Creating component..." });
         // Generate multiple and nested components
         componentNames.forEach((componentName, index) => {
+            componentName = convertToTitleCase(componentName);
             const folderPath = this.getFolderPath(componentName, options);
             componentName = this.handleNestedComponentName(
                 componentName,
                 options,
             );
-
-            if (componentName === "") {
+            if (!componentName) {
                 componentNames.splice(index, 1);
                 return;
             }
@@ -143,33 +128,31 @@ export default class GenerateComponent {
                     folderPath,
                     type: hasTypeScript,
                     style: hasScss,
-                    scopeStyle:
-                        options.scopeStyle || this.config?.generate.scopeStyle,
-                    addIndex:
-                        options.addIndex || this.config?.generate.addIndex,
-                    flat: options.flat,
+                    scopeStyle: this.getOptions(options, "scopeStyle"),
+                    addIndex: this.getOptions(options, "addIndex"),
+                    flat: this.getOptions(options, "flat"),
                 },
                 this.fileCreationError,
             );
 
-            // NOTE: Not creating folder if --flat flag is provided
-            if (options.flat || this.config?.generate.flat) {
+            // Not creating folder if --flat flag is provided
+            if (this.getOptions(options, "flat")) {
                 componentUtilityInstance.generateComponent(
-                    options.skipTest || this.config?.generate.skipTest,
+                    this.getOptions(options, "skipTest"),
                 );
             } else {
                 fs.mkdir(folderPath, { recursive: true }, async (err) => {
                     if (err) {
                         spinner.error({ text: err.message });
+                        return;
                     }
                     componentUtilityInstance.generateComponent(
-                        options.skipTest || this.config?.generate.skipTest,
+                        this.getOptions(options, "skipTest"),
                     );
                 });
             }
         });
 
-        // IMPORTANT: This is where response is sent to the user.
         if (this.fileCreationError) {
             spinner.error({
                 text: `${chalk.red(

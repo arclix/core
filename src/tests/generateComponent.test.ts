@@ -1,5 +1,5 @@
-import fs from "fs/promises";
-import path from "path";
+import path from "node:path";
+import fs from "node:fs/promises";
 import { afterAll, describe, expect, it } from "vitest";
 import GenerateComponent from "../generate/GenerateComponent";
 

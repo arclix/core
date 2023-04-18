@@ -1,4 +1,4 @@
-import { packageType } from "../../types/type.js";
+import { PackageType } from "../../types/type.js";
 
 /**
  * Checks whether the given property exists or not
@@ -9,16 +9,10 @@ import { packageType } from "../../types/type.js";
  */
 const checkProperty = async (
     property: string,
-    pkg: packageType,
+    pkg: PackageType,
 ): Promise<boolean> => {
     const { dependencies, devDependencies } = pkg;
-    if (
-        Object.hasOwn(dependencies, property) ||
-        Object.hasOwn(devDependencies, property)
-    ) {
-        return true;
-    }
-    return false;
+    return property in dependencies || property in devDependencies;
 };
 
 export default checkProperty;

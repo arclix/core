@@ -20,7 +20,7 @@ export interface ArclixConfig {
     generate: GenerateConfig;
 }
 
-export interface packageType {
+export interface PackageType {
     dependencies: any;
     devDependencies: any;
 }

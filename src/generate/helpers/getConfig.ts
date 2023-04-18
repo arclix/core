@@ -1,5 +1,5 @@
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 import getRootPath from "./getRootPath.js";
 import { ArclixConfig } from "../../types/type.js";
 
@@ -10,14 +10,13 @@ import { ArclixConfig } from "../../types/type.js";
  * @returns config content if the file exists otherwise null
  */
 const getConfig = (defaultPath: string): ArclixConfig | null => {
-    const rootPath = getRootPath(process.cwd());
-    const configPath = path.resolve(rootPath, defaultPath);
-    if (fs.existsSync(configPath)) {
-        const data = fs.readFileSync(configPath, { encoding: "utf-8" });
-        return JSON.parse(data) as ArclixConfig;
+    const configPath = path.resolve(getRootPath(process.cwd()), defaultPath);
+    if (!fs.existsSync(configPath)) {
+        return null;
     }
 
-    return null;
+    const data = fs.readFileSync(configPath, "utf-8");
+    return JSON.parse(data) as ArclixConfig;
 };
 
 export default getConfig;

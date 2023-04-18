@@ -1,8 +1,8 @@
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 import chalk from "chalk";
 import { ContentArgs } from "../types/type.js";
-import { convertToTitleCase, spinner } from "../utilities/utility.js";
+import { spinner } from "../utilities/utility.js";
 import { componentTemplate, testTemplate } from "./templates/index.js";
 
 /**
@@ -11,15 +11,12 @@ import { componentTemplate, testTemplate } from "./templates/index.js";
  * author @aaraamuthan @jitiendran
  */
 export class GenerateComponentUtility {
-    private argParams: ContentArgs;
-    private styleType: ".scss" | ".css";
+    private readonly styleType: ".scss" | ".css";
     constructor(
-        private readonly args: ContentArgs,
+        private readonly contentArgs: ContentArgs,
         public fileCreationError: boolean,
     ) {
-        this.argParams = args;
-        this.argParams.componentName = convertToTitleCase(args.componentName);
-        this.styleType = this.argParams.style ? ".scss" : ".css";
+        this.styleType = this.contentArgs.style ? ".scss" : ".css";
     }
     private writeToFile = (
         folderPath: string,
@@ -36,54 +33,46 @@ export class GenerateComponentUtility {
     };
     private createComponent = () => {
         const content = componentTemplate({
-            addIndex: this.argParams.addIndex,
-            componentName: this.args.componentName,
-            scopeStyle: this.argParams.scopeStyle,
+            addIndex: this.contentArgs.addIndex,
+            componentName: this.contentArgs.componentName,
+            scopeStyle: this.contentArgs.scopeStyle,
             styleType: this.styleType,
         });
-        const fileName =
-            this.args.componentName +
-            `${this.argParams.type ? ".tsx" : ".jsx"}`;
-        this.writeToFile(this.argParams.folderPath, fileName, content);
+        const fileName = `${this.contentArgs.componentName}${
+            this.contentArgs.type ? ".tsx" : ".jsx"
+        }`;
+        this.writeToFile(this.contentArgs.folderPath, fileName, content);
     };
     private createStyleFile = () => {
-        const fileName =
-            this.args.componentName +
-            `${
-                this.argParams.scopeStyle
-                    ? `.module${this.styleType}`
-                    : this.styleType
-            }`;
-        this.writeToFile(this.argParams.folderPath, fileName, "");
+        const fileName = `${this.contentArgs.componentName}${
+            this.contentArgs.scopeStyle ? ".module" : ""
+        }${this.styleType}`;
+        this.writeToFile(this.contentArgs.folderPath, fileName, "");
     };
     private createTestFile = () => {
-        const fileName =
-            this.args.componentName +
-            `${this.argParams.type ? ".test.tsx" : ".test.jsx"}`;
+        const fileName = `${this.contentArgs.componentName}.test${
+            this.contentArgs.type ? ".tsx" : ".jsx"
+        }`;
         const content = testTemplate(
-            this.argParams.componentName,
-            this.argParams.addIndex,
+            this.contentArgs.componentName,
+            this.contentArgs.addIndex,
         );
-        this.writeToFile(this.argParams.folderPath, fileName, content);
+        this.writeToFile(this.contentArgs.folderPath, fileName, content);
     };
     private createIndexFile = () => {
-        let content = "";
-        if (this.argParams.flat) {
-            content = `export * from './${this.argParams.componentName}'`;
-        } else {
-            const splitedPath = this.argParams.folderPath.split("/");
-            content = `export * from '../${
-                splitedPath[splitedPath.length - 2]
-            }'`;
-        }
-        const fileName = `index${this.argParams.type ? ".ts" : ".js"}`;
-        this.writeToFile(this.argParams.folderPath, fileName, content);
+        const { flat, type, folderPath, componentName } = this.contentArgs;
+        const filePath = flat
+            ? `"../${folderPath.split("/").slice(-2, -1)[0]}"`
+            : `"./${componentName}"`;
+        const content = `export * from ${filePath}`;
+        const fileName = `index${type ? ".ts" : ".js"}`;
+        this.writeToFile(folderPath, fileName, content);
     };
 
     public generateComponent = (skipTest: boolean) => {
         this.createComponent();
         this.createStyleFile();
-        this.argParams.addIndex && this.createIndexFile();
+        this.contentArgs.addIndex && this.createIndexFile();
         !skipTest && this.createTestFile();
     };
 }

@@ -1,4 +1,4 @@
-import { packageType } from "./../types/type";
+import { PackageType } from "./../types/type";
 import { describe, expect, expectTypeOf, it } from "vitest";
 import getPackageFile from "../generate/helpers/getPackageFile.js";
 
@@ -8,7 +8,7 @@ describe("Get package.json file", () => {
         expect(pkg).not.toBeNull();
         expect(pkg?.dependencies).not.toEqual({});
         expect(pkg?.devDependencies).not.toEqual({});
-        expectTypeOf(pkg).toEqualTypeOf<packageType | null>();
+        expectTypeOf(pkg).toEqualTypeOf<PackageType | null>();
     });
 
     it("should return null if package.json file doesn't exists", async () => {

@@ -1,30 +1,24 @@
-import fs from "fs";
-import path from "path";
-import { packageType } from "../../types/type.js";
+import fs from "node:fs";
+import path from "node:path";
+import { PackageType } from "../../types/type.js";
 import getRootPath from "./getRootPath.js";
 
 /**
  * Get the dependencies and devDependencies from package
  *
- * @param packagePath of the package.json file
+ * @param pkgPath of the package.json file
  * @returns dependencies and devDependencies from package.json or null
  */
-const getPackageFile = async (
-    packagePath: string,
-): Promise<packageType | null> => {
-    const rootPath = getRootPath(process.cwd());
-    const packageJsonPath = path.resolve(rootPath, packagePath);
+const getPackageFile = async (pkgPath: string): Promise<PackageType | null> => {
+    const pkgJsonPath = path.resolve(getRootPath(process.cwd()), pkgPath);
 
-    if (fs.existsSync(packageJsonPath)) {
-        const data = await fs.promises.readFile(packageJsonPath, "utf-8");
-        const packageJson = JSON.parse(data);
-        const dependencies = packageJson.dependencies || {};
-        const devDependencies = packageJson.devDependencies || {};
-
-        return { dependencies, devDependencies };
+    if (!fs.existsSync(pkgJsonPath)) {
+        return null;
     }
 
-    return null;
+    const data = await fs.promises.readFile(pkgJsonPath, "utf-8");
+    const { dependencies = {}, devDependencies = {} } = JSON.parse(data);
+    return { dependencies, devDependencies };
 };
 
 export default getPackageFile;
