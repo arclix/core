@@ -1,3 +1,17 @@
+## <small>0.1.2 (18-03=4-2023)</small>
+
+-   chore(commitlint): add release to type-enum in config (#55) by @jitiendran in https://github.com/arclix/core/pull/56
+-   perf(generate): increase performance by reducing unnecessary reads (#57) by @jitiendran in https://github.com/arclix/core/pull/58
+-   refactor: separate create and generate to module (#59) by @jitiendran in https://github.com/arclix/core/pull/60
+-   feat(generate): introduce multiple and nested component generation (#49) by @jitiendran in https://github.com/arclix/core/pull/61
+-   fix: intermittent errors in generate test cases (#62) by @jitiendran in https://github.com/arclix/core/pull/63
+-   chore(lint): fix format in generateComponent test file caused by (#63) by @jitiendran in https://github.com/arclix/core/pull/64
+-   ci: add ci workflow to verify PR (#54) by @surya71 in https://github.com/arclix/core/pull/65
+-   test: add coverage threshold to unit tests (#67) by @jitiendran in https://github.com/arclix/core/pull/68
+-   refactor: add class decorator to create singleton class (#69) by @jitiendran in https://github.com/arclix/core/pull/70
+-   fix: index file for flat option (#71) by @surya71 in https://github.com/arclix/core/pull/73
+-   refactor(core): update create and generate cli functionality by @jitiendran in https://github.com/arclix/core/pull/74
+
 ## <small>0.1.1 (29-03-2023)</small>
 
 -   test(config): add tests for generate config feature (#43) by @jitiendran in https://github.com/arclix/core/pull/44
