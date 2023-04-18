@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { packageType } from "../types/type";
+import { PackageType } from "../types/type";
 import checkProperty from "../generate/helpers/checkProperty";
 
 describe("Check Property", () => {
-    const mockPkg: packageType = {
+    const mockPkg: PackageType = {
         dependencies: {},
         devDependencies: {
             typescript: "^4.9.4",

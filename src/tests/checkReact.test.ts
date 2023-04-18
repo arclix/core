@@ -1,13 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { packageType } from "../types/type";
+import { PackageType } from "../types/type";
 import checkReact from "../generate/helpers/checkReact";
 
 describe("Check React", () => {
-    const wrongPkg: packageType = {
+    const wrongPkg: PackageType = {
         dependencies: {},
         devDependencies: {},
     } as const;
-    const mockPkg: packageType = {
+    const mockPkg: PackageType = {
         dependencies: {
             react: "^18.2.0",
             "react-dom": "^18.2.0",

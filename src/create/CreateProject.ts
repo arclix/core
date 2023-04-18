@@ -1,8 +1,8 @@
-import path from "path";
+import path from "node:path";
 import inquirer from "inquirer";
 import GenerateConfigFile from "./GenerateConfigFile.js";
 import { singleton } from "../types/decorator.js";
-import { exec, spawn } from "child_process";
+import { exec, spawn } from "node:child_process";
 import { spinner, primaryChalk } from "../utilities/utility.js";
 
 /**
@@ -24,7 +24,7 @@ export default class CreateProject {
 
     private installSass = async (projectName: string) => {
         const npmPath = process.platform == "win32" ? "npm.cmd" : "npm";
-        const finalPath = path.join(process.cwd(), `./${projectName}`);
+        const finalPath = path.join(process.cwd(), projectName);
         await new Promise((r) => {
             const installProcess = spawn(
                 npmPath,

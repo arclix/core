@@ -1,14 +1,16 @@
+import { ContentArgs } from "../../types/type.js";
+
+interface ComponentArgs
+    extends Omit<ContentArgs, "folderPath" | "style" | "type" | "flat"> {
+    styleType: string;
+}
+
 export function componentTemplate({
     addIndex,
     componentName,
     scopeStyle,
     styleType,
-}: {
-    addIndex: boolean;
-    componentName: string;
-    scopeStyle: boolean;
-    styleType: string;
-}) {
+}: ComponentArgs) {
     return `${
         scopeStyle
             ? `import styles from './${componentName}.module${styleType}';`

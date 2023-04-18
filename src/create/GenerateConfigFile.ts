@@ -1,6 +1,6 @@
+import fs from "node:fs";
+import path from "node:path";
 import chalk from "chalk";
-import fs from "fs";
-import path from "path";
 import getRootPath from "../generate/helpers/getRootPath.js";
 import { singleton } from "../types/decorator.js";
 import { emptyLine, log, spinner } from "../utilities/utility.js";
