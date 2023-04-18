@@ -67,7 +67,15 @@ export class GenerateComponentUtility {
         this.writeToFile(this.argParams.folderPath, fileName, content);
     };
     private createIndexFile = () => {
-        const content = `export * from './${this.argParams.componentName}'`;
+        let content = "";
+        if (this.argParams.flat) {
+            content = `export * from './${this.argParams.componentName}'`;
+        } else {
+            const splitedPath = this.argParams.folderPath.split("/");
+            content = `export * from '../${
+                splitedPath[splitedPath.length - 2]
+            }'`;
+        }
         const fileName = `index${this.argParams.type ? ".ts" : ".js"}`;
         this.writeToFile(this.argParams.folderPath, fileName, content);
     };
