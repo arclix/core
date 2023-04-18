@@ -1,4 +1,4 @@
-## <small>0.1.2 (18-03=4-2023)</small>
+## <small>0.1.2 (18-04-2023)</small>
 
 -   chore(commitlint): add release to type-enum in config (#55) by @jitiendran in https://github.com/arclix/core/pull/56
 -   perf(generate): increase performance by reducing unnecessary reads (#57) by @jitiendran in https://github.com/arclix/core/pull/58
