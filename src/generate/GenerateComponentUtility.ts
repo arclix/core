@@ -12,11 +12,13 @@ import { componentTemplate, testTemplate } from "./templates/index.js";
  */
 export class GenerateComponentUtility {
     private readonly styleType: ".scss" | ".css";
+    private readonly componentType: ".tsx" | ".jsx";
     constructor(
         private readonly contentArgs: ContentArgs,
         public fileCreationError: boolean,
     ) {
         this.styleType = this.contentArgs.style ? ".scss" : ".css";
+        this.componentType = this.contentArgs.type ? ".tsx" : ".jsx";
     }
     private writeToFile = (
         folderPath: string,
@@ -38,9 +40,7 @@ export class GenerateComponentUtility {
             scopeStyle: this.contentArgs.scopeStyle,
             styleType: this.styleType,
         });
-        const fileName = `${this.contentArgs.componentName}${
-            this.contentArgs.type ? ".tsx" : ".jsx"
-        }`;
+        const fileName = `${this.contentArgs.componentName}${this.componentType}`;
         this.writeToFile(this.contentArgs.folderPath, fileName, content);
     };
     private createStyleFile = () => {
@@ -50,9 +50,7 @@ export class GenerateComponentUtility {
         this.writeToFile(this.contentArgs.folderPath, fileName, "");
     };
     private createTestFile = () => {
-        const fileName = `${this.contentArgs.componentName}.test${
-            this.contentArgs.type ? ".tsx" : ".jsx"
-        }`;
+        const fileName = `${this.contentArgs.componentName}.test${this.componentType}`;
         const content = testTemplate(
             this.contentArgs.componentName,
             this.contentArgs.addIndex,
