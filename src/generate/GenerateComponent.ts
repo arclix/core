@@ -13,6 +13,7 @@ import {
     getConfig,
     getPackageFile,
 } from "./helpers/index.js";
+import path from "node:path";
 
 /**
  * A singleton class to generate component.
@@ -22,11 +23,13 @@ import {
 @singleton
 export default class GenerateComponent {
     private fileCreationError: boolean;
-    private readonly config: ArclixConfig | null;
     private readonly defaultPath: string;
+    private readonly deletedIndices: number[];
+    private readonly config: ArclixConfig | null;
     private readonly defaultPackagePath: string;
 
     constructor() {
+        this.deletedIndices = [];
         this.fileCreationError = false;
         this.config = getConfig("./arclix.config.json");
         this.defaultPath = this.config?.generate.defaultPath ?? "./src";
@@ -80,6 +83,17 @@ export default class GenerateComponent {
         return nestedComponentName ?? componentName;
     };
 
+    private componentExists = (
+        folderPath: string,
+        componentName: string,
+        type: boolean,
+    ) => {
+        const componentType = type ? ".tsx" : ".jsx";
+        return fs.existsSync(
+            path.join(folderPath, `${componentName}${componentType}`),
+        );
+    };
+
     public generateComponent = async (
         componentNames: string[],
         options: OptionValues,
@@ -117,8 +131,22 @@ export default class GenerateComponent {
                 componentName,
                 options,
             );
+
             if (!componentName) {
-                componentNames.splice(index, 1);
+                this.deletedIndices.push(index);
+                return;
+            }
+
+            // Skip the generation when the component already exists
+            if (
+                this.componentExists(folderPath, componentName, hasTypeScript)
+            ) {
+                this.deletedIndices.push(index);
+                spinner.error({
+                    text: chalk.red(
+                        `Component ${componentName} already exists.\n`,
+                    ),
+                });
                 return;
             }
 
@@ -153,13 +181,16 @@ export default class GenerateComponent {
             }
         });
 
+        // Cleanup to delete the components which are skipped from componentNames
+        componentNames = componentNames.filter(
+            (_, index) => !this.deletedIndices.includes(index),
+        );
+
         if (this.fileCreationError) {
             spinner.error({
-                text: `${chalk.red(
-                    `Component ${componentNames.join(", ")} is not created.\n`,
-                )}`,
+                text: `${chalk.red(`Components are not created.\n`)}`,
             });
-        } else {
+        } else if (componentNames.length > 0) {
             spinner.success({
                 text: `Component ${chalk.green(
                     componentNames.join(", "),
