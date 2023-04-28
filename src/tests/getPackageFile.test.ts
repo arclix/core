@@ -1,4 +1,4 @@
-import { PackageType } from "./../types/type";
+import type { PackageType } from "./../types/type";
 import { describe, expect, expectTypeOf, it } from "vitest";
 import getPackageFile from "../generate/helpers/getPackageFile.js";
 

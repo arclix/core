@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { PackageType } from "../types/type";
+import type { PackageType } from "../types/type";
 import checkProperty from "../generate/helpers/checkProperty";
 
 describe("Check Property", () => {

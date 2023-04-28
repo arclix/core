@@ -1,4 +1,4 @@
-import { ContentArgs } from "../../types/type.js";
+import type { ContentArgs } from "../../types/type.js";
 
 interface ComponentArgs
     extends Omit<ContentArgs, "folderPath" | "style" | "type" | "flat"> {

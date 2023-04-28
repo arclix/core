@@ -1,9 +1,9 @@
-// import fs from "fs";
 import fs from "node:fs";
 import chalk from "chalk";
+import path from "node:path";
 import { OptionValues } from "commander";
-import { convertToTitleCase, spinner } from "../utilities/utility.js";
-import { ArclixConfig, GenerateConfig } from "../types/type.js";
+import { spinner } from "../utilities/utility.js";
+import type { ArclixConfig, GenerateConfig } from "../types/type.js";
 import { GenerateComponentUtility } from "./GenerateComponentUtility.js";
 import { singleton } from "../types/decorator.js";
 import {
@@ -13,7 +13,6 @@ import {
     getConfig,
     getPackageFile,
 } from "./helpers/index.js";
-import path from "node:path";
 
 /**
  * A singleton class to generate component.
@@ -32,7 +31,7 @@ export default class GenerateComponent {
         this.deletedIndices = [];
         this.fileCreationError = false;
         this.config = getConfig("./arclix.config.json");
-        this.defaultPath = this.config?.generate.defaultPath ?? "./src";
+        this.defaultPath = this.config?.generate.defaultPath ?? process.cwd();
         this.defaultPackagePath = "./package.json";
     }
 
@@ -125,7 +124,6 @@ export default class GenerateComponent {
         spinner.start({ text: "Creating component..." });
         // Generate multiple and nested components
         componentNames.forEach((componentName, index) => {
-            componentName = convertToTitleCase(componentName);
             const folderPath = this.getFolderPath(componentName, options);
             componentName = this.handleNestedComponentName(
                 componentName,

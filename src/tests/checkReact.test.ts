@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { PackageType } from "../types/type";
+import type { PackageType } from "../types/type";
 import checkReact from "../generate/helpers/checkReact";
 
 describe("Check React", () => {

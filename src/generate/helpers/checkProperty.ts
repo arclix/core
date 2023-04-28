@@ -1,4 +1,4 @@
-import { PackageType } from "../../types/type.js";
+import type { PackageType } from "../../types/type.js";
 
 /**
  * Checks whether the given property exists or not

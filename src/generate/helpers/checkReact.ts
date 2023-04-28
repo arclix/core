@@ -1,4 +1,4 @@
-import { PackageType } from "../../types/type.js";
+import type { PackageType } from "../../types/type.js";
 
 /**
  * Check wether the project is a React project or not
