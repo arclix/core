@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { PackageType } from "../../types/type.js";
+import type { PackageType } from "../../types/type.js";
 import getRootPath from "./getRootPath.js";
 
 /**

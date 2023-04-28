@@ -1,8 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
 import chalk from "chalk";
-import { ContentArgs } from "../types/type.js";
 import { spinner } from "../utilities/utility.js";
+import type { ContentArgs } from "../types/type.js";
 import { componentTemplate, testTemplate } from "./templates/index.js";
 
 /**

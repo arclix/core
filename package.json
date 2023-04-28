@@ -6,6 +6,7 @@
     },
     "version": "0.1.2",
     "description": "An Open Source CLI with Creation and Component Generation for React.",
+    "homepage": "https://arclix.github.io/arclix-docs",
     "main": "dist/index.js",
     "type": "module",
     "files": [

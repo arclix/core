@@ -4,7 +4,7 @@ import chalk from "chalk";
 import getRootPath from "../generate/helpers/getRootPath.js";
 import { singleton } from "../types/decorator.js";
 import { emptyLine, log, spinner } from "../utilities/utility.js";
-import { ArclixConfig, GenerateConfig } from "../types/type.js";
+import type { ArclixConfig, GenerateConfig } from "../types/type.js";
 
 /**
  * A singleton class to generate config file.
@@ -22,7 +22,7 @@ export default class GenerateConfigFile {
             addIndex: false,
             skipTest: false,
             scopeStyle: false,
-            defaultPath: "./src/",
+            defaultPath: "./",
         };
 
         this.config = {

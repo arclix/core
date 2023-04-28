@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { GenerateConfig } from "../types/type";
+import type { GenerateConfig } from "../types/type";
 import getConfig from "../generate/helpers/getConfig";
 
 const defaultConfig: GenerateConfig = {
