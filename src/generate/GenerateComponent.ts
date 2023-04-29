@@ -3,7 +3,7 @@ import chalk from "chalk";
 import path from "node:path";
 import { OptionValues } from "commander";
 import { spinner } from "../utilities/utility.js";
-import type { ArclixConfig, GenerateConfig } from "../types/type.js";
+import type { ArclixConfig, GenerateConfig, Template } from "../types/type.js";
 import { GenerateComponentUtility } from "./GenerateComponentUtility.js";
 import { singleton } from "../types/decorator.js";
 import {
@@ -22,6 +22,7 @@ import {
 @singleton
 export default class GenerateComponent {
     private fileCreationError: boolean;
+    private readonly template: Template;
     private readonly defaultPath: string;
     private readonly deletedIndices: number[];
     private readonly config: ArclixConfig | null;
@@ -31,6 +32,7 @@ export default class GenerateComponent {
         this.deletedIndices = [];
         this.fileCreationError = false;
         this.config = getConfig("./arclix.config.json");
+        this.template = this.config?.generate.template ?? "tsx";
         this.defaultPath = this.config?.generate.defaultPath ?? process.cwd();
         this.defaultPackagePath = "./package.json";
     }
@@ -82,14 +84,9 @@ export default class GenerateComponent {
         return nestedComponentName ?? componentName;
     };
 
-    private componentExists = (
-        folderPath: string,
-        componentName: string,
-        type: boolean,
-    ) => {
-        const componentType = type ? ".tsx" : ".jsx";
+    private componentExists = (folderPath: string, componentName: string) => {
         return fs.existsSync(
-            path.join(folderPath, `${componentName}${componentType}`),
+            path.join(folderPath, `${componentName}.${this.template}`),
         );
     };
 
@@ -118,7 +115,6 @@ export default class GenerateComponent {
             return;
         }
 
-        const hasTypeScript = await checkProperty("typescript", pkg);
         const hasScss = await checkProperty("sass", pkg);
 
         spinner.start({ text: "Creating component..." });
@@ -136,9 +132,7 @@ export default class GenerateComponent {
             }
 
             // Skip the generation when the component already exists
-            if (
-                this.componentExists(folderPath, componentName, hasTypeScript)
-            ) {
+            if (this.componentExists(folderPath, componentName)) {
                 this.deletedIndices.push(index);
                 spinner.error({
                     text: chalk.red(
@@ -152,8 +146,8 @@ export default class GenerateComponent {
                 {
                     componentName,
                     folderPath,
-                    type: hasTypeScript,
                     style: hasScss,
+                    template: this.template,
                     scopeStyle: this.getOptions(options, "scopeStyle"),
                     addIndex: this.getOptions(options, "addIndex"),
                     flat: this.getOptions(options, "flat"),
