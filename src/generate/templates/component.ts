@@ -1,7 +1,7 @@
 import type { ContentArgs } from "../../types/type.js";
 
 interface ComponentArgs
-    extends Omit<ContentArgs, "folderPath" | "style" | "type" | "flat"> {
+    extends Pick<ContentArgs, "addIndex" | "scopeStyle" | "componentName"> {
     styleType: string;
 }
 

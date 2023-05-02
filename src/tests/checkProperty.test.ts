@@ -6,15 +6,9 @@ describe("Check Property", () => {
     const mockPkg: PackageType = {
         dependencies: {},
         devDependencies: {
-            typescript: "^4.9.4",
             sass: "^1.58.3",
         },
     } as const;
-
-    it("should return true if it's a typescript project", async () => {
-        const isTypeScript = await checkProperty("typescript", mockPkg);
-        expect(isTypeScript).toBe(true);
-    });
 
     it("should return true if it's a scss project", async () => {
         const isScss = await checkProperty("sass", mockPkg);

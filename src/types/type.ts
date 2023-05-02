@@ -1,8 +1,10 @@
+export type Template = "jsx" | "tsx";
+
 export interface ContentArgs {
     componentName: string;
+    template: Template;
     folderPath: string;
     style?: boolean;
-    type: boolean;
     scopeStyle: boolean;
     addIndex: boolean;
     flat: boolean;
@@ -13,6 +15,7 @@ export interface GenerateConfig {
     addIndex: boolean;
     skipTest: boolean;
     scopeStyle: boolean;
+    template: Template;
     defaultPath: string;
 }
 

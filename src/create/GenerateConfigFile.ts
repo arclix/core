@@ -22,6 +22,7 @@ export default class GenerateConfigFile {
             addIndex: false,
             skipTest: false,
             scopeStyle: false,
+            template: "tsx",
             defaultPath: "./",
         };
 
