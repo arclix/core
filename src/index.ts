@@ -8,7 +8,7 @@ import { OptionValues, program } from "commander";
 import { Command, AliasCommand } from "./types/type.js";
 import { log, emptyLine, primaryChalk, spinner } from "./utilities/utility.js";
 
-const version = "ARCLIX v0.1.2";
+const version = "ARCLIX v0.1.3";
 const createProjectInstance = new CreateProject();
 const generateComponentInstance = new GenerateComponent();
 const generateConfigFileInstance = new GenerateConfigFile();

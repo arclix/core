@@ -1,3 +1,10 @@
+## <small>0.1.3 (02-05-2023)</small>
+
+-   fix(generate): add component exist check before generation (#78) by @jitiendran in https://github.com/arclix/core/pull/79
+-   chore: update readme docs by @jitiendran in https://github.com/arclix/core/pull/80
+-   fix(generate): update default path from src to cwd (#81) by @jitiendran in https://github.com/arclix/core/pull/82
+-   feat(generate)!: add typescript as default template (#83) by @jitiendran in https://github.com/arclix/core/pull/84
+
 ## <small>0.1.2 (18-04-2023)</small>
 
 -   chore(commitlint): add release to type-enum in config (#55) by @jitiendran in https://github.com/arclix/core/pull/56
