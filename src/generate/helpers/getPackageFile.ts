@@ -1,7 +1,5 @@
 import fs from "node:fs";
-import path from "node:path";
 import type { PackageType } from "../../types/type.js";
-import getRootPath from "./getRootPath.js";
 
 /**
  * Get the dependencies and devDependencies from package
@@ -10,13 +8,11 @@ import getRootPath from "./getRootPath.js";
  * @returns dependencies and devDependencies from package.json or null
  */
 const getPackageFile = async (pkgPath: string): Promise<PackageType | null> => {
-    const pkgJsonPath = path.resolve(getRootPath(process.cwd()), pkgPath);
-
-    if (!fs.existsSync(pkgJsonPath)) {
+    if (!fs.existsSync(pkgPath)) {
         return null;
     }
 
-    const data = await fs.promises.readFile(pkgJsonPath, "utf-8");
+    const data = await fs.promises.readFile(pkgPath, "utf-8");
     const { dependencies = {}, devDependencies = {} } = JSON.parse(data);
     return { dependencies, devDependencies };
 };
