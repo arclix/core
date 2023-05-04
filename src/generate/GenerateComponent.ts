@@ -9,7 +9,7 @@ import { singleton } from "../types/decorator.js";
 import {
     checkReact,
     checkProperty,
-    getRootPath,
+    getRootDirectory,
     getConfig,
     getPackageFile,
 } from "./helpers/index.js";
@@ -21,20 +21,53 @@ import {
  */
 @singleton
 export default class GenerateComponent {
-    private fileCreationError: boolean;
+    /**
+     * Template of the component to be generated.
+     *
+     * @default tsx
+     */
     private readonly template: Template;
+    /**
+     * Root directory path of the react project where component is to be generated.
+     *
+     * @default CWD
+     */
+    private readonly rootPath: string;
+    /**
+     * Default path for component generation which is CWD.
+     *
+     * @default CWD
+     */
     private readonly defaultPath: string;
-    private readonly deletedIndices: number[];
-    private readonly config: ArclixConfig | null;
+    /**
+     * Default path for `package.json` file.
+     */
     private readonly defaultPackagePath: string;
+    /**
+     * Config options got from `arclix.config.json` file.
+     */
+    private readonly config: ArclixConfig | null;
+    /**
+     * List of components that are skipped while generating due to error.
+     */
+    private readonly deletedIndices: number[];
+    /**
+     * Error occurred while creating file.
+     *
+     * @default false
+     */
+    private fileCreationError: boolean;
 
     constructor() {
         this.deletedIndices = [];
         this.fileCreationError = false;
         this.config = getConfig("./arclix.config.json");
         this.template = this.config?.generate.template ?? "tsx";
-        this.defaultPath = this.config?.generate.defaultPath ?? process.cwd();
-        this.defaultPackagePath = "./package.json";
+        this.rootPath = getRootDirectory() ?? process.cwd();
+        this.defaultPath = this.config?.generate.defaultPath
+            ? path.join(this.rootPath, this.config?.generate.defaultPath)
+            : process.cwd();
+        this.defaultPackagePath = path.join(this.rootPath, "package.json");
     }
 
     // Get's the options either from flags or configs
@@ -51,9 +84,7 @@ export default class GenerateComponent {
         componentName: string,
         options: OptionValues,
     ): string => {
-        const defaultPath = getRootPath(process.cwd())
-            ? ""
-            : this.handlePath(this.defaultPath);
+        const defaultPath = this.handlePath(this.defaultPath);
         // If the `path` option is provided then add the path provided in the option.
         const pathSuffix = options.path ? this.handlePath(options.path) : "";
         // If the `flat` option is provided then there is no need to add folder name.
@@ -136,7 +167,7 @@ export default class GenerateComponent {
                 this.deletedIndices.push(index);
                 spinner.error({
                     text: chalk.red(
-                        `Component ${componentName} already exists.\n`,
+                        `Component ${componentName} already exists in this path.\n`,
                     ),
                 });
                 return;

@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
-import getRootPath from "./getRootPath.js";
 import type { ArclixConfig } from "../../types/type.js";
+import getRootDirectory from "./getRootDirectory.js";
 
 /**
  * Get's the config file contents
@@ -10,7 +10,10 @@ import type { ArclixConfig } from "../../types/type.js";
  * @returns config content if the file exists otherwise null
  */
 const getConfig = (defaultPath: string): ArclixConfig | null => {
-    const configPath = path.resolve(getRootPath(process.cwd()), defaultPath);
+    const configPath = path.resolve(
+        getRootDirectory() ?? process.cwd(),
+        defaultPath,
+    );
     if (!fs.existsSync(configPath)) {
         return null;
     }
