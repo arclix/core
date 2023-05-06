@@ -1,12 +1,10 @@
 export default function testTemplate(componentName: string, addIndex: boolean) {
-    return `import { render } from '@testing-library/react';
+    return `import React from 'react';
 import ${
         addIndex ? `{ ${componentName} }` : componentName
     } from './${componentName}';
 
-test('renders ${componentName} component', () => {
-    const { getByText } = render(<${componentName} />);
-    const linkElement = getByText(/Hello, World!/i);
-    expect(linkElement).toBeInTheDocument();
+describe('${componentName}', () => {
+    // write your tests here...
 });`;
 }

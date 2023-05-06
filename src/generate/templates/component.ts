@@ -11,11 +11,12 @@ export default function componentTemplate({
     scopeStyle,
     styleType,
 }: ComponentArgs) {
-    return `${
-        scopeStyle
-            ? `import styles from './${componentName}.module${styleType}';`
-            : `import './${componentName}${styleType}';`
-    }
+    return `import React from 'react';
+${
+    scopeStyle
+        ? `import styles from './${componentName}.module${styleType}';`
+        : `import './${componentName}${styleType}';`
+}
 
 ${addIndex ? "export " : ""}const ${componentName} = () => {
     return (

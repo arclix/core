@@ -6,11 +6,12 @@ const mockComponent = (
     module: boolean,
     index: boolean = false,
 ) => {
-    return `${
-        module
-            ? `import styles from './Sample.module${style}';`
-            : `import './Sample${style}';`
-    }
+    return `import React from 'react';
+${
+    module
+        ? `import styles from './Sample.module${style}';`
+        : `import './Sample${style}';`
+}
 
 ${index ? "export " : ""}const Sample = () => {
     return (
