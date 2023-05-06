@@ -5,8 +5,8 @@ import path from "node:path";
  * Get's the root directory of the project.
  * Recursively look's for the root directory until `package.json` is found.
  *
- * @param currentDir current working directory
- * @returns root directory path
+ * @param currentDir current working directory.
+ * @returns root directory path.
  */
 const getRootDirectory = (currentDir = process.cwd()): string | null => {
     while (currentDir !== path.sep) {

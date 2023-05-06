@@ -3,7 +3,12 @@ import chalk from "chalk";
 import path from "node:path";
 import { OptionValues } from "commander";
 import { spinner } from "../utilities/utility.js";
-import type { ArclixConfig, GenerateConfig, Template } from "../types/type.js";
+import type {
+    ArclixConfig,
+    BooleanProps,
+    GenerateConfig,
+    Template,
+} from "../types/type.js";
 import { GenerateComponentUtility } from "./GenerateComponentUtility.js";
 import { singleton } from "../types/decorator.js";
 import {
@@ -70,13 +75,13 @@ export default class GenerateComponent {
         this.defaultPackagePath = path.join(this.rootPath, "package.json");
     }
 
-    // Get's the options either from flags or configs
-    // Flags can override config values, so flags take higher priority
+    // Get's the options either from flags or configs.
+    // Flags can override config values, so flags take higher priority.
     private getOptions = (
         options: OptionValues,
-        property: keyof GenerateConfig,
+        property: keyof BooleanProps<GenerateConfig>,
     ): boolean => {
-        return options[property] || this.config?.generate[property];
+        return options[property] || this.config?.generate[property] === true;
     };
 
     // Get's the folder path where the component should be generated.
@@ -94,7 +99,7 @@ export default class GenerateComponent {
         return `${defaultPath}${pathSuffix}${folderName}`;
     };
 
-    // Add trailing '/' to the path if not provided
+    // Add trailing '/' to the path if not provided.
     private handlePath = (path: string): string => {
         return path.endsWith("/") ? path : path + "/";
     };
@@ -127,7 +132,7 @@ export default class GenerateComponent {
         packagePath = this.defaultPackagePath,
     ) => {
         const pkg = await getPackageFile(packagePath);
-        // Throw error if package.json doesn't exist
+        // Throw error if package.json doesn't exist.
         if (!pkg) {
             spinner.error({
                 text: chalk.red("package.json file doesn't exist.\n"),
@@ -136,7 +141,7 @@ export default class GenerateComponent {
         }
 
         const isReact = await checkReact(pkg);
-        // Throw error if it isn't a react project
+        // Throw error if it isn't a react project.
         if (!isReact) {
             spinner.error({
                 text: chalk.red(
@@ -149,7 +154,7 @@ export default class GenerateComponent {
         const hasScss = await checkProperty("sass", pkg);
 
         spinner.start({ text: "Creating component..." });
-        // Generate multiple and nested components
+        // Generate multiple and nested components.
         componentNames.forEach((componentName, index) => {
             const folderPath = this.getFolderPath(componentName, options);
             componentName = this.handleNestedComponentName(
@@ -162,7 +167,7 @@ export default class GenerateComponent {
                 return;
             }
 
-            // Skip the generation when the component already exists
+            // Skip the generation when the component already exists.
             if (this.componentExists(folderPath, componentName)) {
                 this.deletedIndices.push(index);
                 spinner.error({
@@ -181,12 +186,13 @@ export default class GenerateComponent {
                     template: this.template,
                     scopeStyle: this.getOptions(options, "scopeStyle"),
                     addIndex: this.getOptions(options, "addIndex"),
+                    addStory: this.getOptions(options, "addStory"),
                     flat: this.getOptions(options, "flat"),
                 },
                 this.fileCreationError,
             );
 
-            // Not creating folder if --flat flag is provided
+            // Not creating folder if --flat flag is provided.
             if (this.getOptions(options, "flat")) {
                 componentUtilityInstance.generateComponent(
                     this.getOptions(options, "skipTest"),
@@ -204,7 +210,7 @@ export default class GenerateComponent {
             }
         });
 
-        // Cleanup to delete the components which are skipped from componentNames
+        // Cleanup to delete the components which are skipped from componentNames.
         componentNames = componentNames.filter(
             (_, index) => !this.deletedIndices.includes(index),
         );

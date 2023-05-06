@@ -1,4 +1,4 @@
-export function testTemplate(componentName: string, addIndex: boolean) {
+export default function testTemplate(componentName: string, addIndex: boolean) {
     return `import { render } from '@testing-library/react';
 import ${
         addIndex ? `{ ${componentName} }` : componentName

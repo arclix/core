@@ -19,6 +19,7 @@ export default class GenerateConfigFile {
     constructor() {
         this.generateConfig = {
             flat: false,
+            addStory: false,
             addIndex: false,
             skipTest: false,
             scopeStyle: false,

@@ -4,10 +4,10 @@ import type { ArclixConfig } from "../../types/type.js";
 import getRootDirectory from "./getRootDirectory.js";
 
 /**
- * Get's the config file contents
+ * Get's the properties of config file.
  *
- * @param defaultPath path to the config file
- * @returns config content if the file exists otherwise null
+ * @param defaultPath path to the config file.
+ * @returns config `properties` if the file exists otherwise `null`.
  */
 const getConfig = (defaultPath: string): ArclixConfig | null => {
     const configPath = path.resolve(
