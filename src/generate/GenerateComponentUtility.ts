@@ -3,7 +3,11 @@ import path from "node:path";
 import chalk from "chalk";
 import { spinner } from "../utilities/utility.js";
 import type { ContentArgs } from "../types/type.js";
-import { componentTemplate, testTemplate } from "./templates/index.js";
+import {
+    componentTemplate,
+    testTemplate,
+    storyTemplate,
+} from "./templates/index.js";
 
 /**
  * A utility class to generate component based on arguments.
@@ -66,11 +70,19 @@ export class GenerateComponentUtility {
         const fileName = `index${this.indexType}`;
         this.writeToFile(folderPath, fileName, content);
     };
+    private createStoryFile = () => {
+        const { addIndex, template, folderPath, componentName } =
+            this.contentArgs;
+        const fileName = `${componentName}.stories.${template}`;
+        const content = storyTemplate({ addIndex, componentName });
+        this.writeToFile(folderPath, fileName, content);
+    };
 
     public generateComponent = (skipTest: boolean) => {
         this.createComponent();
         this.createStyleFile();
         this.contentArgs.addIndex && this.createIndexFile();
+        this.contentArgs.addStory && this.createStoryFile();
         !skipTest && this.createTestFile();
     };
 }

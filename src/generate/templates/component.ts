@@ -5,7 +5,7 @@ interface ComponentArgs
     styleType: string;
 }
 
-export function componentTemplate({
+export default function componentTemplate({
     addIndex,
     componentName,
     scopeStyle,

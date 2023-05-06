@@ -1,11 +1,11 @@
 import type { PackageType } from "../../types/type.js";
 
 /**
- * Checks whether the given property exists or not
+ * Checks whether the given property exists or not.
  *
- * @param property property to check
- * @param pkg package.json contents
- * @returns true if exists or false
+ * @param property property to check.
+ * @param pkg properties of package.json file.
+ * @returns `true` if exists or `false`
  */
 const checkProperty = async (
     property: string,

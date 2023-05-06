@@ -58,6 +58,7 @@ generate
     .option("--scopeStyle", "Scopes the style to the component.")
     .option("--skipTest", "Skip the test file while generating component.")
     .option("--addIndex", "Adds index file to make the imports easier.")
+    .option("--addStory", "Adds storybook story to the component.")
     .option("-f, --flat", "Generates components without parent folder.")
     .option("-p, --path <string>", "Generates components based on the path.")
     .action(async (...actions) => {
