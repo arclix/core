@@ -2,13 +2,11 @@ import { describe, expect, it } from "vitest";
 import testTemplate from "../generate/templates/test";
 
 const mockTestTemplate = (index: boolean): string => {
-    return `import { render } from '@testing-library/react';
+    return `import React from 'react';
 import ${index ? `{ Sample }` : "Sample"} from './Sample';
 
-test('renders Sample component', () => {
-    const { getByText } = render(<Sample />);
-    const linkElement = getByText(/Hello, World!/i);
-    expect(linkElement).toBeInTheDocument();
+describe('Sample', () => {
+    // write your tests here...
 });`;
 };
 
