@@ -1,9 +1,7 @@
-import type { ContentArgs } from "../../types/type.js";
-
-type StoryArgs = Pick<ContentArgs, "componentName" | "addIndex">;
-
-export default function storyTemplate(args: StoryArgs) {
-    const { componentName, addIndex } = args;
+export default function storyTemplate(
+    componentName: string,
+    addIndex: boolean,
+) {
     return `import React from 'react';
 import ${
         addIndex ? `{ ${componentName} }` : componentName

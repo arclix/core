@@ -10,18 +10,12 @@ import ${index ? "{ Sample }" : "Sample"} from './Sample';
 
 describe("Story Template", () => {
     it("should return template by importing default export function", () => {
-        const template = storyTemplate({
-            componentName: "Sample",
-            addIndex: false,
-        });
+        const template = storyTemplate("Sample", false);
         expect(template).toBe(mockStoryTemplate(false));
     });
 
     it("should return template by importing normal export function", () => {
-        const template = storyTemplate({
-            componentName: "Sample",
-            addIndex: true,
-        });
+        const template = storyTemplate("Sample", true);
         expect(template).toBe(mockStoryTemplate(true));
     });
 });

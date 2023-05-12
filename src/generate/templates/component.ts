@@ -1,15 +1,15 @@
-import type { ContentArgs } from "../../types/type.js";
-
-interface ComponentArgs
-    extends Pick<ContentArgs, "addIndex" | "scopeStyle" | "componentName"> {
+interface ComponentArgs {
+    addIndex: boolean;
     styleType: string;
+    scopeStyle: boolean;
+    componentName: string;
 }
 
 export default function componentTemplate({
     addIndex,
-    componentName,
-    scopeStyle,
     styleType,
+    scopeStyle,
+    componentName,
 }: ComponentArgs) {
     return `import React from 'react';
 ${

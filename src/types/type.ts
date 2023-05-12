@@ -15,29 +15,32 @@ export type BooleanProps<T> = {
     [K in keyof T as T[K] extends boolean ? K : never]: boolean;
 };
 
-export interface ContentArgs {
-    componentName: string;
-    template: Template;
-    folderPath: string;
-    style?: boolean;
-    scopeStyle: boolean;
+export interface CLIOptions {
     addIndex: boolean;
     addStory: boolean;
+    addTest: boolean;
+    scopeStyle: boolean;
     flat: boolean;
+    path: string;
+    type: string;
 }
 
-export interface GenerateConfig {
-    flat: boolean;
-    addIndex: boolean;
-    addStory: boolean;
-    skipTest: boolean;
-    scopeStyle: boolean;
-    template: Template;
-    defaultPath: string;
+export interface ComponentConfig extends Omit<CLIOptions, "type"> {
+    cssPreprocessor: string;
+    usesTypeScript: boolean;
+}
+
+export interface ContentArgs {
+    componentName: string;
+    cssPreprocessor: string;
+    usesTypeScript: boolean;
+    options: CLIOptions;
 }
 
 export interface ArclixConfig {
-    generate: GenerateConfig;
+    readonly component: {
+        [type: string]: ComponentConfig;
+    };
 }
 
 export interface PackageType {

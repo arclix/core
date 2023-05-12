@@ -3,7 +3,7 @@ import path from "node:path";
 import chalk from "chalk";
 import { singleton } from "../types/decorator.js";
 import { emptyLine, log, spinner } from "../utilities/utility.js";
-import type { ArclixConfig, GenerateConfig } from "../types/type.js";
+import type { ArclixConfig, ComponentConfig } from "../types/type.js";
 import getRootDirectory from "../generate/helpers/getRootDirectory.js";
 
 /**
@@ -14,21 +14,24 @@ import getRootDirectory from "../generate/helpers/getRootDirectory.js";
 @singleton
 export default class GenerateConfigFile {
     private readonly config: ArclixConfig;
-    private readonly generateConfig: GenerateConfig;
+    private readonly defaultComponentConfig: ComponentConfig;
 
     constructor() {
-        this.generateConfig = {
-            flat: false,
+        this.defaultComponentConfig = {
+            cssPreprocessor: "css",
+            usesTypeScript: true,
+            scopeStyle: false,
             addStory: false,
             addIndex: false,
-            skipTest: false,
-            scopeStyle: false,
-            template: "tsx",
-            defaultPath: "./",
+            addTest: false,
+            flat: false,
+            path: "./",
         };
 
         this.config = {
-            generate: this.generateConfig,
+            component: {
+                default: this.defaultComponentConfig,
+            },
         };
     }
 
@@ -43,7 +46,7 @@ export default class GenerateConfigFile {
         const content = `${JSON.stringify(this.config, null, 2)}\n`;
 
         if (projectName) {
-            process.chdir(path.join(currentDir, `./${projectName}`));
+            process.chdir(path.join(currentDir, projectName));
             fs.writeFileSync("arclix.config.json", content);
             process.chdir(currentDir);
         } else {

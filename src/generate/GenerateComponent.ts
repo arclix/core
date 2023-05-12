@@ -1,19 +1,12 @@
 import fs from "node:fs";
 import chalk from "chalk";
 import path from "node:path";
-import { OptionValues } from "commander";
 import { spinner } from "../utilities/utility.js";
-import type {
-    ArclixConfig,
-    BooleanProps,
-    GenerateConfig,
-    Template,
-} from "../types/type.js";
+import type { ArclixConfig, BooleanProps, CLIOptions } from "../types/type.js";
 import { GenerateComponentUtility } from "./GenerateComponentUtility.js";
 import { singleton } from "../types/decorator.js";
 import {
     checkReact,
-    checkProperty,
     getRootDirectory,
     getConfig,
     getPackageFile,
@@ -27,23 +20,11 @@ import {
 @singleton
 export default class GenerateComponent {
     /**
-     * Template of the component to be generated.
-     *
-     * @default tsx
-     */
-    private readonly template: Template;
-    /**
      * Root directory path of the react project where component is to be generated.
      *
      * @default CWD
      */
     private readonly rootPath: string;
-    /**
-     * Default path for component generation which is CWD.
-     *
-     * @default CWD
-     */
-    private readonly defaultPath: string;
     /**
      * Default path for `package.json` file.
      */
@@ -67,68 +48,72 @@ export default class GenerateComponent {
         this.deletedIndices = [];
         this.fileCreationError = false;
         this.config = getConfig("./arclix.config.json");
-        this.template = this.config?.generate.template ?? "tsx";
         this.rootPath = getRootDirectory() ?? process.cwd();
-        this.defaultPath = this.config?.generate.defaultPath
-            ? path.join(this.rootPath, this.config?.generate.defaultPath)
-            : process.cwd();
         this.defaultPackagePath = path.join(this.rootPath, "package.json");
     }
 
     // Get's the options either from flags or configs.
     // Flags can override config values, so flags take higher priority.
     private getOptions = (
-        options: OptionValues,
-        property: keyof BooleanProps<GenerateConfig>,
+        options: CLIOptions,
+        property: keyof BooleanProps<CLIOptions>,
     ): boolean => {
-        return options[property] || this.config?.generate[property] === true;
+        return (
+            options[property] ||
+            this.config?.component[options.type ?? "default"][property] === true
+        );
     };
 
     // Get's the folder path where the component should be generated.
     private getFolderPath = (
         componentName: string,
-        options: OptionValues,
+        options: CLIOptions,
     ): string => {
-        const defaultPath = this.handlePath(this.defaultPath);
-        // If the `path` option is provided then add the path provided in the option.
-        const pathSuffix = options.path ? this.handlePath(options.path) : "";
-        // If the `flat` option is provided then there is no need to add folder name.
+        const configPath =
+            this.config?.component[options.type ?? "default"].path;
+        /**
+         * If path flag is provided then use path specified in path flag.
+         * Or else check for path in config file and use the path if it's available.
+         * Or else use the current working directory.
+         */
+        const folderPath = options.path ?? configPath ?? this.rootPath;
         const folderName = this.getOptions(options, "flat")
             ? ""
             : componentName;
-        return `${defaultPath}${pathSuffix}${folderName}`;
+        return path.join(folderPath, folderName);
     };
 
-    // Add trailing '/' to the path if not provided.
-    private handlePath = (path: string): string => {
-        return path.endsWith("/") ? path : path + "/";
-    };
-
+    // Returns the actual component name from nested component name.
+    // E.g Notes/Note here Note is the actual component name needed to be nested inside Notes.
     private handleNestedComponentName = (
         componentName: string,
-        options: OptionValues,
+        flat: boolean,
     ): string => {
-        const nestedComponentName = componentName.split("/").pop();
-        if (componentName.includes("/") && this.getOptions(options, "flat")) {
+        if (flat && componentName.includes("/")) {
             spinner.error({
                 text: `${chalk.red(
-                    "Cannot nest the component while using --flat or -f option\n",
+                    "Cannot nest the component while using --flat or -f option.\n",
                 )}`,
             });
             return "";
         }
-        return nestedComponentName ?? componentName;
+        return componentName.split("/").pop() ?? componentName;
     };
 
-    private componentExists = (folderPath: string, componentName: string) => {
+    private componentExists = (
+        folderPath: string,
+        componentName: string,
+        usesTypeScript: boolean,
+    ): boolean => {
+        const template = usesTypeScript ? "tsx" : "jsx";
         return fs.existsSync(
-            path.join(folderPath, `${componentName}.${this.template}`),
+            path.join(folderPath, `${componentName}.${template}`),
         );
     };
 
     public generateComponent = async (
         componentNames: string[],
-        options: OptionValues,
+        options: CLIOptions,
         packagePath = this.defaultPackagePath,
     ) => {
         const pkg = await getPackageFile(packagePath);
@@ -151,15 +136,24 @@ export default class GenerateComponent {
             return;
         }
 
-        const hasScss = await checkProperty("sass", pkg);
-
         spinner.start({ text: "Creating component..." });
         // Generate multiple and nested components.
         componentNames.forEach((componentName, index) => {
-            const folderPath = this.getFolderPath(componentName, options);
+            const type = options.type ?? "default";
+            const path = this.getFolderPath(componentName, options);
+            const cliOptions: CLIOptions = {
+                addIndex: this.getOptions(options, "addIndex"),
+                addStory: this.getOptions(options, "addStory"),
+                addTest: this.getOptions(options, "addTest"),
+                scopeStyle: this.getOptions(options, "scopeStyle"),
+                flat: this.getOptions(options, "flat"),
+                path,
+                type,
+            };
+
             componentName = this.handleNestedComponentName(
                 componentName,
-                options,
+                cliOptions.flat,
             );
 
             if (!componentName) {
@@ -167,8 +161,13 @@ export default class GenerateComponent {
                 return;
             }
 
+            const cssPreprocessor =
+                this.config?.component[type].cssPreprocessor ?? "css";
+            const usesTypeScript =
+                this.config?.component[type].usesTypeScript ?? true;
+
             // Skip the generation when the component already exists.
-            if (this.componentExists(folderPath, componentName)) {
+            if (this.componentExists(path, componentName, usesTypeScript)) {
                 this.deletedIndices.push(index);
                 spinner.error({
                     text: chalk.red(
@@ -181,31 +180,23 @@ export default class GenerateComponent {
             const componentUtilityInstance = new GenerateComponentUtility(
                 {
                     componentName,
-                    folderPath,
-                    style: hasScss,
-                    template: this.template,
-                    scopeStyle: this.getOptions(options, "scopeStyle"),
-                    addIndex: this.getOptions(options, "addIndex"),
-                    addStory: this.getOptions(options, "addStory"),
-                    flat: this.getOptions(options, "flat"),
+                    cssPreprocessor,
+                    usesTypeScript,
+                    options: cliOptions,
                 },
                 this.fileCreationError,
             );
 
             // Not creating folder if --flat flag is provided.
-            if (this.getOptions(options, "flat")) {
-                componentUtilityInstance.generateComponent(
-                    this.getOptions(options, "skipTest"),
-                );
+            if (cliOptions.flat) {
+                componentUtilityInstance.generateComponent();
             } else {
-                fs.mkdir(folderPath, { recursive: true }, async (err) => {
+                fs.mkdir(path, { recursive: true }, async (err) => {
                     if (err) {
                         spinner.error({ text: err.message });
                         return;
                     }
-                    componentUtilityInstance.generateComponent(
-                        this.getOptions(options, "skipTest"),
-                    );
+                    componentUtilityInstance.generateComponent();
                 });
             }
         });

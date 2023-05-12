@@ -1,6 +1,7 @@
 import path from "node:path";
 import fs from "node:fs/promises";
-import { afterAll, describe, expect, it } from "vitest";
+import { spinner } from "../utilities/utility";
+import { afterAll, describe, expect, it, vi } from "vitest";
 import GenerateComponent from "../generate/GenerateComponent";
 
 const exists = async (path: string): Promise<boolean> => {
@@ -14,15 +15,35 @@ describe("Generate Component", () => {
     const mockPath = path.join(process.cwd(), "./src/mocks");
     const generateComponentInstance = new GenerateComponent();
 
+    it("should throw error when package.json file is not present", async () => {
+        const spinnerError = vi.spyOn(spinner, "error");
+        await generateComponentInstance.generateComponent(
+            ["Sample"],
+            {
+                flat: true,
+                addIndex: false,
+                addStory: false,
+                addTest: true,
+                path: "./src/mocks",
+                scopeStyle: false,
+                type: "default",
+            },
+            "../tests",
+        );
+        expect(spinnerError).toHaveBeenCalled();
+    });
+
     it("should generate component without folder with name 'Sample'", async () => {
         await generateComponentInstance.generateComponent(
             ["Sample"],
             {
                 flat: true,
                 addIndex: false,
-                skipTest: false,
+                addStory: false,
+                addTest: true,
                 path: "./src/mocks",
                 scopeStyle: false,
+                type: "default",
             },
             packagePath,
         );
@@ -33,7 +54,7 @@ describe("Generate Component", () => {
                 path.join(mockPath, "./Sample.tsx"),
             );
             const styleFileExists = await exists(
-                path.join(mockPath, "./Sample.scss"),
+                path.join(mockPath, "./Sample.css"),
             );
             const testFileExists = await exists(
                 path.join(mockPath, "./Sample.test.tsx"),
@@ -52,9 +73,11 @@ describe("Generate Component", () => {
             {
                 flat: false,
                 addIndex: true,
-                skipTest: false,
-                path: "./src/mocks",
+                addStory: false,
+                addTest: true,
                 scopeStyle: false,
+                path: "./src/mocks",
+                type: "default",
             },
             packagePath,
         );
@@ -65,7 +88,7 @@ describe("Generate Component", () => {
                 path.join(mockPath, "./Sample/Sample.tsx"),
             );
             const styleFileExists = await exists(
-                path.join(mockPath, "./Sample/Sample.scss"),
+                path.join(mockPath, "./Sample/Sample.css"),
             );
             const indexFileExists = await exists(
                 path.join(mockPath, "./Sample/index.ts"),
@@ -87,9 +110,11 @@ describe("Generate Component", () => {
             {
                 flat: false,
                 addIndex: false,
-                skipTest: true,
-                path: "./src/mocks",
+                addStory: false,
+                addTest: false,
                 scopeStyle: false,
+                path: "./src/mocks",
+                type: "default",
             },
             packagePath,
         );
@@ -100,7 +125,7 @@ describe("Generate Component", () => {
                 path.join(mockPath, "./Sample1/Sample1.tsx"),
             );
             const styleFileExists = await exists(
-                path.join(mockPath, "./Sample1/Sample1.scss"),
+                path.join(mockPath, "./Sample1/Sample1.css"),
             );
 
             expect(folderExists).toBe(true);
@@ -115,9 +140,11 @@ describe("Generate Component", () => {
             {
                 flat: false,
                 addIndex: false,
-                skipTest: false,
-                path: "./src/mocks",
+                addStory: false,
+                addTest: true,
                 scopeStyle: true,
+                path: "./src/mocks",
+                type: "default",
             },
             packagePath,
         );
@@ -128,7 +155,7 @@ describe("Generate Component", () => {
                 path.join(mockPath, "./Sample2/Sample2.tsx"),
             );
             const styleFileExists = await exists(
-                path.join(mockPath, "./Sample2/Sample2.module.scss"),
+                path.join(mockPath, "./Sample2/Sample2.module.css"),
             );
             const testFileExists = await exists(
                 path.join(mockPath, "./Sample2/Sample2.test.tsx"),
@@ -141,15 +168,55 @@ describe("Generate Component", () => {
         }, 5000);
     }, 10000);
 
+    it.skip("should generate component 'Sample3' with story file", async () => {
+        await generateComponentInstance.generateComponent(
+            ["Sample3"],
+            {
+                flat: false,
+                addIndex: false,
+                addStory: true,
+                addTest: true,
+                scopeStyle: false,
+                path: "./src/mocks",
+                type: "default",
+            },
+            packagePath,
+        );
+
+        setTimeout(async () => {
+            const folderExists = await exists("./src/mocks/Sample3");
+            const componentFileExists = await exists(
+                path.join(mockPath, "./Sample2/Sample3.tsx"),
+            );
+            const styleFileExists = await exists(
+                path.join(mockPath, "./Sample2/Sample3.css"),
+            );
+            const testFileExists = await exists(
+                path.join(mockPath, "./Sample2/Sample3.test.tsx"),
+            );
+            const storyFileExists = await exists(
+                path.join(mockPath, "./Sample3/Sample3.story.tsx"),
+            );
+
+            expect(folderExists).toBe(true);
+            expect(componentFileExists).toBe(true);
+            expect(styleFileExists).toBe(true);
+            expect(testFileExists).toBe(true);
+            expect(storyFileExists).toBe(true);
+        }, 5000);
+    }, 10000);
+
     it("should generate multiple and nested components", async () => {
         await generateComponentInstance.generateComponent(
             ["Sample3", "Sample3/Nested"],
             {
                 flat: false,
                 addIndex: false,
-                skipTest: false,
-                path: "./src/mocks",
+                addStory: false,
+                addTest: true,
                 scopeStyle: false,
+                path: "./src/mocks",
+                type: "default",
             },
             packagePath,
         );
@@ -160,7 +227,7 @@ describe("Generate Component", () => {
                 path.join(mockPath, "./Sample3/Sample3.tsx"),
             );
             const styleFileExists = await exists(
-                path.join(mockPath, "./Sample3/Sample3.scss"),
+                path.join(mockPath, "./Sample3/Sample3.css"),
             );
             const testFileExists = await exists(
                 path.join(mockPath, "./Sample3/Sample3.test.tsx"),
@@ -173,7 +240,7 @@ describe("Generate Component", () => {
                 path.join(mockPath, "./Sample3/Nested/Nested.tsx"),
             );
             const nestedStyleFileExists = await exists(
-                path.join(mockPath, "./Sample3/Nested/Nested.scss"),
+                path.join(mockPath, "./Sample3/Nested/Nested.css"),
             );
             const nestedTestFileExists = await exists(
                 path.join(mockPath, "./Sample3/Nested/Nested.test.tsx"),
@@ -192,13 +259,13 @@ describe("Generate Component", () => {
 
     afterAll(async () => {
         await fs.rm("./src/mocks/Sample.tsx");
-        await fs.rm("./src/mocks/Sample.scss");
+        await fs.rm("./src/mocks/Sample.css");
         await fs.rm("./src/mocks/Sample.test.tsx");
         await fs.rm("./src/mocks/Sample3/Sample3.tsx");
-        await fs.rm("./src/mocks/Sample3/Sample3.scss");
+        await fs.rm("./src/mocks/Sample3/Sample3.css");
         await fs.rm("./src/mocks/Sample3/Sample3.test.tsx");
         await fs.rm("./src/mocks/Sample3/Nested/Nested.tsx");
-        await fs.rm("./src/mocks/Sample3/Nested/Nested.scss");
+        await fs.rm("./src/mocks/Sample3/Nested/Nested.css");
         await fs.rm("./src/mocks/Sample3/Nested/Nested.test.tsx");
         await fs.rmdir("./src/mocks/Sample3/Nested", { recursive: true });
         await fs.rmdir("./src/mocks/Sample3", { recursive: true });

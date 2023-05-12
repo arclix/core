@@ -4,8 +4,8 @@ import chalk from "chalk";
 import CreateProject from "./create/CreateProject.js";
 import GenerateComponent from "./generate/GenerateComponent.js";
 import GenerateConfigFile from "./create/GenerateConfigFile.js";
-import { OptionValues, program } from "commander";
-import { Command, AliasCommand } from "./types/type.js";
+import { program } from "commander";
+import { Command, AliasCommand, CLIOptions } from "./types/type.js";
 import { log, emptyLine, primaryChalk, spinner } from "./utilities/utility.js";
 
 const version = "ARCLIX v0.1.3";
@@ -56,20 +56,23 @@ generate
     .description("Generates component in the current directory.")
     .argument("<component name>", "component name to be generated.")
     .option("--scopeStyle", "Scopes the style to the component.")
-    .option("--skipTest", "Skip the test file while generating component.")
+    .option("--addTest", "Adds the test file while generating component.")
     .option("--addIndex", "Adds index file to make the imports easier.")
     .option("--addStory", "Adds storybook story to the component.")
     .option("-f, --flat", "Generates components without parent folder.")
     .option("-p, --path <string>", "Generates components based on the path.")
     .action(async (...actions) => {
+        const start = performance.now();
         log("\n" + primaryChalk.italic.bold(version));
         emptyLine();
         const componentNames: string[] = actions[2].args;
-        const options: OptionValues = actions[2]._optionValues;
+        const options: CLIOptions = actions[2]._optionValues;
         await generateComponentInstance.generateComponent(
             componentNames,
             options,
         );
+        const end = performance.now();
+        console.log(`Time taken to generate is ${end - start}ms.`);
     });
 
 program

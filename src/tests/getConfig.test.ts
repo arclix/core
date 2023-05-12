@@ -1,13 +1,20 @@
 import { describe, expect, it } from "vitest";
-import type { GenerateConfig } from "../types/type";
+import type { ArclixConfig } from "../types/type";
 import getConfig from "../generate/helpers/getConfig";
 
-const defaultConfig: GenerateConfig = {
-    flat: false,
-    addIndex: false,
-    skipTest: false,
-    scopeStyle: false,
-    defaultPath: "./src/",
+const defaultConfig: ArclixConfig = {
+    component: {
+        default: {
+            cssPreprocessor: "css",
+            usesTypeScript: true,
+            scopeStyle: true,
+            addStory: true,
+            addIndex: true,
+            addTest: true,
+            flat: false,
+            path: "/src",
+        },
+    },
 } as const;
 
 describe("Get Arclix Config", () => {

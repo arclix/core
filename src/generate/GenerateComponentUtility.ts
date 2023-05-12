@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import chalk from "chalk";
 import { spinner } from "../utilities/utility.js";
-import type { ContentArgs } from "../types/type.js";
+import type { ContentArgs, Template } from "../types/type.js";
 import {
     componentTemplate,
     testTemplate,
@@ -15,14 +15,16 @@ import {
  * author @aaraamuthan @jitiendran
  */
 export class GenerateComponentUtility {
-    private readonly styleType: ".scss" | ".css";
+    private readonly template: Template;
+    private readonly styleType: string;
     private readonly indexType: ".ts" | ".js";
     constructor(
         private readonly contentArgs: ContentArgs,
         public fileCreationError: boolean,
     ) {
-        this.styleType = this.contentArgs.style ? ".scss" : ".css";
-        this.indexType = this.contentArgs.template === "tsx" ? ".ts" : ".js";
+        this.styleType = `.${this.contentArgs.cssPreprocessor}`;
+        this.indexType = this.contentArgs.usesTypeScript ? ".ts" : ".js";
+        this.template = this.contentArgs.usesTypeScript ? "tsx" : "jsx";
     }
     private writeToFile = (
         folderPath: string,
@@ -38,51 +40,53 @@ export class GenerateComponentUtility {
         });
     };
     private createComponent = () => {
+        const { addIndex, scopeStyle, path } = this.contentArgs.options;
         const content = componentTemplate({
-            addIndex: this.contentArgs.addIndex,
+            addIndex,
             componentName: this.contentArgs.componentName,
-            scopeStyle: this.contentArgs.scopeStyle,
+            scopeStyle,
             styleType: this.styleType,
         });
-        const fileName = `${this.contentArgs.componentName}.${this.contentArgs.template}`;
-        this.writeToFile(this.contentArgs.folderPath, fileName, content);
+        const fileName = `${this.contentArgs.componentName}.${this.template}`;
+        this.writeToFile(path, fileName, content);
     };
     private createStyleFile = () => {
+        const { scopeStyle, path } = this.contentArgs.options;
         const fileName = `${this.contentArgs.componentName}${
-            this.contentArgs.scopeStyle ? ".module" : ""
+            scopeStyle ? ".module" : ""
         }${this.styleType}`;
-        this.writeToFile(this.contentArgs.folderPath, fileName, "");
+        this.writeToFile(path, fileName, "");
     };
     private createTestFile = () => {
-        const fileName = `${this.contentArgs.componentName}.test.${this.contentArgs.template}`;
-        const content = testTemplate(
-            this.contentArgs.componentName,
-            this.contentArgs.addIndex,
-        );
-        this.writeToFile(this.contentArgs.folderPath, fileName, content);
+        const { addIndex, path } = this.contentArgs.options;
+        const fileName = `${this.contentArgs.componentName}.test.${this.template}`;
+        const content = testTemplate(this.contentArgs.componentName, addIndex);
+        this.writeToFile(path, fileName, content);
     };
     private createIndexFile = () => {
-        const { flat, folderPath, componentName } = this.contentArgs;
+        const { path: folderPath, flat } = this.contentArgs.options;
         const filePath = flat
-            ? `"../${folderPath.split("/").slice(-2, -1)[0]}"`
-            : `"./${componentName}"`;
+            ? `"../${folderPath.split(path.sep).pop()}"`
+            : `"./${this.contentArgs.componentName}"`;
         const content = `export * from ${filePath}`;
         const fileName = `index${this.indexType}`;
         this.writeToFile(folderPath, fileName, content);
     };
     private createStoryFile = () => {
-        const { addIndex, template, folderPath, componentName } =
-            this.contentArgs;
-        const fileName = `${componentName}.stories.${template}`;
-        const content = storyTemplate({ addIndex, componentName });
-        this.writeToFile(folderPath, fileName, content);
+        const {
+            componentName,
+            options: { addIndex, path },
+        } = this.contentArgs;
+        const fileName = `${componentName}.stories.${this.template}`;
+        const content = storyTemplate(componentName, addIndex);
+        this.writeToFile(path, fileName, content);
     };
 
-    public generateComponent = (skipTest: boolean) => {
+    public generateComponent = () => {
         this.createComponent();
         this.createStyleFile();
-        this.contentArgs.addIndex && this.createIndexFile();
-        this.contentArgs.addStory && this.createStoryFile();
-        !skipTest && this.createTestFile();
+        this.contentArgs.options.addIndex && this.createIndexFile();
+        this.contentArgs.options.addStory && this.createStoryFile();
+        this.contentArgs.options.addTest && this.createTestFile();
     };
 }
