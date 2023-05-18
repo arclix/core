@@ -1,4 +1,4 @@
-name: Publish Package to npmjs
+name: Publish Package to NPM
 on:
   release:
     types: [published]
@@ -14,7 +14,7 @@ jobs:
           node-version: '16.x'
           registry-url: 'https://registry.npmjs.org'
       - name: Install dependencies and build 🔧
-        run: npm i && npm build
+        run: npm i && npm run build
       - name: Publish package on NPM 📦
         run: npm publish
         env:
