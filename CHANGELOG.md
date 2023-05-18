@@ -4,7 +4,6 @@
 -   feat(generate)!: add support to storybook in component generation (#85) by @jitiendran in https://github.com/arclix/core/pull/92
 -   feat: update component and test templates to be generic (#90) by @jitiendran in https://github.com/arclix/core/pull/93
 -   ci: workflow to publish on npm registery (#72) by @surya71 in https://github.com/arclix/core/pull/94
-
 -   release: v0.1.4 by @jitiendran in https://github.com/arclix/core/pull/99
 -   fix(ci): invalid build command by @jitiendran in https://github.com/arclix/core/pull/101
 
