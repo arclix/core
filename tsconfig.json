@@ -1,18 +1,19 @@
 {
-    "compilerOptions": {
-        "module": "NodeNext",
-        "strict": true,
-        "moduleResolution": "nodenext",
-        "target": "ES2022",
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
-        "noImplicitReturns": true,
-        "allowUnreachableCode": false,
-        "allowUnusedLabels": false,
-        "strictNullChecks": true,
-        "experimentalDecorators": true,
-        "outDir": "dist"
-    },
-    "include": ["src/**/*"],
-    "exclude": ["node_modules", "src/tests"]
+  "compilerOptions": {
+    "module": "NodeNext",
+    "strict": true,
+    "moduleResolution": "nodenext",
+    "target": "ES2022",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "strictNullChecks": true,
+    "verbatimModuleSyntax": true,
+    "experimentalDecorators": true,
+    "outDir": "dist"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "src/tests", "src/mocks"]
 }

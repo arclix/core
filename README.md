@@ -24,11 +24,11 @@
 
 Get started with ARCLIX, learn the commands for initializing and generating react components.
 
--   [Get Started](https://arclix.github.io/arclix-docs/docs/intro)
--   [Creating an App](https://arclix.github.io/arclix-docs/docs/create-app/create) – How to create a new app.
--   [Generate a Component](https://arclix.github.io/arclix-docs/docs/component-generation/generate) - How to generate a component
--   [Contribution Guidelines](https://github.com/arclix/core/blob/master/CONTRIBUTING.md) - How to contribute to this project.
--   [LICENSE](#license)
+- [Get Started](https://arclix.github.io/arclix-docs/docs/intro)
+- [Creating an App](https://arclix.github.io/arclix-docs/docs/create-app/create) – How to create a new app.
+- [Generate a Component](https://arclix.github.io/arclix-docs/docs/component-generation/generate) - How to generate a component
+- [Contribution Guidelines](https://github.com/arclix/core/blob/master/CONTRIBUTING.md) - How to contribute to this project.
+- [LICENSE](#license)
 
 If something doesn’t work, please [file an issue](https://github.com/arclix/core/issues/new).<br>
 If you have questions or need help, please ask in [GitHub Discussions](https://github.com/arclix/core/issues/discussions)

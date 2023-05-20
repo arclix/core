@@ -4,9 +4,9 @@ We follow a standard commit convention followed by [Angular's commit convention]
 
 So that we have the following advantages:
 
--   get **more readable messages**.
--   easy to follow throught **project history**.
--   generate better **change log** for Arclix.
+- get **more readable messages**.
+- easy to follow throught **project history**.
+- generate better **change log** for Arclix.
 
 ## Commit Message Format
 
@@ -40,21 +40,21 @@ The commit messages should follow the following:
 
 1. Commit message with description and scope
 
-    ```
-    feat(core): add create project (#1)
-    ```
+   ```
+   feat(core): add create project (#1)
+   ```
 
 2. Commit message with `!` to draw attention to breaking change
 
-    ```
-    refactor(core)!: remove create project (#2)
-    ```
+   ```
+   refactor(core)!: remove create project (#2)
+   ```
 
 3. Commit message without scope
 
-    ```
-    feat: add create project (#1)
-    ```
+   ```
+   feat: add create project (#1)
+   ```
 
 ### Revert
 
@@ -74,9 +74,9 @@ The scope could be anything specifying the place of the commit change. For examp
 
 The commit message contains a succinct description of the change:
 
--   use the imperative, present tense: "change" not "changed" nor "changes"
--   don't capitalize the first letter
--   no dot (.) at the end
+- use the imperative, present tense: "change" not "changed" nor "changes"
+- don't capitalize the first letter
+- no dot (.) at the end
 
 > **Note:**
 > We use [commitlint](https://commitlint.js.org) to restrict the commit messages to follow our convention mentioned above.

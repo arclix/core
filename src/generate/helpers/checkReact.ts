@@ -1,4 +1,4 @@
-import type { PackageType } from "../../types/type.js";
+import type { PackageType } from '../../types/type.js';
 
 /**
  * Check wether the project is a `React` project or not.
@@ -7,12 +7,12 @@ import type { PackageType } from "../../types/type.js";
  * @returns `true` it it's a react project or `flase`.
  */
 const checkReact = async (pkg: PackageType): Promise<boolean> => {
-    const { dependencies, devDependencies } = pkg;
-    const hasReact = "react" in dependencies || "react" in devDependencies;
-    const hasReactDom =
-        "react-dom" in dependencies || "react-dom" in devDependencies;
+  const { dependencies, devDependencies } = pkg;
+  const hasReact = 'react' in dependencies || 'react' in devDependencies;
+  const hasReactDom =
+    'react-dom' in dependencies || 'react-dom' in devDependencies;
 
-    return hasReact && hasReactDom;
+  return hasReact && hasReactDom;
 };
 
 export default checkReact;

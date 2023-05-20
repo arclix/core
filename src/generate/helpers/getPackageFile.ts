@@ -1,5 +1,5 @@
-import fs from "node:fs";
-import type { PackageType } from "../../types/type.js";
+import fs from 'node:fs';
+import type { PackageType } from '../../types/type.js';
 
 /**
  * Get the dependencies and devDependencies from package.
@@ -8,13 +8,13 @@ import type { PackageType } from "../../types/type.js";
  * @returns `dependencies` and `devDependencies` from package.json or null.
  */
 const getPackageFile = async (pkgPath: string): Promise<PackageType | null> => {
-    if (!fs.existsSync(pkgPath)) {
-        return null;
-    }
+  if (!fs.existsSync(pkgPath)) {
+    return null;
+  }
 
-    const data = await fs.promises.readFile(pkgPath, "utf-8");
-    const { dependencies = {}, devDependencies = {} } = JSON.parse(data);
-    return { dependencies, devDependencies };
+  const data = await fs.promises.readFile(pkgPath, 'utf-8');
+  const { dependencies = {}, devDependencies = {} } = JSON.parse(data);
+  return { dependencies, devDependencies };
 };
 
 export default getPackageFile;

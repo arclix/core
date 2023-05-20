@@ -4,18 +4,18 @@
  * @returns singleton class that extends the inferred class.
  */
 export function singleton<T extends { new (...args: any[]): object }>(
-    constructor: T,
+  constructor: T,
 ) {
-    return class Singleton extends constructor {
-        static instance: Singleton;
+  return class Singleton extends constructor {
+    static instance: Singleton;
 
-        constructor(...args: any[]) {
-            super(...args);
+    constructor(...args: any[]) {
+      super(...args);
 
-            if (!Singleton.instance) {
-                Singleton.instance = this;
-            }
-            return Singleton.instance;
-        }
-    };
+      if (!Singleton.instance) {
+        Singleton.instance = this;
+      }
+      return Singleton.instance;
+    }
+  };
 }
