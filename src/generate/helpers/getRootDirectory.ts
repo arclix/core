@@ -1,5 +1,5 @@
-import fs from "node:fs";
-import path from "node:path";
+import fs from 'node:fs';
+import path from 'node:path';
 
 /**
  * Get's the root directory of the project.
@@ -9,13 +9,13 @@ import path from "node:path";
  * @returns root directory path.
  */
 const getRootDirectory = (currentDir = process.cwd()): string | null => {
-    while (currentDir !== path.sep) {
-        if (fs.existsSync(path.join(currentDir, "package.json"))) {
-            return currentDir;
-        }
-        currentDir = path.dirname(currentDir);
+  while (currentDir !== path.sep) {
+    if (fs.existsSync(path.join(currentDir, 'package.json'))) {
+      return currentDir;
     }
-    return null;
+    currentDir = path.dirname(currentDir);
+  }
+  return null;
 };
 
 export default getRootDirectory;

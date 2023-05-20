@@ -1,14 +1,14 @@
 {
-    "component": {
-        "default": {
-            "cssPreprocessor": "css",
-            "usesTypeScript": true,
-            "scopeStyle": true,
-            "addStory": true,
-            "addIndex": true,
-            "addTest": true,
-            "flat": false,
-            "path": "/src"
-        }
+  "component": {
+    "default": {
+      "cssPreprocessor": "css",
+      "usesTypeScript": true,
+      "scopeStyle": true,
+      "addStory": true,
+      "addIndex": true,
+      "addTest": true,
+      "flat": false,
+      "path": "/src"
     }
+  }
 }

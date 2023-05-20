@@ -1,61 +1,61 @@
 {
-    "name": "arclix",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/arclix/core.git"
-    },
-    "version": "0.1.4",
-    "description": "An Open Source CLI with Creation and Component Generation for React.",
-    "homepage": "https://arclix.github.io/arclix-docs",
-    "main": "dist/index.js",
-    "type": "module",
-    "files": [
-        "dist"
-    ],
-    "scripts": {
-        "dev": "tsc --watch --project ./tsconfig.json",
-        "build": "tsc --project ./tsconfig.json",
-        "prettier": "prettier --write --cache .",
-        "prettier:check": "prettier --check .",
-        "lint": "eslint --ext .ts --cache .",
-        "format": "npm run prettier && npm run lint",
-        "format:check": "npm run prettier:check && npm run lint",
-        "verify": "npm run build && npm run format:check",
-        "verify:pr": "npm run verify && npm run test:coverage",
-        "pre-commit": "npm run verify",
-        "test": "vitest run",
-        "test:coverage": "vitest run --coverage",
-        "prepare": "husky install"
-    },
-    "keywords": [
-        "TypeScript",
-        "React",
-        "React CLI",
-        "cli",
-        "react",
-        "react-cli"
-    ],
-    "author": "Jitiendran",
-    "license": "MIT",
-    "bin": "/dist/index.js",
-    "devDependencies": {
-        "@commitlint/cli": "^17.4.4",
-        "@commitlint/config-conventional": "^17.4.4",
-        "@types/inquirer": "^9.0.3",
-        "@types/node": "^18.11.18",
-        "@typescript-eslint/eslint-plugin": "^5.54.1",
-        "@typescript-eslint/parser": "^5.54.1",
-        "@vitest/coverage-c8": "^0.29.2",
-        "eslint": "^8.35.0",
-        "husky": "^8.0.3",
-        "prettier": "2.8.4",
-        "typescript": "^4.9.5",
-        "vitest": "^0.29.2"
-    },
-    "dependencies": {
-        "chalk": "^5.2.0",
-        "commander": "^10.0.0",
-        "inquirer": "^9.1.4",
-        "nanospinner": "^1.1.0"
-    }
+  "name": "arclix",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arclix/core.git"
+  },
+  "version": "0.1.4",
+  "description": "An Open Source CLI with Creation and Component Generation for React.",
+  "homepage": "https://arclix.github.io/arclix-docs",
+  "main": "dist/index.js",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "tsc --watch --project ./tsconfig.json",
+    "build": "tsc --project ./tsconfig.json",
+    "prettier": "prettier --write --cache .",
+    "prettier:check": "prettier --check .",
+    "lint": "eslint --fix --ext .ts --cache .",
+    "format": "npm run prettier && npm run lint",
+    "format:check": "npm run prettier:check && npm run lint",
+    "verify": "npm run format:check && npm run build",
+    "verify:pr": "npm run verify && npm run test:coverage",
+    "pre-commit": "npm run verify",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "prepare": "husky install"
+  },
+  "keywords": [
+    "TypeScript",
+    "React",
+    "React CLI",
+    "cli",
+    "react",
+    "react-cli"
+  ],
+  "author": "Jitiendran",
+  "license": "MIT",
+  "bin": "/dist/index.js",
+  "devDependencies": {
+    "@commitlint/cli": "^17.4.4",
+    "@commitlint/config-conventional": "^17.4.4",
+    "@types/inquirer": "^9.0.3",
+    "@types/node": "^18.11.18",
+    "@typescript-eslint/eslint-plugin": "^5.54.1",
+    "@typescript-eslint/parser": "^5.54.1",
+    "@vitest/coverage-c8": "^0.29.2",
+    "eslint": "^8.35.0",
+    "husky": "^8.0.3",
+    "prettier": "2.8.4",
+    "typescript": "^5.0.4",
+    "vitest": "^0.29.2"
+  },
+  "dependencies": {
+    "chalk": "^5.2.0",
+    "commander": "^10.0.0",
+    "inquirer": "^9.1.4",
+    "nanospinner": "^1.1.0"
+  }
 }
