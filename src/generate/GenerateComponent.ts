@@ -128,11 +128,21 @@ export default class GenerateComponent {
       return;
     }
 
+    const type = options.type ?? 'default';
+    // Throw error if the given type doesn't exist in the config.
+    if (this.config && !this.config.component[type]) {
+      spinner.error({
+        text: chalk.red(
+          `Component type ${type} doesn't exist in the config file.\n`,
+        ),
+      });
+      return;
+    }
+
     spinner.start({ text: 'Creating component...' });
     // Generate multiple and nested components.
     try {
       componentNames.forEach((componentName, index) => {
-        const type = options.type ?? 'default';
         const path = this.getFolderPath(componentName, options);
         const cliOptions: CLIOptions = {
           addIndex: this.getOptions(options, 'addIndex'),

@@ -33,6 +33,42 @@ describe('Generate Component', () => {
     expect(spinnerError).toHaveBeenCalled();
   });
 
+  it("should throw error if it's not a react project", async () => {
+    const spinnerError = vi.spyOn(spinner, 'error');
+    await generateComponentInstance.generateComponent(
+      ['Sample'],
+      {
+        flat: true,
+        addIndex: false,
+        addStory: false,
+        addTest: true,
+        path: './src/mocks',
+        scopeStyle: false,
+        type: 'default',
+      },
+      'package.json',
+    );
+    expect(spinnerError).toHaveBeenCalled();
+  });
+
+  it('should throw error if the given path is invalid', async () => {
+    const spinnerError = vi.spyOn(spinner, 'error');
+    await generateComponentInstance.generateComponent(
+      ['Sample'],
+      {
+        flat: true,
+        addIndex: false,
+        addStory: false,
+        addTest: true,
+        path: './src/mock',
+        scopeStyle: false,
+        type: 'default',
+      },
+      packagePath,
+    );
+    expect(spinnerError).toHaveBeenCalled();
+  });
+
   it("should generate component without folder with name 'Sample'", async () => {
     await generateComponentInstance.generateComponent(
       ['Sample'],
@@ -251,6 +287,24 @@ describe('Generate Component', () => {
       expect(nestedStyleFileExists).toBe(true);
       expect(nestedTestFileExists).toBe(true);
     }, 5000);
+  }, 10000);
+
+  it('should throw error while generating nested components with --flat option', async () => {
+    const spinnerError = vi.spyOn(spinner, 'error');
+    await generateComponentInstance.generateComponent(
+      ['Sample4/Nested'],
+      {
+        flat: true,
+        addIndex: false,
+        addStory: false,
+        addTest: true,
+        scopeStyle: false,
+        path: './src/mocks',
+        type: 'default',
+      },
+      packagePath,
+    );
+    expect(spinnerError).toHaveBeenCalled();
   }, 10000);
 
   afterAll(async () => {

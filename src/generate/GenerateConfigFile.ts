@@ -33,7 +33,7 @@ export default class GenerateConfigFile {
   }
 
   /**
-   * Generates config file while creating the project if projectName exists.
+   * Generates config file while creating the project if `projectName` exists.
    * Otherwise generates config file to the existing project.
    *
    * @param projectName to be created with arclix
