@@ -19,9 +19,11 @@ export class GenerateComponentUtility {
 
   constructor(private readonly contentArgs: ContentArgs) {
     this.styleType = `.${this.contentArgs.cssPreprocessor}`;
-    this.indexType = this.contentArgs.usesTypeScript ? '.ts' : '.js';
-    this.template = this.contentArgs.usesTypeScript ? 'tsx' : 'jsx';
+    [this.indexType, this.template] = this.contentArgs.usesTypeScript
+      ? ['.ts', 'tsx']
+      : ['.js', 'jsx'];
   }
+
   private writeToFile = (
     folderPath: string,
     fileName: string,
@@ -33,17 +35,22 @@ export class GenerateComponentUtility {
       }
     });
   };
+
   private createComponent = () => {
-    const { addIndex, scopeStyle, path } = this.contentArgs.options;
+    const {
+      componentName,
+      options: { addIndex, scopeStyle, path },
+    } = this.contentArgs;
     const content = componentTemplate({
       addIndex,
-      componentName: this.contentArgs.componentName,
+      componentName,
       scopeStyle,
       styleType: this.styleType,
     });
-    const fileName = `${this.contentArgs.componentName}.${this.template}`;
+    const fileName = `${componentName}.${this.template}`;
     this.writeToFile(path, fileName, content);
   };
+
   private createStyleFile = () => {
     const { scopeStyle, path } = this.contentArgs.options;
     const fileName = `${this.contentArgs.componentName}${
@@ -51,12 +58,14 @@ export class GenerateComponentUtility {
     }${this.styleType}`;
     this.writeToFile(path, fileName, '');
   };
+
   private createTestFile = () => {
     const { addIndex, path } = this.contentArgs.options;
     const fileName = `${this.contentArgs.componentName}.test.${this.template}`;
     const content = testTemplate(this.contentArgs.componentName, addIndex);
     this.writeToFile(path, fileName, content);
   };
+
   private createIndexFile = () => {
     const { path: folderPath, flat } = this.contentArgs.options;
     const filePath = flat
@@ -66,6 +75,7 @@ export class GenerateComponentUtility {
     const fileName = `index${this.indexType}`;
     this.writeToFile(folderPath, fileName, content);
   };
+
   private createStoryFile = () => {
     const {
       componentName,

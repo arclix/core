@@ -7,7 +7,7 @@ describe('Get Root Directory', () => {
     expect(getRootDirectory(path.sep)).toBeNull();
   });
 
-  it("should return root path if it has 'src'", () => {
-    expect(getRootDirectory()).not.toBeNull();
+  it('should return root path', () => {
+    expect(getRootDirectory(process.cwd())).not.toBeNull();
   });
 });

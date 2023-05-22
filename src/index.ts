@@ -9,7 +9,7 @@ import type { CLIOptions } from './types/type.js';
 import { Command, AliasCommand } from './types/type.js';
 import { log, emptyLine, primaryChalk, spinner } from './utilities/utility.js';
 
-const version = 'ARCLIX v0.1.3';
+const version = 'ARCLIX v0.1.4';
 const createProjectInstance = new CreateProject();
 const generateComponentInstance = new GenerateComponent();
 const generateConfigFileInstance = new GenerateConfigFile();
@@ -35,7 +35,7 @@ program
     log('\n' + primaryChalk.italic.bold(version));
     emptyLine();
 
-    // Throw error if the projectname is not in lowercase
+    // Throw error if the project name is not in lowercase
     if (!checkProjectName(projectName)) {
       spinner.error({
         text: chalk.red('Project name should be in lowercase\n'),
@@ -62,20 +62,21 @@ generate
   .option('--addStory', 'Adds storybook story to the component.')
   .option('-f, --flat', 'Generates components without parent folder.')
   .option('-p, --path <string>', 'Generates components based on the path.')
+  .option(
+    '--type <string>',
+    'Specify the component type based on config to be generated.',
+  )
   .action(async (...actions) => {
-    const start = performance.now();
     log('\n' + primaryChalk.italic.bold(version));
     emptyLine();
     const componentNames: string[] = actions[2].args;
     const options: CLIOptions = actions[2]._optionValues;
     await generateComponentInstance.generateComponent(componentNames, options);
-    const end = performance.now();
-    console.log(`Time taken to generate is ${end - start}ms.`);
   });
 
 program
   .command(Command.INIT)
-  .description('Generated config file to the existing react project.')
+  .description('Generates config file to the existing react project.')
   .action(() => {
     log('\n' + primaryChalk.italic.bold(version));
     generateConfigFileInstance.generateConfigFile();
