@@ -1,50 +1,21 @@
 #!/usr/bin/env node
 
-import chalk from 'chalk';
-import CreateProject from './create/CreateProject.js';
 import GenerateComponent from './generate/GenerateComponent.js';
 import GenerateConfigFile from './generate/GenerateConfigFile.js';
 import { program } from 'commander';
 import type { CLIOptions } from './types/type.js';
 import { Command, AliasCommand } from './types/type.js';
-import { log, emptyLine, primaryChalk, spinner } from './utilities/utility.js';
+import { log, emptyLine, primaryChalk } from './utilities/utility.js';
 
 const version = 'ARCLIX v0.1.4';
-const createProjectInstance = new CreateProject();
 const generateComponentInstance = new GenerateComponent();
 const generateConfigFileInstance = new GenerateConfigFile();
-
-const checkProjectName = (projectName: string): boolean => {
-  if (projectName !== projectName.toLowerCase()) {
-    return false;
-  }
-  return true;
-};
 
 program.version(
   version,
   '-v --version',
   'Displays the version of Arclix in use',
 );
-
-program
-  .command(Command.CREATE)
-  .argument('<project name>', 'name of project to be generated')
-  .description('Creates React project in the current directory')
-  .action(async (projectName: string) => {
-    log('\n' + primaryChalk.italic.bold(version));
-    emptyLine();
-
-    // Throw error if the project name is not in lowercase
-    if (!checkProjectName(projectName)) {
-      spinner.error({
-        text: chalk.red('Project name should be in lowercase\n'),
-      });
-      return;
-    }
-
-    await createProjectInstance.createProject(projectName);
-  });
 
 const generate = program
   .command(Command.GENERATE)

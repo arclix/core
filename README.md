@@ -22,10 +22,9 @@
 
 ## Documentation
 
-Get started with ARCLIX, learn the commands for initializing and generating react components.
+Get started with ARCLIX, learn the commands for generating react components.
 
 - [Get Started](https://arclix.github.io/arclix-docs/docs/intro)
-- [Creating an App](https://arclix.github.io/arclix-docs/docs/create-app/create) – How to create a new app.
 - [Generate a Component](https://arclix.github.io/arclix-docs/docs/component-generation/generate) - How to generate a component.
 - [Generate Multiple and Nested Components](https://arclix.github.io/arclix-docs/docs/component-generation/generate#generate-multiple-components) - How to generate multiple and nested components.
 - [Configure Arclix](https://arclix.github.io/arclix-docs/docs/config) - How to configure the arclix CLI for the project scope.
