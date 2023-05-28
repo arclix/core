@@ -27,7 +27,8 @@ Get started with ARCLIX, learn the commands for generating react components.
 - [Get Started](https://arclix.github.io/arclix-docs/docs/intro)
 - [Generate a Component](https://arclix.github.io/arclix-docs/docs/component-generation/generate) - How to generate a component.
 - [Generate Multiple and Nested Components](https://arclix.github.io/arclix-docs/docs/component-generation/generate#generate-multiple-components) - How to generate multiple and nested components.
-- [Configure Arclix](https://arclix.github.io/arclix-docs/docs/config) - How to configure the arclix CLI for the project scope.
+- [Configure Arclix](https://arclix.github.io/arclix-docs/docs/arclix-configuration/config) - How to configure the arclix CLI for the project scope.
+- [Dynamic component types](https://arclix.github.io/arclix-docs/docs/arclix-configuration/dynamic-component-types) - How to create dynamic component types.
 - [Contribution Guidelines](https://github.com/arclix/core/blob/master/CONTRIBUTING.md) - How to contribute to this project.
 - [LICENSE](#license)
 
