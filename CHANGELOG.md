@@ -1,3 +1,11 @@
+## <small>0.1.5 (28-05-2023)</small>
+
+- feat(generate)!: add css preprocessor support in config (#97) by @jitiendran in https://github.com/arclix/core/pull/98
+- chore: update lint rule and formatting by @jitiendran in https://github.com/arclix/core/pull/105
+- chore: update readme file with updated links by @jitiendran in https://github.com/arclix/core/pull/106
+- feat(generate)!: add dynamic component type support in config (#95) by @jitiendran in https://github.com/arclix/core/pull/107
+- refactor(core)!: remove create module from arclix by @jitiendran in https://github.com/arclix/core/pull/108
+
 ## <small>0.1.4 (18-05-2023)</small>
 
 - fix(generate): cwd bug in component generation (#88) by @jitiendran in https://github.com/arclix/core/pull/89

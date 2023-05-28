@@ -7,7 +7,7 @@ import type { CLIOptions } from './types/type.js';
 import { Command, AliasCommand } from './types/type.js';
 import { log, emptyLine, primaryChalk } from './utilities/utility.js';
 
-const version = 'ARCLIX v0.1.4';
+const version = 'ARCLIX v0.1.5';
 const generateComponentInstance = new GenerateComponent();
 const generateConfigFileInstance = new GenerateConfigFile();
 
