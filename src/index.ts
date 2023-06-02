@@ -1,15 +1,59 @@
 #!/usr/bin/env node
 
+import chalk from 'chalk';
+import pacote from 'pacote';
+import path, { dirname } from 'node:path';
+import { program } from 'commander';
 import GenerateComponent from './generate/GenerateComponent.js';
 import GenerateConfigFile from './generate/GenerateConfigFile.js';
-import { program } from 'commander';
 import type { CLIOptions } from './types/type.js';
 import { Command, AliasCommand } from './types/type.js';
-import { log, emptyLine, primaryChalk } from './utilities/utility.js';
+import boxen, { type Options as BoxenOptions } from 'boxen';
+import { log, emptyLine, getPkg, primaryChalk } from './utilities/utility.js';
+import { fileURLToPath } from 'node:url';
 
 const version = 'ARCLIX v0.1.5';
 const generateComponentInstance = new GenerateComponent();
 const generateConfigFileInstance = new GenerateConfigFile();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const pkg = await getPkg(path.join(__dirname, '../package.json'));
+
+// Notify users when there is update available.
+const notifyUpdate = async () => {
+  const currentVersion = pkg.version;
+  const pkgManifest = await pacote.manifest('arclix@latest');
+  const latestVersion = pkgManifest.version;
+
+  if (currentVersion === latestVersion) {
+    return;
+  }
+
+  const boxOptions: BoxenOptions = {
+    padding: 1,
+    margin: 1,
+    align: 'center',
+    borderColor: 'yellow',
+    borderStyle: 'round',
+  };
+
+  const updateMessage = boxen(
+    `Update available ${chalk.dim(currentVersion)} -> ${chalk.green(
+      latestVersion,
+    )}
+
+To upgrade Arclix to latest version run the following command:
+
+${primaryChalk(`npm i -D arclix@${latestVersion}`)}
+  `,
+    boxOptions,
+  );
+
+  log(updateMessage);
+};
+
+await notifyUpdate();
 
 program.version(
   version,
