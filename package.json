@@ -42,6 +42,7 @@
     "@commitlint/cli": "^17.4.4",
     "@commitlint/config-conventional": "^17.4.4",
     "@types/node": "^18.11.18",
+    "@types/pacote": "^11.1.5",
     "@typescript-eslint/eslint-plugin": "^5.54.1",
     "@typescript-eslint/parser": "^5.54.1",
     "@vitest/coverage-c8": "^0.29.2",
@@ -52,8 +53,10 @@
     "vitest": "^0.29.2"
   },
   "dependencies": {
+    "boxen": "^7.1.0",
     "chalk": "^5.2.0",
     "commander": "^10.0.0",
-    "nanospinner": "^1.1.0"
+    "nanospinner": "^1.1.0",
+    "pacote": "^15.2.0"
   }
 }

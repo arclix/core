@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import chalk from 'chalk';
 import { createSpinner } from 'nanospinner';
 
@@ -10,4 +11,9 @@ const convertToTitleCase = (componentName: string) =>
   componentName.slice(0, 1).toUpperCase() +
   componentName.slice(1, componentName.length);
 
-export { log, spinner, emptyLine, primaryChalk, convertToTitleCase };
+const getPkg = async (pkgPath: string) => {
+  const data = await fs.promises.readFile(pkgPath, 'utf-8');
+  return JSON.parse(data);
+};
+
+export { log, spinner, emptyLine, getPkg, primaryChalk, convertToTitleCase };
