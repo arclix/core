@@ -15,6 +15,10 @@ export type BooleanProps<T> = {
   [K in keyof T as T[K] extends boolean ? K : never]: boolean;
 };
 
+export type CustomTemplateType = Partial<{
+  [K in CustomTemplate]: string;
+}>;
+
 export interface CLIOptions {
   addIndex: boolean;
   addStory: boolean;
@@ -28,12 +32,14 @@ export interface CLIOptions {
 export interface ComponentConfig extends Omit<CLIOptions, 'type'> {
   cssPreprocessor: string;
   usesTypeScript: boolean;
+  customTemplate?: CustomTemplateType;
 }
 
 export interface ContentArgs {
   componentName: string;
   cssPreprocessor: string;
   usesTypeScript: boolean;
+  customTemplate?: CustomTemplateType;
   options: CLIOptions;
 }
 
@@ -58,4 +64,11 @@ export enum Command {
 export enum AliasCommand {
   GENERATE = 'g',
   COMPONENT = 'c',
+}
+
+export enum CustomTemplate {
+  COMPONENT = 'component',
+  STYLE = 'style',
+  TEST = 'test',
+  STORY = 'story',
 }

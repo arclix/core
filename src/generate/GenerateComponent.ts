@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import chalk from 'chalk';
 import path from 'node:path';
-import { spinner } from '../utilities/utility.js';
+import { spinner, logError } from '../utilities/utility.js';
 import type { ArclixConfig, BooleanProps, CLIOptions } from '../types/type.js';
 import { GenerateComponentUtility } from './GenerateComponentUtility.js';
 import { singleton } from '../types/decorator.js';
@@ -71,7 +71,6 @@ export default class GenerateComponent {
     const folderPath = options.path ?? configPath ?? this.rootPath;
     const folderName = this.getOptions(options, 'flat') ? '' : componentName;
 
-    // Throw error if path doesn't exist on this project.
     if (!fs.existsSync(folderPath)) {
       throw new Error("Invalid path or path doesn't exist on this project.");
     }
@@ -111,31 +110,20 @@ export default class GenerateComponent {
     packagePath = this.defaultPackagePath,
   ) => {
     const pkg = await getPackageFile(packagePath);
-    // Throw error if package.json doesn't exist.
     if (!pkg) {
-      spinner.error({
-        text: chalk.red("package.json file doesn't exist.\n"),
-      });
+      logError("package.json file doesn't exist.\n");
       return;
     }
 
     const isReact = await checkReact(pkg);
-    // Throw error if it isn't a react project.
     if (!isReact) {
-      spinner.error({
-        text: chalk.red('Cannot create component outside of React project.\n'),
-      });
+      logError('Cannot create component outside of React project.\n');
       return;
     }
 
     const type = options.type ?? 'default';
-    // Throw error if the given type doesn't exist in the config.
     if (this.config && !this.config.component[type]) {
-      spinner.error({
-        text: chalk.red(
-          `Component type ${type} doesn't exist in the config file.\n`,
-        ),
-      });
+      logError(`Component type ${type} doesn't exist in the config file.\n`);
       return;
     }
 
@@ -168,15 +156,12 @@ export default class GenerateComponent {
           this.config?.component[type].cssPreprocessor ?? 'css';
         const usesTypeScript =
           this.config?.component[type].usesTypeScript ?? true;
+        const customTemplate = this.config?.component[type].customTemplate;
 
         // Skip the generation when the component already exists.
         if (this.componentExists(path, componentName, usesTypeScript)) {
           this.deletedIndices.push(index);
-          spinner.error({
-            text: chalk.red(
-              `Component ${componentName} already exists in this path.\n`,
-            ),
-          });
+          logError(`Component ${componentName} already exists in this path.\n`);
           return;
         }
 
@@ -184,6 +169,7 @@ export default class GenerateComponent {
           componentName,
           cssPreprocessor,
           usesTypeScript,
+          customTemplate,
           options: cliOptions,
         });
 
@@ -193,14 +179,16 @@ export default class GenerateComponent {
         } else {
           fs.mkdir(path, { recursive: true }, async (err) => {
             if (err) {
-              spinner.error({ text: err.message });
-              return;
+              logError(err.message);
+              process.exit(1);
             }
             componentUtilityInstance.generateComponent();
           });
         }
       });
-
+    } catch (error) {
+      logError((error as Error).message);
+    } finally {
       // Cleanup to delete the components which are skipped from componentNames.
       componentNames = componentNames.filter(
         (_, index) => !this.deletedIndices.includes(index),
@@ -213,10 +201,6 @@ export default class GenerateComponent {
           )} created.\n`,
         });
       }
-    } catch (error) {
-      spinner.error({
-        text: `${chalk.red(`${error}\n`)}`,
-      });
     }
   };
 }
