@@ -3,7 +3,7 @@
 import chalk from 'chalk';
 import pacote from 'pacote';
 import path, { dirname } from 'node:path';
-import { program } from 'commander';
+import { program as cli } from 'commander';
 import GenerateComponent from './generate/GenerateComponent.js';
 import GenerateConfigFile from './generate/GenerateConfigFile.js';
 import type { CLIOptions } from './types/type.js';
@@ -55,13 +55,9 @@ ${primaryChalk(`npm i -D arclix@${latestVersion}`)}
 
 await notifyUpdate();
 
-program.version(
-  version,
-  '-v --version',
-  'Displays the version of Arclix in use',
-);
+cli.version(version, '-v --version', 'Displays the version of Arclix in use');
 
-const generate = program
+const generate = cli
   .command(Command.GENERATE)
   .alias(AliasCommand.GENERATE)
   .description('Generates based on argument in the current directory.');
@@ -89,7 +85,7 @@ generate
     await generateComponentInstance.generateComponent(componentNames, options);
   });
 
-program
+cli
   .command(Command.INIT)
   .description('Generates config file to the existing react project.')
   .action(() => {
@@ -97,4 +93,4 @@ program
     generateConfigFileInstance.generateConfigFile();
   });
 
-program.parse(process.argv);
+cli.parse(process.argv);

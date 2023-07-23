@@ -4,6 +4,7 @@ import { createSpinner } from 'nanospinner';
 
 const log = console.log;
 const spinner = createSpinner();
+const logError = (error: string) => spinner.error({ text: chalk.red(error) });
 const emptyLine = () => log();
 const primaryChalk = chalk.hex('#09d3ac');
 
@@ -16,4 +17,12 @@ const getPkg = async (pkgPath: string) => {
   return JSON.parse(data);
 };
 
-export { log, spinner, emptyLine, getPkg, primaryChalk, convertToTitleCase };
+export {
+  log,
+  spinner,
+  logError,
+  emptyLine,
+  getPkg,
+  primaryChalk,
+  convertToTitleCase,
+};
